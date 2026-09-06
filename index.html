@@ -5,29 +5,32 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080a10">
 <title>Samoth — Compagnon premium</title>
-<link rel="stylesheet" href="samoth-premium.css?v=1">
+<link rel="stylesheet" href="samoth-premium.css?v=2">
 </head>
 <body>
 <div id="fx"></div><div id="fx2"></div>
 <div id="ribbon"><div class="rt">SAMOTH · RÉSULTAT</div><div id="rb" class="rb"></div></div>
 <div class="wrap"><main class="shell">
 <header class="head"><div class="sigils"><span class="ice">❄</span><span class="star">✦</span><span class="moon">☾</span></div><h1>SAMOTH</h1><div class="subtitle">Ensorceleur 10 • Ancêtre draconique argent • Maître du froid</div></header>
+
 <section class="grid stats">
   <div class="card center"><span class="label">CA</span><span class="big ice">14</span></div>
-  <div class="card center"><span class="label">PV</span><span class="big">72</span></div>
+  <div class="card center hp-stat"><span class="label">PV</span><div class="hp-controls"><button onclick="chgHp(-1)">−</button><input id="hpInput" type="number" min="0" max="72" onchange="setHp()"><button onclick="chgHp(1)">+</button></div></div>
   <div class="card center"><span class="label">Initiative</span><span class="big violet">+1</span></div>
   <div class="card center"><span class="label">DD sorts</span><span class="big gold">18</span></div>
   <div class="card center"><span class="label">Att. sort</span><span class="big ice">+10</span></div>
 </section>
-<section class="grid resource-grid">
-  <div class="card slots-card"><h3>Emplacements de sorts</h3><div id="slots"></div></div>
-  <div class="card center"><span class="label">PV actuels</span><div class="hp-controls"><button onclick="chgHp(-1)">−</button><input id="hpInput" type="number" min="0" max="72" onchange="setHp()"><button onclick="chgHp(1)">+</button></div></div>
-  <div class="card center"><span class="label">Dégâts du tour</span><span id="turnDamage" class="big gold">0</span><span class="label">infligés</span></div>
+
+<section class="grid resource-grid compact-resources">
+  <div class="card slots-card"><div class="resource-title"><h3>Emplacements de sorts</h3><span>4 • 3 • 3 • 3 • 2</span></div><div id="slots"></div></div>
   <div class="card meta-card"><div class="meta-head"><div><h3>Métamagie</h3><div class="meta-sub">2 pts réservés méta</div></div><div><div id="metaTotal" class="meta-total">12 / 12</div><div id="metaSplit" class="meta-sub"></div></div></div><div class="metachips"><button class="metachip" data-meta="Renforcé" onclick="armMeta('Renforcé',1)">Renforcé · 1</button><button class="metachip" data-meta="Accéléré" onclick="armMeta('Accéléré',2)">Accéléré · 2</button><button class="metachip" data-meta="Jumelé" onclick="armMeta('Jumelé',1)">Jumelé · niv.</button><button class="metachip" data-meta="Prévenant" onclick="armMeta('Prévenant',1)">Prévenant · 1</button><button class="metachip" data-meta="Intensifié" onclick="armMeta('Intensifié',3)">Intensifié · 3</button><button class="metachip" onclick="clearMeta()">Aucune</button></div><button id="pureMiniBtn" class="pure-mini" onclick="armPure()">🔥 Flammes pures · <span id="pureMiniState">Prêt</span></button></div>
 </section>
-<div class="turn-banner"><b>Tour <span id="turnN">1</span></b><span>❄ Samoth tient le rythme du combat</span></div>
+
+<div class="turn-banner compact-turn"><div><b>Tour <span id="turnN">1</span></b><span>❄ Samoth tient le rythme du combat</span></div><div class="turn-damage"><small>Dégâts du tour</small><strong>💥 <span id="turnDamage">0</span></strong></div></div>
 <div class="economy"><div id="ecoAction" class="eco"><b>⚔ Action</b><span>Disponible</span></div><div id="ecoBonus" class="eco"><b>✦ Bonus</b><span>Disponible</span></div><div id="ecoReaction" class="eco"><b>↯ Réaction</b><span>Disponible</span></div><div id="concMini" class="concmini" onclick="endConc()"><b>◐ Concentration</b><span id="concName">Aucune</span></div><button class="turn-next" onclick="nextTurn()">Tour suivant →</button></div>
+
 <nav class="tabs"><button class="tab active" data-panel="damage">❄ Dégâts</button><button class="tab" data-panel="buffs">✦ Buff / Debuff</button><button class="tab" data-panel="defense">🛡 Défense</button><button class="tab" data-panel="dragon">🐉 Dragon</button><button class="tab" data-panel="objects">◇ Objets</button></nav>
+
 <section id="damage" class="panel active"><div class="grid two">
   <article class="card spell cold"><h3>Rayon de givre</h3><p>Tour de magie · attaque +10 · 2d8 froid · ralentit de 3 m.</p><button class="btnice" onclick="attackSpell('Rayon de givre',0,2,8,true)">Lancer</button></article>
   <article class="card spell cold"><h3>Gelure</h3><p>CON DD18 · 2d6 froid · désavantage prochaine attaque d’arme.</p><button class="btnice" onclick="saveSpell('Gelure',0,'CON',2,6,true)">Lancer</button></article>
@@ -36,25 +39,30 @@
   <article class="card spell cold"><h3>Cône de froid</h3><p>N5 · CON DD18 · 8d8 froid.</p><button class="btnice" onclick="saveSpell('Cône de froid',5,'CON',8,8,true)">Lancer N5</button></article>
   <article class="card spell cold"><h3>Orbe chromatique</h3><p>N1 · attaque +10 · 3d8 froid si choisi.</p><button class="btnice" onclick="attackSpell('Orbe chromatique froid',1,3,8,true)">Froid N1</button></article>
 </div><div class="rule">Spécialisation froid : résistance ignorée, les 1 deviennent 2 et +3 dégâts d’Affinité élémentaire.</div></section>
+
 <section id="buffs" class="panel"><div class="grid two">
   <article class="card spell buff"><h3>Hâte</h3><p>N3 · concentration · +2 CA, vitesse ×2, avantage DEX.</p><button class="btnviolet" onclick="castUtility('Hâte',3,true,'action','fx-haste')">Lancer</button></article>
   <article class="card spell buff"><h3>Invisibilité supérieure</h3><p>N4 · concentration · jusqu’à 1 minute.</p><button class="btnviolet" onclick="castUtility('Invisibilité supérieure',4,true,'action','fx-veil')">Lancer</button></article>
   <article class="card spell buff"><h3>Rayonnement écœurant</h3><p>N4 · concentration · CON DD18 · 4d10 radiant + épuisement.</p><button class="btnviolet" onclick="castUtility('Rayonnement écœurant',4,true,'action','fx-radiant')">Lancer</button></article>
   <article class="card"><h3>Incantation flexible</h3><p>Créer un emplacement utilise seulement les 10 points convertibles.</p><div class="row"><button onclick="createSlot(1,2)">N1 · 2</button><button onclick="createSlot(2,3)">N2 · 3</button><button onclick="createSlot(3,5)">N3 · 5</button><button onclick="createSlot(4,6)">N4 · 6</button><button onclick="createSlot(5,7)">N5 · 7</button></div></article>
 </div></section>
+
 <section id="defense" class="panel"><div class="defgrid"><div class="card damagebox"><h3>Dégâts reçus</h3><p>Applique les dégâts et lance le test de concentration si nécessaire.</p><div class="row"><input id="incoming" type="number" min="0" placeholder="Dégâts reçus"><button onclick="takeDamage()">Appliquer</button></div></div><div class="grid two">
   <article class="card spell def"><h3>Bouclier</h3><p>Réaction · N1 · +5 CA.</p><button class="btnice" onclick="reactionSpell('Bouclier',1,'fx-shield')">Utiliser</button></article>
   <article class="card spell def"><h3>Absorption des éléments</h3><p>Réaction · N1 · résistance au type déclencheur.</p><button onclick="reactionSpell('Absorption des éléments',1,'fx-cold')">Utiliser</button></article>
   <article class="card spell def"><h3>Contresort</h3><p>Réaction · interruption automatique si niveau ≤ emplacement.</p><div class="row"><button onclick="reactionSpell('Contresort',3,'fx-counter')">N3</button><button onclick="reactionSpell('Contresort',4,'fx-counter')">N4</button><button onclick="reactionSpell('Contresort',5,'fx-counter')">N5</button></div></article>
   <article class="card spell def"><h3>Ailes protectrices</h3><p>Réaction · +4 CA · 4/repos long.</p><button onclick="useWings()">Utiliser · <span id="wingsText">4</span>/4</button></article>
 </div></div></section>
+
 <section id="dragon" class="panel"><div class="card spell cold"><h3>Esprit draconique d’argent</h3><p>Convocation N5 · concentration jusqu’à 1 h.</p><div class="dragonstats"><div class="dstat">CA<b>19</b></div><div class="dstat">PV<b id="dragonHp">50/50</b></div><div class="dstat">Vol<b>18 m</b></div><div class="dstat">Attaque<b>+10</b></div><div class="dstat">DD souffle<b>18</b></div><div class="dstat">Portée<b>3 m</b></div></div><div class="row"><button class="btnice" onclick="summonDragon()">Invoquer N5</button><button onclick="dragonRend()">Déchirement ×2</button><button onclick="dragonBreath()">Souffle froid</button></div></div></section>
+
 <section id="objects" class="panel"><div class="grid two">
   <article class="card spell obj"><h3>Bâton de confluence</h3><p>8 charges · récupération 1d4+2.</p><div class="row"><button onclick="staff(-1)">−1</button><button onclick="staff(1)">+1</button><button onclick="staffRecharge()">Récupérer</button></div><span id="staffText" class="big gold">8/8</span></article>
   <article class="card spell obj"><h3>Fiole sanguine</h3><p>+2 attaque/DD déjà inclus. Après dépense d’un dé de vie : +5 SP convertibles.</p><button onclick="useVial()">Utiliser · <span id="vialText">1</span>/1</button></article>
   <article class="card spell obj"><h3>Soins du dragon métallique</h3><p>1 lancement gratuit/repos long.</p><button class="btngreen" onclick="freeHeal()">Soins gratuit · <span id="healText">1</span>/1</button></article>
   <article class="card spell obj"><h3>Anneau en bois</h3><p>Régénération : 1d6 PV par heure.</p><button class="btngreen" onclick="woodHeal()">Récupérer 1d6 PV</button></article>
 </div></section>
+
 <div class="utility"><button onclick="shortRest()">Repos court</button><button onclick="longRest()">Repos long</button><button onclick="clearLog()">Effacer journal</button><button class="btnred" onclick="resetAll()">Réinitialiser</button></div>
 <pre id="log" class="log"></pre>
 </main></div>
