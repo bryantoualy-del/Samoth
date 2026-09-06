@@ -1,16 +1,11 @@
-/* Ruban d’action — plus visible, lisible et cliquable */
+/* Ruban d’action — succès flashy, indisponible plus sobre */
 #ribbon{
   width:min(calc(100% - 20px),920px);
   padding:16px 18px 15px;
   border:2px solid #e6fbff;
   border-radius:16px;
-  background:
-    linear-gradient(90deg,rgba(19,86,112,.98) 0%,rgba(74,53,111,.98) 48%,rgba(118,63,91,.98) 100%);
-  box-shadow:
-    0 16px 44px rgba(0,0,0,.78),
-    0 0 28px rgba(122,220,240,.48),
-    0 0 52px rgba(158,139,208,.28),
-    inset 0 0 0 1px rgba(255,255,255,.12);
+  background:linear-gradient(90deg,rgba(19,86,112,.98) 0%,rgba(74,53,111,.98) 48%,rgba(118,63,91,.98) 100%);
+  box-shadow:0 16px 44px rgba(0,0,0,.78),0 0 28px rgba(122,220,240,.48),0 0 52px rgba(158,139,208,.28),inset 0 0 0 1px rgba(255,255,255,.12);
   pointer-events:auto;
   cursor:pointer;
   overflow:hidden;
@@ -25,28 +20,21 @@
 }
 #ribbon.show:before{animation:ribbonShine 1.15s ease-out}
 #ribbon.show{animation:ribbonGlow 1.8s ease-in-out infinite alternate}
-#ribbon .rt{
-  color:#f2feff;
-  font-size:14px;
-  letter-spacing:.11em;
-  text-shadow:0 0 12px rgba(191,246,255,.9);
+#ribbon .rt{color:#f2feff;font-size:14px;letter-spacing:.11em;text-shadow:0 0 12px rgba(191,246,255,.9)}
+#ribbon .rb{margin-top:7px;font-size:17px;line-height:1.42;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+#ribbon .rb:after{content:'  ·  toucher pour fermer';display:block;margin-top:7px;font:700 11px Georgia,'Times New Roman',serif;letter-spacing:.04em;color:#dffbff;opacity:.76}
+
+#ribbon.blocked{
+  border-color:#6d7786;
+  background:linear-gradient(90deg,rgba(31,36,45,.98),rgba(42,43,51,.98) 52%,rgba(51,45,50,.98));
+  box-shadow:0 14px 34px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.04) inset;
 }
-#ribbon .rb{
-  margin-top:7px;
-  font-size:17px;
-  line-height:1.42;
-  color:#fff;
-  text-shadow:0 1px 8px rgba(0,0,0,.6);
-}
-#ribbon .rb:after{
-  content:'  ·  toucher pour fermer';
-  display:block;
-  margin-top:7px;
-  font:700 11px Georgia,'Times New Roman',serif;
-  letter-spacing:.04em;
-  color:#dffbff;
-  opacity:.76;
-}
+#ribbon.blocked.show{animation:none}
+#ribbon.blocked:before{display:none}
+#ribbon.blocked .rt{color:#b9c1cb;text-shadow:none;letter-spacing:.09em}
+#ribbon.blocked .rb{color:#e0e3e7;text-shadow:none}
+#ribbon.blocked .rb:after{color:#9da5af;opacity:.65}
+
 @keyframes ribbonShine{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
 @keyframes ribbonGlow{
   from{box-shadow:0 16px 44px rgba(0,0,0,.78),0 0 22px rgba(122,220,240,.35),0 0 38px rgba(158,139,208,.20),inset 0 0 0 1px rgba(255,255,255,.10)}
