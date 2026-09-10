@@ -1,4 +1,4 @@
-/* Samoth responsive shell — mobile + iPad, inspired by Zephyr */
+/* Samoth responsive shell — mobile + shared tablet/desktop layout */
 .wrap{max-width:1240px;padding:8px 10px}
 .shell{padding:11px 13px}
 .head{padding:3px 4px 10px}
@@ -52,8 +52,8 @@
 .row{margin-top:7px}
 .log{min-height:90px}
 
-/* iPad portrait + landscape */
-@media (min-width:761px) and (max-width:1180px){
+/* Tablet + desktop: exact same layout */
+@media (min-width:761px){
   body{overflow-x:hidden}
   .wrap{max-width:1100px;padding:6px 8px}
   .shell{padding:9px 10px;border-radius:16px}
@@ -63,15 +63,10 @@
   .compact-resources{grid-template-columns:1.08fr .92fr}
   .metachips{grid-template-columns:repeat(3,1fr)}
   .economy{grid-template-columns:repeat(4,1fr) 118px;position:sticky;top:0;z-index:31;background:rgba(8,10,16,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:6px;border:1px solid rgba(74,86,106,.55);border-radius:12px}
-  .tabs{top:64px;z-index:30}
+  .tabs{top:64px;z-index:30;position:sticky}
   .two{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dragonstats{grid-template-columns:repeat(3,1fr)}
   .utility{grid-template-columns:repeat(4,1fr)}
-}
-
-@media (orientation:landscape) and (min-width:900px){
-  .two{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .tabs{position:sticky}
 }
 
 /* Mobile — app-like combat mode inspired by Zephyr */
