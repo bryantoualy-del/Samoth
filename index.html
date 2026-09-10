@@ -6,29 +6,39 @@
 <meta name="theme-color" content="#080a10">
 <title>Samoth — Compagnon premium</title>
 <link rel="stylesheet" href="samoth-premium.css?v=2">
-<link rel="stylesheet" href="samoth-ipad.css?v=2">
+<link rel="stylesheet" href="samoth-ipad.css?v=4">
 <link rel="stylesheet" href="samoth-ribbon.css?v=1">
 </head>
 <body>
 <div id="fx"></div><div id="fx2"></div>
 <div id="ribbon"><div class="rt">SAMOTH · RÉSULTAT</div><div id="rb" class="rb"></div></div>
-<div class="wrap"><main class="shell">
-<header class="head"><div class="sigils"><span class="ice">❄</span><span class="star">✦</span><span class="dragon">🐉</span></div><h1>SAMOTH</h1><div class="subtitle">Ensorceleur 10 • Ancêtre draconique argent • Maître du froid</div></header>
 
-<div class="mobile-combat-hud">
-  <div class="mobile-hud-main">
-    <div class="mh-stat"><small>PV</small><strong id="mobileHpMirror">72</strong></div>
-    <div id="mobileEcoAction" class="mh-chip"><small>Action</small><strong>Libre</strong></div>
-    <div id="mobileEcoBonus" class="mh-chip"><small>Bonus</small><strong>Libre</strong></div>
-    <div id="mobileEcoReaction" class="mh-chip"><small>Réaction</small><strong>Libre</strong></div>
+<!-- HUD mobile dédié, synchronisé avec le moteur Samoth -->
+<div id="mobileHud" class="mobile-hud" aria-label="HUD de combat mobile">
+  <div class="mh-top">
+    <div class="mh-brand"><span>❄</span><b>SAMOTH</b></div>
+    <div id="mhConc" class="mh-conc" onclick="endConc()"><small>Concentration</small><b id="mhConcName">Aucune</b></div>
+  </div>
+  <div class="mh-vitals">
+    <button class="mh-hp" onclick="chgHp(-1)"><small>PV</small><b id="mhHp">72</b><span>−</span></button>
+    <button class="mh-hp-plus" onclick="chgHp(1)">+</button>
+    <div class="mh-chip"><small>CA</small><b>14</b></div>
+    <div class="mh-chip"><small>DD</small><b>18</b></div>
+    <div class="mh-chip"><small>ATQ</small><b>+10</b></div>
+  </div>
+  <div class="mh-economy">
+    <div id="mhAction" class="mh-eco"><span>⚔</span><small>Action</small></div>
+    <div id="mhBonus" class="mh-eco"><span>✦</span><small>Bonus</small></div>
+    <div id="mhReaction" class="mh-eco"><span>↯</span><small>Réaction</small></div>
+    <div class="mh-turn"><small>Tour</small><b id="mhTurn">1</b></div>
+    <div class="mh-dmg"><small>Dégâts</small><b>💥 <span id="mhDamage">0</span></b></div>
     <button class="mh-next" onclick="nextTurn()">→</button>
   </div>
-  <div class="mobile-hud-sub">
-    <button class="mh-conc" onclick="endConc()"><small>◐ Concentration</small><strong id="mobileConcMirror">Aucune</strong></button>
-    <div class="mh-turn"><small>Tour</small><strong id="mobileTurnMirror">1</strong></div>
-    <div class="mh-dmg"><small>Dégâts</small><strong id="mobileDamageMirror">0</strong></div>
-  </div>
+  <div class="mh-slots" id="mhSlots"></div>
 </div>
+
+<div class="wrap"><main class="shell">
+<header class="head"><div class="sigils"><span class="ice">❄</span><span class="star">✦</span><span class="dragon">🐉</span></div><h1>SAMOTH</h1><div class="subtitle">Ensorceleur 10 • Ancêtre draconique argent • Maître du froid</div></header>
 
 <section class="grid stats">
   <div class="card center"><span class="label">CA</span><span class="big ice">14</span></div>
@@ -85,27 +95,5 @@
 </main></div>
 <script src="samoth-premium.js?v=2"></script>
 <script src="samoth-ribbon.js?v=1"></script>
-<script>
-(function(){
-  const ids=['hpInput','ecoAction','ecoBonus','ecoReaction','concName','turnN','turnDamage'];
-  function syncMobile(){
-    const hp=document.getElementById('hpInput');
-    const conc=document.getElementById('concName');
-    const turn=document.getElementById('turnN');
-    const dmg=document.getElementById('turnDamage');
-    if(hp) document.getElementById('mobileHpMirror').textContent=hp.value||'0';
-    if(conc) document.getElementById('mobileConcMirror').textContent=conc.textContent||'Aucune';
-    if(turn) document.getElementById('mobileTurnMirror').textContent=turn.textContent||'1';
-    if(dmg) document.getElementById('mobileDamageMirror').textContent=dmg.textContent||'0';
-    [['ecoAction','mobileEcoAction'],['ecoBonus','mobileEcoBonus'],['ecoReaction','mobileEcoReaction']].forEach(([src,dst])=>{
-      const a=document.getElementById(src), b=document.getElementById(dst); if(!a||!b)return;
-      const used=a.classList.contains('used'); b.classList.toggle('used',used); b.querySelector('strong').textContent=used?'Pris':'Libre';
-    });
-  }
-  const obs=new MutationObserver(syncMobile);
-  ids.forEach(id=>{const el=document.getElementById(id); if(el) obs.observe(el,{attributes:true,childList:true,subtree:true,characterData:true});});
-  document.addEventListener('input',syncMobile,true); document.addEventListener('change',syncMobile,true); document.addEventListener('click',()=>setTimeout(syncMobile,0),true);
-  window.addEventListener('load',()=>setTimeout(syncMobile,0));
-})();
-</script>
+<script src="samoth-mobile-hud.js?v=1"></script>
 </body></html>
