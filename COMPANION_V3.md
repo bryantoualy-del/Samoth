@@ -32,6 +32,12 @@ Le vrai contrat « moteur commun » et une annulation atomique d'une attaque gui
 
 ## Vérifications sur les pages publiées
 
+### Samoth : composition Silas et tour du dragon
+
+La composition visuelle de Samoth reprend maintenant celle de Silas : identité et emblème personnalisé à gauche, constantes séparées à droite, barre de tour, cartes sur douze colonnes, attaque signature large et onglets arrondis. Sa palette reste argent, bleu et glace ; ses FX propres demeurent actifs. La feuille `samoth-silas.css` est spécifique à Samoth.
+
+Le dragon invoqué dispose d'une phase immédiatement après Samoth, de ses propres Action, Réaction, Mouvement et dégâts de tour. Déchirement ×2 montre les deux d20, interdit de compter un 1 naturel comme touche et impose le 20 naturel comme touche critique. Souffle froid et Déchirement ne dépensent l'Action qu'à la résolution. Sans Action choisie, la fin de phase journalise son Esquive automatique. Undo du Souffle testé : Action, dégâts et journal reviennent ensemble ; la phase est conservée après rechargement. Annuler est désormais également présent dans la barre de tour.
+
 - Samoth : inventaire (ajout), notes (rechargement), soins (Action consommée, Bonus libre), Undo des soins (notes intactes).
 - Brackmard : Second souffle puis Undo ; attaque PyroMerlin guidée, dégâts détaillés, Undo restaure attaques, dégâts et journal.
 - Nans : rage puis Undo ; attaque Volto guidée, dégâts, charge et Undo atomique.
