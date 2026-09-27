@@ -86,3 +86,28 @@ html{background:#080b10}body{background:radial-gradient(circle at 88% -8%,#18364
 @media(max-width:767px){.caster-head{display:flex;align-items:center}.caster-head .eyebrow{display:none}.caster-head h2{font-size:1.15rem;margin:0}.caster-resource{margin:0;font-size:.67rem}.caster-picker{gap:3px}.caster-picker select{min-height:44px}.caster-preview p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.caster-facts{margin-top:4px}}
 @media(max-width:900px){.caster-layout{grid-template-columns:1fr}.caster-controls{flex-wrap:wrap}.caster-controls .options{flex:1 1 100%}.caster-controls .caster-cast{width:100%}.slot-groups{width:100%}}
 @media(max-width:767px){.caster-head{display:block}.caster-resource{display:inline-block;margin:1px 0 9px}.caster-preview{display:block}.caster-facts{flex-direction:row;flex-wrap:wrap;justify-content:start;margin-top:6px}.caster-facts span{padding:2px 6px;background:#1c3642;border-radius:6px}.spell-slots{display:block}.slot-groups{gap:10px;margin-top:9px}.slot-group{min-width:130px}.spell-section{padding:12px}.spell-legend{margin-bottom:9px}}
+
+/* Surfaces: deep ink backdrop, raised slate cards, darker recessed controls. */
+:root{--bg:#06090e;--panel:#19232e;--panel2:#202d39;--line:#425566;--shadow:0 1px 0 #d7edff0b inset,0 10px 30px #0008,0 2px 8px #0005}
+html{background:#06090e}
+body{background:radial-gradient(ellipse 48rem 36rem at 94% 4%,#19304765,transparent 72%),radial-gradient(ellipse 34rem 29rem at 2% 75%,#27233938,transparent 72%),linear-gradient(160deg,#070a10 4%,#0b111a 52%,#070a10);background-attachment:fixed}
+.vitals,.card{background:linear-gradient(145deg,#222e3a 0%,#1a2530 48%,#141d27 100%);border-color:#526578;box-shadow:var(--shadow)}
+.identity{background:radial-gradient(circle at 86% 68%,#32607772,transparent 12rem),linear-gradient(130deg,#243646,#182633 70%,#14202a);border-color:#7295aa;box-shadow:var(--shadow)}
+.turnbar{background:linear-gradient(145deg,#23313fee,#18232ff4);border-color:#60768a;box-shadow:0 1px 0 #effaff16 inset,0 10px 26px #000a}
+.stat,.item{background:linear-gradient(145deg,#121c26,#101923);border-color:#405466}
+.stat:nth-child(2){border-color:#8294a1}
+.spell-section{background:linear-gradient(145deg,#202b37,#19232e);border-color:#526578}
+.spell{background:linear-gradient(145deg,#17232e,#111a24)}
+.spell-caster{background:radial-gradient(circle at 96% 4%,#27729a39,transparent 19rem),linear-gradient(130deg,#263c4c,#192b39 65%,#172431);border-color:#81a7ba}
+.dragon-card{background:radial-gradient(circle at 90% 15%,#2aa4cc42,transparent 17rem),linear-gradient(135deg,#21485b,#172e3e);border-color:#65bad0}
+#dragon .card:not(.dragon-card){background:linear-gradient(145deg,#234050,#182b39);border-color:#558ca1}
+.spell-slots,#resources .card:first-child{background:linear-gradient(135deg,#34302b,#24272a 58%,#1c262d);border-color:#9a8064}
+.nav button{background:#18232e;border-color:#465c70}
+.nav button:not(.active):hover{background:#253849}
+.economy{background:#1a2b38;border-color:#567185}
+.ability,.mini{background:#1c303d;border-color:#59788a}
+.meta-strip{background:linear-gradient(100deg,#362d44,#27283b 54%,#202d3a);border-color:#aa8bc0;border-left-color:#d3a9ef}
+.meta-chip{background:#282638;border-color:#847296}
+.num,select,textarea,input:not(.num){background:#0e1822}
+.caster-picker select{background:#102432}
+@media(max-width:767px){body{background-attachment:scroll}.identity{background:radial-gradient(circle at 91% 68%,#32607772,transparent 9rem),linear-gradient(130deg,#243646,#182633 70%,#14202a)}.nav{background:#080e17ed}}
