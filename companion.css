@@ -13,3 +13,5 @@ body{background:radial-gradient(circle at 82% -6%,#315374 0,transparent 33rem),l
 
 .bar-hp{display:flex;gap:4px;justify-content:center;margin-top:3px}.bar-hp .mini{font-size:.68rem;min-height:28px;padding:3px 6px}
 @media(max-width:767px){.turnbar #shortRest,.turnbar #longRest{display:none}.turnbar #undo{grid-column:span 4}.nav{position:relative;top:auto;z-index:auto}.bar-hp .mini{min-height:35px;min-width:46px}}
+
+@media(max-width:767px){.turnbar .round{order:1}.turnbar .damage-turn{order:2}.turnbar .economy{order:3}.turnbar .turn-conc{order:4}.turnbar .next{order:5}.turnbar #undo{order:6}}
