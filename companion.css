@@ -87,29 +87,30 @@ html{background:#080b10}body{background:radial-gradient(circle at 88% -8%,#18364
 @media(max-width:900px){.caster-layout{grid-template-columns:1fr}.caster-controls{flex-wrap:wrap}.caster-controls .options{flex:1 1 100%}.caster-controls .caster-cast{width:100%}.slot-groups{width:100%}}
 @media(max-width:767px){.caster-head{display:block}.caster-resource{display:inline-block;margin:1px 0 9px}.caster-preview{display:block}.caster-facts{flex-direction:row;flex-wrap:wrap;justify-content:start;margin-top:6px}.caster-facts span{padding:2px 6px;background:#1c3642;border-radius:6px}.spell-slots{display:block}.slot-groups{gap:10px;margin-top:9px}.slot-group{min-width:130px}.spell-section{padding:12px}.spell-legend{margin-bottom:9px}}
 
-/* Bleu saphir : fond nuit, cartes bleu encre, lumière cyan et métal argent. */
-:root{--bg:#060914;--panel:#14213a;--panel2:#1a3051;--blue:#68caf5;--line:#405b7a;--shadow:0 1px 0 #d7edff11 inset,0 10px 30px #0009,0 2px 8px #0005}
-html{background:#060914}
-body{background:radial-gradient(ellipse 48rem 36rem at 94% 4%,#1b357e66,transparent 72%),radial-gradient(ellipse 34rem 29rem at 2% 75%,#26225245,transparent 72%),linear-gradient(160deg,#060914 4%,#0a1226 52%,#060914);background-attachment:fixed}
-.vitals,.card{background:linear-gradient(145deg,#203353 0%,#182943 48%,#111e34 100%);border-color:#4d6c93;box-shadow:var(--shadow)}
-.identity{background:radial-gradient(circle at 86% 68%,#286fa77a,transparent 12rem),linear-gradient(130deg,#243f68,#172d4d 70%,#13233c);border-color:#6b9ccc;box-shadow:var(--shadow)}
-.turnbar{background:linear-gradient(145deg,#1d3252f2,#142541f5);border-color:#537ca8;box-shadow:0 1px 0 #effaff1e inset,0 10px 26px #000a}
-.stat,.item{background:linear-gradient(145deg,#10213a,#0d1a30);border-color:#3c6086}
-.stat:nth-child(2){border-color:#8294a1}
-.spell-section{background:linear-gradient(145deg,#1c3050,#14243e);border-color:#50729a}
-.spell{background:linear-gradient(145deg,#142743,#0e1b32)}
-.spell-caster{background:radial-gradient(circle at 96% 4%,#218bd553,transparent 19rem),linear-gradient(130deg,#204977,#17385f 65%,#142846);border-color:#64aee2}
-.dragon-card{background:radial-gradient(circle at 90% 15%,#2aa4cc55,transparent 17rem),linear-gradient(135deg,#164e72,#12334f);border-color:#65cbe7}
-#dragon .card:not(.dragon-card){background:linear-gradient(145deg,#1b4565,#132c48);border-color:#5999c0}
-.spell-slots,#resources .card:first-child{background:linear-gradient(135deg,#34302b,#24272a 58%,#1c262d);border-color:#9a8064}
-.nav button{background:#14243d;border-color:#41638b}
-.nav button:not(.active):hover{background:#24486f}
-.nav button.active,.next{background:linear-gradient(130deg,#65c7ef,#e3f5ff 80%);border-color:#9cdef8;color:#09203b}
-.economy{background:#173657;border-color:#477eaa}
-.ability,.mini{background:#1a3d60;border-color:#4f8ab5}
-.primary{background:linear-gradient(125deg,#55b5e7,#c9edff);border-color:#8ad9ff;color:#08243d}
-.meta-strip{background:linear-gradient(100deg,#362d44,#27283b 54%,#202d3a);border-color:#aa8bc0;border-left-color:#d3a9ef}
-.meta-chip{background:#282638;border-color:#847296}
-.num,select,textarea,input:not(.num){background:#0b1930}
-.caster-picker select{background:#102e50}
-@media(max-width:767px){body{background-attachment:scroll}.identity{background:radial-gradient(circle at 91% 68%,#286fa77a,transparent 9rem),linear-gradient(130deg,#243f68,#172d4d 70%,#13233c)}.nav{background:#070e20ed}}
+/* Givre d'argent : encre noire, métal clair et éclats de glace. */
+:root{--bg:#080a0e;--panel:#191d25;--panel2:#262d37;--ink:#f4f8fa;--muted:#b3c1ca;--gold:#e0ecf3;--blue:#9be9f5;--line:#596b7a;--shadow:0 1px 0 #eaf9ff1a inset,0 12px 32px #000b,0 2px 8px #0007}
+html{background:#080a0e}
+body{background:radial-gradient(ellipse 42rem 30rem at 98% 0%,#d9faff16,transparent 70%),radial-gradient(ellipse 32rem 27rem at 0% 78%,#2a314930,transparent 72%),linear-gradient(150deg,#080a0e 4%,#10151d 55%,#07090d);background-attachment:fixed}
+.vitals,.card{background:linear-gradient(145deg,#252d37 0%,#1b222c 44%,#131a22 100%);border-color:#697d8c;box-shadow:var(--shadow)}
+.identity{background:linear-gradient(130deg,transparent 0 62%,#daf8ff0e 62% 66%,transparent 66% 71%,#aedce916 71% 74%,transparent 74%),radial-gradient(circle at 84% 65%,#8fdef13a,transparent 12rem),linear-gradient(130deg,#252f3a,#151c27 75%,#10151d);border-color:#a4c2d0;box-shadow:var(--shadow)}
+.identity .eyebrow{color:#adecf7}.identity h1{color:#fff;text-shadow:0 2px 22px #d9f8ff36}.signature-icon{filter:drop-shadow(0 0 15px #bcf2ff82)}
+.turnbar{background:linear-gradient(145deg,#252e39f5,#171e28f8);border-color:#7892a4;box-shadow:0 1px 0 #fff2 inset,0 10px 26px #000b}
+.stat,.item{background:linear-gradient(145deg,#111820,#0d131b);border-color:#465a6a}
+.stat:nth-child(2){border-color:#92a9b8}
+.spell-section{background:linear-gradient(145deg,#252e38,#1a222c);border-color:#6c8391}
+.spell{background:linear-gradient(145deg,#19242e,#111a23)}
+.spell-caster{background:radial-gradient(circle at 96% 0%,#adf0ff2b,transparent 18rem),linear-gradient(130deg,#2d3945,#1b2a36 66%,#14202a);border-color:#9bd5e6}
+.dragon-card{background:radial-gradient(circle at 90% 15%,#9fefff3b,transparent 17rem),linear-gradient(135deg,#254351,#152a37);border-color:#91dbea}
+#dragon .card:not(.dragon-card){background:linear-gradient(145deg,#213945,#152732);border-color:#6aafc1}
+.spell-slots,#resources .card:first-child{background:linear-gradient(135deg,#353231,#252a2c 58%,#1c252b);border-color:#a69a8d}
+.nav button{background:#19222b;border-color:#566c7d}
+.nav button:not(.active):hover{background:#2a3c48}
+.nav button.active,.next{background:linear-gradient(125deg,#d5edf5,#f8feff 72%);border-color:#ebfaff;color:#14202a}
+.economy{background:#1b2a34;border-color:#5d8294}
+.ability,.mini{background:#243844;border-color:#6b9eaf}
+.primary{background:linear-gradient(125deg,#9ed9e8,#effcff);border-color:#c9f1f9;color:#132b34}
+.meta-strip{background:linear-gradient(100deg,#37313e,#282935 54%,#202b32);border-color:#ac98b8;border-left-color:#d4b8e2}
+.meta-chip{background:#302b37;border-color:#95839f}
+.num,select,textarea,input:not(.num){background:#0d171e}
+.caster-picker select{background:#10232d}
+@media(max-width:767px){body{background-attachment:scroll}.identity{background:linear-gradient(130deg,transparent 0 68%,#daf8ff0e 68% 72%,transparent 72%),radial-gradient(circle at 90% 65%,#8fdef13a,transparent 9rem),linear-gradient(130deg,#252f3a,#151c27 75%,#10151d)}.nav{background:#0a1017ed}}
