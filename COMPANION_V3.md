@@ -29,3 +29,13 @@ Audit des branches `main` du 27 septembre 2026. Les dépôts restent indépendan
 ## Limites vérifiables
 
 Le vrai contrat « moteur commun » et une annulation atomique d'une attaque guidée sur les quatre personnages demandent une migration de leurs moteurs, distincte de l'interface. Aucun bouton de l'interface ne doit prétendre offrir ce comportement tant qu'il n'est pas garanti. L'essai sur Safari physique reste distinct des tests Chromium aux largeurs simulées.
+
+## Vérifications sur les pages publiées
+
+- Samoth : inventaire (ajout), notes (rechargement), soins (Action consommée, Bonus libre), Undo des soins (notes intactes).
+- Brackmard : Second souffle puis Undo ; attaque PyroMerlin guidée, dégâts détaillés, Undo restaure attaques, dégâts et journal.
+- Nans : rage puis Undo ; attaque Volto guidée, dégâts, charge et Undo atomique.
+- Rufus : lame psychique avec Sournoise et ventilation immédiate des dégâts, Undo, PV conservés après rechargement.
+- Banc `tests/responsive.html` : iframe à largeurs CSS 390, 430, 768 et 1280. Les trois autres compagnons n'ont aucun débordement horizontal aux quatre tailles. Samoth débordait de 58–73 px à 390/430 à cause des cartes d'emplacements ; correction `minmax(0,1fr)` ajoutée ensuite, à revérifier après propagation Pages.
+
+Les contrôles sur iframe ne remplacent pas un test sur Safari/iPhone et iPad physiques (notamment clavier, safe area réelle, gestes tactiles et installation). Import JSON, restauration de backup et sessions de plusieurs heures demandent encore un essai de bout en bout. Le moteur unique partagé entre personnages reste un chantier distinct ; les quatre moteurs d'origine sont préservés et les surfaces V3 sont mutualisées.
