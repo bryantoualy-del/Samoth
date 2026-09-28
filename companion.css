@@ -175,3 +175,11 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
   .journal,.journal.collapsed{bottom:calc(70px + env(safe-area-inset-bottom))}.journal.collapsed{min-width:0;width:88px;right:8px;grid-template-columns:34px 34px;gap:6px;padding:7px}.journal.collapsed b{display:none}.journal.collapsed .journal-actions{grid-column:1/-1;grid-row:1}
   .app{padding-bottom:calc(170px + env(safe-area-inset-bottom))}
 }
+
+/* Spectral frost: pointer free, brief, with a reduced motion fallback. */
+.samoth-fx{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 52%,color-mix(in srgb,var(--glow,#b6eaff) 15%,transparent),transparent 55%)}
+.samoth-fx.play{animation:samothMist .9s ease-out forwards}.samoth-fx:before{content:"";position:absolute;width:min(55vmin,400px);aspect-ratio:1;border:1px solid var(--glow,#b6eaff);border-radius:50%;box-shadow:0 0 44px var(--glow,#b6eaff),inset 0 0 50px #b8e8ff2d;transform:scale(.35);opacity:0}
+.samoth-fx.play:before{animation:samothRing .9s ease-out both}.samoth-fx.summon.play:before,.samoth-fx.crit.play:before,.samoth-fx.breath.play:before{animation-duration:1.2s}
+.samoth-fx i{position:absolute;width:2px;height:clamp(8px,2vmin,24px);background:linear-gradient(transparent,var(--glow,#b6eaff),#fff);box-shadow:0 0 9px var(--glow,#b6eaff);opacity:0;transform:translate(0,0) rotate(35deg);animation:samothShard .7s ease-out var(--delay) both}
+@keyframes samothMist{15%{opacity:.8}100%{opacity:0}}@keyframes samothRing{15%{opacity:.7;transform:scale(.55)}100%{opacity:0;transform:scale(1.6)}}@keyframes samothShard{10%{opacity:.9}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(120deg)}}
+@media(prefers-reduced-motion:reduce){.samoth-fx{display:none!important}}
