@@ -127,3 +127,51 @@ body{background:radial-gradient(ellipse 42rem 30rem at 98% 0%,#d9faff16,transpar
 .spell-legend button.active small{color:#eef8fc}.spell-legend button:disabled{opacity:.35;cursor:default}
 .spell-legend button:hover:not(:disabled),.spell-legend button:focus-visible{outline:2px solid var(--role,#d5e9ef);outline-offset:2px}
 @media(max-width:767px){.subnav{width:100%}.subnav button{flex:1;min-width:0;padding:8px 9px}.spell-legend{gap:6px}.spell-legend button{min-height:40px}}
+
+/* PV : des contrôles rouges/verts identifiables même sans lire le texte. */
+.hpstat{border-color:#617c8d;background:linear-gradient(145deg,#182530,#101820)}
+.hpstat .num{border-color:#617d8f;color:#f7fbff}
+.hp-actions .mini{flex:1;min-height:40px;font-weight:800}
+.hp-actions [data-hp="damage"]{color:#ffd5d7;border-color:#a95663;background:linear-gradient(145deg,#542630,#321a22)}
+.hp-actions [data-hp="heal"]{color:#d6ffe9;border-color:#4e9f75;background:linear-gradient(145deg,#204d39,#142f27)}
+.hp-actions [data-hp="damage"]:hover,.hp-actions [data-hp="damage"]:focus-visible{background:#71313d;border-color:#f09daa}
+.hp-actions [data-hp="heal"]:hover,.hp-actions [data-hp="heal"]:focus-visible{background:#276447;border-color:#9ce4b8}
+.stat small{color:#b7cfda}.stat:nth-child(3) b,.stat:nth-child(5) b{color:#a3e9f6}.stat:nth-child(4) b{color:#c4dcdf}.stat:nth-child(6) b{color:#d5c5ee}
+
+/* Confirmation centrale, même lecture immédiate que Silas. */
+dialog.hit-confirm{width:min(480px,calc(100% - 24px));max-height:calc(100dvh - 32px);padding:20px;border:1px solid #a2d6e6;border-radius:20px;background:linear-gradient(150deg,#283944,#111a23);box-shadow:0 25px 90px #000,0 0 35px #9edfed2e;text-align:center}
+dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
+.hit-confirm #resolutionTitle{margin:0;color:#bbecf5;font:700 .85rem ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em}
+.hit-confirm .hit-roll{font:800 clamp(2.5rem,10vw,4.8rem)/1 Georgia,serif;color:#f4fcff;text-shadow:0 0 24px #adefff75;margin:5px 0}
+.hit-confirm .hit-detail{color:#c1dce6;font-size:.9rem}.hit-confirm .hit-question{margin:10px 0 2px;color:#f0f7fa;font:700 1.16rem Georgia,serif}
+.hit-confirm .dialog-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.hit-confirm .dialog-actions button{min-height:52px;border-radius:11px;font-weight:900}
+.hit-confirm .dialog-actions .hit-no{background:linear-gradient(135deg,#562630,#772f3b);border-color:#c07780;color:#fff0f0}
+.hit-confirm .dialog-actions .hit-yes{background:linear-gradient(135deg,#204b39,#2e7654);border-color:#79c69a;color:#effff5}
+.hit-confirm .dialog-actions .cancel{grid-column:1/-1;min-height:40px;background:#202a33;color:#c8d5dc}
+
+/* La couleur du lanceur suit le sort choisi, le fond reste argent/noir. */
+#combat{--cast-tint:#8ed3e3;--cast-edge:#c6eef5}
+#combat[data-spell-role="froid"]{--cast-tint:#61cbe8;--cast-edge:#9fe9f6}
+#combat[data-spell-role="defense"]{--cast-tint:#da8899;--cast-edge:#f1bac6}
+#combat[data-spell-role="soutien"]{--cast-tint:#a99adf;--cast-edge:#d1c6f2}
+#combat[data-spell-role="controle"]{--cast-tint:#d9b676;--cast-edge:#efdbad}
+#combat[data-spell-role="soin"]{--cast-tint:#74cba0;--cast-edge:#afe6c4}
+#combat[data-spell-role="invocation"]{--cast-tint:#61cddd;--cast-edge:#a8f0f3}
+#combat[data-spell-role="arcane"]{--cast-tint:#a4badc;--cast-edge:#d3e0f3}
+#combat .spell-caster{border-color:var(--cast-tint);background:radial-gradient(circle at 92% 10%,color-mix(in srgb,var(--cast-tint) 30%,transparent),transparent 22rem),linear-gradient(125deg,#293640,#172631 62%,#101b25);box-shadow:inset 3px 0 var(--cast-edge),var(--shadow)}
+#combat .spell-caster .eyebrow,.caster-picker{color:var(--cast-edge)}
+#combat .spell-caster .caster-resource{border-color:var(--cast-tint);background:color-mix(in srgb,var(--cast-tint) 20%,#101923);color:#f2fbff}
+#combat .spell-caster .caster-picker select{border-color:var(--cast-tint)}
+#combat .spell-caster .caster-cast{background:linear-gradient(120deg,var(--cast-edge),#f5fcff);border-color:var(--cast-edge);color:#14222a}
+#combat .spell-caster .caster-preview{background:linear-gradient(125deg,color-mix(in srgb,var(--cast-tint) 18%,#19242c),#111b23)}
+
+/* Quatre destinations fixes sur téléphone ; sections secondaires juste au-dessus. */
+.mobile-nav,.mobile-subnav{display:none}
+@media(max-width:767px){
+  .nav{display:none}.mobile-nav{position:fixed;z-index:38;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;padding:6px max(7px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));background:#0d141deb;border-top:1px solid #6c8999;backdrop-filter:blur(18px)}
+  .mobile-nav button{min-height:48px;min-width:0;padding:5px 2px;border:1px solid transparent;border-radius:10px;background:transparent;color:#c4d8e0;font-size:.76rem;font-weight:800;line-height:1.13;cursor:pointer}
+  .mobile-nav button.active{color:#10202b;border-color:#d9f2f9;background:linear-gradient(130deg,#c2e4ef,#f6fdff)}
+  .mobile-subnav:not(:empty){display:flex;gap:6px;margin:0 0 10px}.mobile-subnav button{flex:1;min-height:42px;border:1px solid #6b8495;border-radius:10px;background:#1a2731;color:#c7dce4;font-weight:800}.mobile-subnav button.active{border-color:#acdce9;background:#304652;color:#f4fcff}
+  .journal,.journal.collapsed{bottom:calc(70px + env(safe-area-inset-bottom))}.journal.collapsed{min-width:0;width:88px;right:8px;grid-template-columns:34px 34px;gap:6px;padding:7px}.journal.collapsed b{display:none}.journal.collapsed .journal-actions{grid-column:1/-1;grid-row:1}
+  .app{padding-bottom:calc(170px + env(safe-area-inset-bottom))}
+}
