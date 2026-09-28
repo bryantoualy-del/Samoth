@@ -190,3 +190,6 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
 
 .social-heading{grid-column:1/-1}.social-heading h2{margin-bottom:2px}.social-tabs,.social-roll-modes{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.social-tabs button,.social-roll-modes button{flex:1;min-width:100px;min-height:42px}.social-tabs button.active,.social-roll-modes button.active{border-color:#a9daed;background:#173847;color:#eefbff}@media(max-width:500px){.social-tabs button{min-width:0;font-size:11px}.social-roll-modes button{min-width:0}}
 .signature-icon img{display:block;width:100%;height:100%;object-fit:cover;border-radius:16px}
+/* Emblème détouré, centré dans la zone d’identité. */
+.signature-icon{top:50%;bottom:auto;transform:translateY(-50%);display:grid;place-items:center}
+.signature-icon img{object-fit:contain;border-radius:0}
