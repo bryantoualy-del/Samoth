@@ -73,7 +73,7 @@ html{background:#080b10}body{background:radial-gradient(circle at 88% -8%,#18364
 .nav button[data-view="dragon"]{border-color:#4b849c;color:#9fe5f6}.nav button[data-view="dragon"].active{background:linear-gradient(130deg,#50bdd9,#b1f1f6);color:#08232f;box-shadow:0 0 18px #58cce044}.dragon-card{border-color:#4ab5d0;background:radial-gradient(circle at 90% 15%,#2aa4cc4d,transparent 17rem),linear-gradient(135deg,#153648,#111e2c);box-shadow:inset 3px 0 #75e2ef,var(--shadow)}.dragon-card h2{color:#d7f7fb}.dragon-card .eyebrow{color:#90dfeb}.dragon-brand{display:flex;justify-content:space-between;align-items:center;gap:14px}.dragon-brand>div:first-child{min-width:0}.dragon-logo{width:76px;height:76px;flex:none;filter:drop-shadow(0 0 12px #59c9e899)}.dragon-logo svg{width:100%;height:100%;display:block}.dragon-summon{border-color:#65c8dd;background:#123747;color:#c6f2fa}.dragon-summon:disabled{opacity:.38}
 #dragon .card:not(.dragon-card){border-color:#458098;background:linear-gradient(145deg,#17313f,#101b27)}#dragon .card:not(.dragon-card) h2{color:#b4e9f3}#dragon .primary{background:linear-gradient(125deg,#62beda,#b9eef5);color:#082530;border-color:#a8e9f3}
 #combat .card:nth-child(5){border-color:#9c876c;background:linear-gradient(135deg,#29251f,#14171b 62%);box-shadow:inset 3px 0 #c9ad7e,var(--shadow)}#combat .card:nth-child(5) h2,#combat .card:nth-child(5) .item b{color:#eadaba}#combat .card:nth-child(5) .item{border-color:#605345;background:#201d1b}
-#resources .card:first-child{border-color:#8e765c;background:linear-gradient(145deg,#26231e,#11171b)}#resources .card:first-child h2{color:#ebddc6}#resources .ability.react{border-color:#aa717d;background:#35232a;color:#f7dce5}
+[data-power-pane="resources"] .card:first-child{border-color:#8e765c;background:linear-gradient(145deg,#26231e,#11171b)}[data-power-pane="resources"] .card:first-child h2{color:#ebddc6}#resources .ability.react{border-color:#aa717d;background:#35232a;color:#f7dce5}
 @media(max-width:900px){.meta-strip{grid-template-columns:1fr}.meta-strip-head{display:flex;justify-content:space-between;align-items:center;gap:7px}.meta-strip-head small{max-width:52%;margin:0;text-align:right}}
 @media(max-width:767px){.meta-strip{padding:9px;gap:8px}.meta-strip-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.meta-chip{min-height:42px;padding:6px 8px}.meta-strip-head strong{font-size:1rem}.meta-strip-head small{font-size:.65rem}.dragon-logo{width:60px;height:60px}.dragon-brand{gap:6px}}
 /* Combat : un sort sélectionné, ses contraintes et le lancement à portée du pouce. */
@@ -102,7 +102,7 @@ body{background:radial-gradient(ellipse 42rem 30rem at 98% 0%,#d9faff16,transpar
 .spell-caster{background:radial-gradient(circle at 96% 0%,#adf0ff2b,transparent 18rem),linear-gradient(130deg,#2d3945,#1b2a36 66%,#14202a);border-color:#9bd5e6}
 .dragon-card{background:radial-gradient(circle at 90% 15%,#9fefff3b,transparent 17rem),linear-gradient(135deg,#254351,#152a37);border-color:#91dbea}
 #dragon .card:not(.dragon-card){background:linear-gradient(145deg,#213945,#152732);border-color:#6aafc1}
-.spell-slots,#resources .card:first-child{background:linear-gradient(135deg,#353231,#252a2c 58%,#1c252b);border-color:#a69a8d}
+.spell-slots,[data-power-pane="resources"] .card:first-child{background:linear-gradient(135deg,#353231,#252a2c 58%,#1c252b);border-color:#a69a8d}
 .nav button{background:#19222b;border-color:#566c7d}
 .nav button:not(.active):hover{background:#2a3c48}
 .nav button.active,.next{background:linear-gradient(125deg,#d5edf5,#f8feff 72%);border-color:#ebfaff;color:#14202a}
@@ -114,3 +114,16 @@ body{background:radial-gradient(ellipse 42rem 30rem at 98% 0%,#d9faff16,transpar
 .num,select,textarea,input:not(.num){background:#0d171e}
 .caster-picker select{background:#10232d}
 @media(max-width:767px){body{background-attachment:scroll}.identity{background:linear-gradient(130deg,transparent 0 68%,#daf8ff0e 68% 72%,transparent 72%),radial-gradient(circle at 90% 65%,#8fdef13a,transparent 9rem),linear-gradient(130deg,#252f3a,#151c27 75%,#10151d)}.nav{background:#0a1017ed}}
+
+/* Navigation à deux niveaux et filtres du grimoire. */
+.subnav{display:flex;gap:6px;width:fit-content;max-width:100%;margin:0 0 14px;padding:4px;border:1px solid #647a89;border-radius:13px;background:#111920}
+.subnav button{min-height:42px;padding:8px 17px;border:1px solid transparent;border-radius:9px;background:transparent;color:#c5d4dc;cursor:pointer;font-weight:800}
+.subnav button.active{background:linear-gradient(125deg,#d4ecf3,#f5fcff);border-color:#d6f2fa;color:#14222b;box-shadow:0 2px 10px #0006}
+.power-pane{display:none}.power-pane.active{display:block}
+.spell-legend{align-items:center;margin-bottom:2px}
+.spell-legend button{min-height:40px;padding:6px 11px;border:1px solid var(--role,#899eaa);border-radius:999px;background:#141e26;color:var(--role,#e5f0f5);font:800 .77rem ui-sans-serif,system-ui,sans-serif;cursor:pointer}
+.spell-legend button small{margin-left:4px;color:#b7cbd5;font-size:.7rem}
+.spell-legend button.active{background:color-mix(in srgb,var(--role,#d5e9ef) 23%,#111820);box-shadow:inset 0 0 0 1px var(--role,#d5e9ef),0 0 12px #a3dbeb24;color:#fff}
+.spell-legend button.active small{color:#eef8fc}.spell-legend button:disabled{opacity:.35;cursor:default}
+.spell-legend button:hover:not(:disabled),.spell-legend button:focus-visible{outline:2px solid var(--role,#d5e9ef);outline-offset:2px}
+@media(max-width:767px){.subnav{width:100%}.subnav button{flex:1;min-width:0;padding:8px 9px}.spell-legend{gap:6px}.spell-legend button{min-height:40px}}
