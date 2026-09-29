@@ -320,3 +320,9 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
  .staff-spells{grid-template-columns:1fr 1fr}.staff-spell{min-height:92px;padding:10px}.staff-spell small{font-size:.72rem}
 }
 @media(prefers-reduced-motion:reduce){.staff-combat:before{animation:none}.samoth-fx{display:none!important}}
+
+
+/* 6.1 — Bâton intégré au lanceur de sorts */
+.staff-source-toggle{flex:1 1 100%;display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:9px 12px;border:1px solid #6fa9c1;border-radius:10px;background:linear-gradient(120deg,#17303d,#0d1b24);color:#eefaff!important;text-transform:none!important;letter-spacing:0!important}
+.staff-source-toggle span{display:flex;align-items:center;gap:8px}.staff-source-toggle input{width:19px!important;height:19px!important;min-height:0!important;accent-color:#9de4ff}.staff-source-toggle strong{color:#bfeeff;font-size:.78rem;white-space:nowrap}.staff-source-toggle.locked{border-style:dashed}.staff-source-toggle.locked input{opacity:.7}
+@media(max-width:500px){.staff-source-toggle{align-items:flex-start;flex-direction:column!important;gap:5px}.staff-source-toggle strong{padding-left:27px}}
