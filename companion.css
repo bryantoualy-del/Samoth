@@ -721,3 +721,64 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
 .rest-confirm .dialog-actions{grid-template-columns:1fr}
 .rest-confirm .dialog-actions .rest-yes{min-height:54px;background:linear-gradient(135deg,#174457,#23738c);border-color:#8edff1;color:#effcff;box-shadow:0 0 20px #63cfe72b}
 .rest-confirm .dialog-actions .cancel{grid-column:auto}
+
+
+/* 7.3 — FX signature : Flammes pures + Vortex de glace */
+.samoth-fx.flame{background:
+ radial-gradient(circle at 50% 52%,rgba(255,245,218,.16),rgba(244,181,99,.08) 24%,transparent 58%),
+ radial-gradient(circle at 50% 62%,rgba(255,184,84,.08),transparent 42%)}
+.samoth-fx.flame:before{background:radial-gradient(circle at 50% 50%,rgba(255,255,244,.4),rgba(255,204,126,.18) 18%,transparent 48%)}
+.pure-flame{position:absolute;left:50%;top:50%;width:min(58vmin,540px);aspect-ratio:1;transform:translate(-50%,-50%);display:grid;place-items:center;filter:drop-shadow(0 0 24px #ffd7a8)}
+.pure-flame span{position:absolute;display:block}
+.pure-flame-sigil{width:72%;aspect-ratio:1;border:1px solid rgba(255,233,193,.72);border-radius:50%;box-shadow:0 0 28px rgba(255,196,116,.22),inset 0 0 22px rgba(255,235,198,.08)}
+.pure-flame-sigil:before,.pure-flame-sigil:after{content:'';position:absolute;inset:13%;border:1px solid rgba(255,222,170,.45);transform:rotate(45deg)}
+.pure-flame-sigil:after{transform:rotate(0deg);border-radius:50%;border-style:dashed}
+.pure-flame-core{width:20%;height:34%;bottom:31%;border-radius:52% 48% 62% 38%/68% 55% 45% 32%;background:linear-gradient(180deg,#fffdf1 0,#ffe3ac 34%,#ffb55e 68%,rgba(255,125,58,.18));box-shadow:0 0 18px #fff6df,0 0 42px #ffb15f;clip-path:polygon(50% 0,66% 29%,88% 50%,75% 77%,51% 100%,30% 78%,14% 52%,36% 29%)}
+.pure-flame-crown{width:54%;height:38%;bottom:26%;background:
+ radial-gradient(ellipse at 20% 70%,rgba(255,230,184,.9) 0 3%,transparent 4%),
+ radial-gradient(ellipse at 38% 48%,rgba(255,206,134,.82) 0 3%,transparent 4%),
+ radial-gradient(ellipse at 62% 52%,rgba(255,235,192,.86) 0 3%,transparent 4%),
+ radial-gradient(ellipse at 80% 70%,rgba(255,190,104,.85) 0 3%,transparent 4%);
+ filter:blur(.2px)}
+.pure-flame-ring{width:18%;aspect-ratio:1;border:3px solid #fff0cf;border-radius:50%;box-shadow:0 0 18px #ffd7a0,0 0 46px #ffae55;opacity:0}
+.samoth-fx.flame.play .pure-flame-sigil{animation:pureSigil 2.15s cubic-bezier(.18,.72,.2,1) both}
+.samoth-fx.flame.play .pure-flame-core{animation:pureCore 2.0s ease-out both}
+.samoth-fx.flame.play .pure-flame-crown{animation:pureCrown 1.8s .12s ease-out both}
+.samoth-fx.flame.play .pure-flame-ring{animation:pureRing 1.45s .35s cubic-bezier(.12,.72,.18,1) both}
+.samoth-fx.flame i{background:linear-gradient(180deg,#fff9e8,#ffd49d 52%,#e68d4d)!important;filter:drop-shadow(0 0 5px #ffd89f)!important}
+.samoth-fx.flame.play i{animation-name:pureEmber!important;animation-duration:1.75s!important}
+
+.samoth-fx.vortex{background:
+ radial-gradient(ellipse 72vmin 52vmin at 50% 56%,rgba(180,240,255,.17),rgba(70,143,176,.09) 42%,transparent 74%),
+ linear-gradient(180deg,rgba(2,7,12,.16),rgba(4,12,18,.38))}
+.vortex-tornado{position:absolute;left:50%;top:54%;width:min(58vmin,560px);height:min(72vmin,680px);transform:translate(-50%,-50%);display:grid;place-items:center;perspective:900px}
+.vortex-tornado span{position:absolute;display:block}
+.vortex-cone{width:68%;height:76%;clip-path:polygon(35% 0,65% 0,88% 77%,62% 100%,38% 100%,12% 77%);background:
+ repeating-conic-gradient(from 0deg at 50% 50%,rgba(220,249,255,.0) 0 9deg,rgba(181,236,250,.22) 11deg 17deg,transparent 18deg 33deg),
+ radial-gradient(ellipse at 50% 18%,rgba(232,252,255,.48),rgba(124,211,236,.12) 38%,transparent 70%);
+ filter:blur(.4px) drop-shadow(0 0 22px #9eeaff);opacity:0}
+.vortex-core{width:18%;height:54%;border-radius:50%;background:linear-gradient(180deg,rgba(235,253,255,.0),rgba(219,250,255,.82) 46%,rgba(124,219,244,.24));filter:blur(7px);box-shadow:0 0 42px #b8f2ff;opacity:0}
+.vortex-freeze-ring{width:16%;aspect-ratio:1;border:3px solid rgba(237,254,255,.96);border-radius:50%;box-shadow:0 0 0 10px rgba(166,233,250,.15),0 0 40px #bcefff;opacity:0}
+.vortex-frost-floor{bottom:2%;width:86%;height:18%;border-radius:50%;background:
+ radial-gradient(ellipse,rgba(239,254,255,.76) 0 6%,rgba(146,221,241,.3) 28%,rgba(73,151,181,.13) 52%,transparent 72%);
+ filter:blur(1px);opacity:0}
+.samoth-fx.vortex .frost-form{width:min(44vmin,430px)!important;height:min(44vmin,430px)!important;border-width:1px!important;background:repeating-conic-gradient(from 20deg,rgba(231,251,255,.52) 0 5deg,transparent 6deg 23deg)!important;box-shadow:0 0 60px #8fe7ff66,inset 0 0 45px #c9f7ff44!important}
+.samoth-fx.vortex.play .vortex-cone{animation:vortexTornado 2.55s cubic-bezier(.12,.75,.2,1) both}
+.samoth-fx.vortex.play .vortex-core{animation:vortexCore 2.45s ease-out both}
+.samoth-fx.vortex.play .vortex-freeze-ring{animation:vortexFreeze 1.18s 1.22s cubic-bezier(.08,.78,.2,1) both}
+.samoth-fx.vortex.play .vortex-frost-floor{animation:vortexFloor 1.5s .95s ease-out both}
+.samoth-fx.vortex.play .frost-form{animation:vortexDisc 2.6s ease-out both!important}
+.samoth-fx.vortex.play i{animation-name:vortexShard!important;animation-duration:2.15s!important}
+
+@keyframes pureSigil{0%{opacity:0;transform:scale(.58) rotate(-24deg)}20%{opacity:.86}62%{opacity:.7;transform:scale(1.03) rotate(42deg)}100%{opacity:0;transform:scale(1.14) rotate(68deg)}}
+@keyframes pureCore{0%{opacity:0;transform:translateY(16%) scale(.5)}22%{opacity:1}58%{opacity:1;transform:translateY(-3%) scale(1.12)}100%{opacity:0;transform:translateY(-18%) scale(.9)}}
+@keyframes pureCrown{0%{opacity:0;transform:scale(.5)}35%{opacity:.95}100%{opacity:0;transform:scale(1.45)}}
+@keyframes pureRing{0%{opacity:0;transform:scale(.35)}20%{opacity:1}100%{opacity:0;transform:scale(5.3)}}
+@keyframes pureEmber{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y) - 90px)) scale(.9) rotate(340deg)}}
+
+@keyframes vortexTornado{0%{opacity:0;transform:scale(.28) rotate(-75deg) translateY(8%)}18%{opacity:.72}45%{opacity:1;transform:scale(.82) rotate(110deg) translateY(0)}72%{opacity:.96;transform:scale(1.04) rotate(265deg)}100%{opacity:0;transform:scale(1.12) rotate(420deg) translateY(-5%)}}
+@keyframes vortexCore{0%{opacity:0;transform:scaleY(.25)}22%{opacity:.75}62%{opacity:1;transform:scaleY(1.08)}100%{opacity:0;transform:scaleY(.82)}}
+@keyframes vortexFreeze{0%{opacity:0;transform:scale(.18)}18%{opacity:1}55%{opacity:.95;transform:scale(2.6)}100%{opacity:0;transform:scale(5.2)}}
+@keyframes vortexFloor{0%{opacity:0;transform:scale(.35)}32%{opacity:.95}72%{opacity:.78;transform:scale(1.08)}100%{opacity:0;transform:scale(1.22)}}
+@keyframes vortexDisc{0%{opacity:0;transform:scale(.12) rotate(-80deg)}22%{opacity:.7}72%{opacity:.82;transform:scale(1.05) rotate(260deg)}100%{opacity:0;transform:scale(1.22) rotate(390deg)}}
+@keyframes vortexShard{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(0)}16%{opacity:1}52%{transform:translate(calc(-50% + var(--x)*.42),calc(-50% + var(--y)*.42)) scale(.75) rotate(220deg)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.18) rotate(520deg)}}
