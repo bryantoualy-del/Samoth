@@ -376,3 +376,252 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
 /* 6.2.2 — ajustement fin du sélecteur d'emplacement */
 .compact-cast-fields .compact-field.cast-choice{width:172px}
 @media(max-width:700px){.compact-cast-fields .compact-field.cast-choice{width:100%}}
+
+
+/* =========================================================
+   7.0 — SAMOTH BLACK ICE / ARGENT SPECTRAL
+   Refonte premium : contraste, matière, navigation, combat.
+   ========================================================= */
+:root{
+ --bg:#070a0f;--panel:#0e131a;--panel2:#121a23;--ink:#f4f7fa;--muted:#8d99a7;
+ --gold:#8fe7ff;--gold2:#47798c;--green:#7fd7c6;--foam:#dce9f0;--red:#d98595;
+ --blue:#79d9ff;--violet:#aaa6e8;--line:#27313d;--shadow:0 18px 48px #000a;--r:15px;
+ --ice:#8fe7ff;--ice2:#d9f8ff;--steel:#aab8c6;--void:#070a0f;--glass:#111923e8;
+}
+html{background:#070a0f}
+body{
+ color:var(--ink);
+ background:
+ radial-gradient(900px 420px at 82% -8%,rgba(92,193,231,.11),transparent 67%),
+ radial-gradient(620px 360px at 10% 3%,rgba(170,166,232,.065),transparent 70%),
+ linear-gradient(145deg,#06090d 0,#0a0f16 48%,#070b11 100%);
+}
+body:before{
+ content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.34;
+ background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+ background-size:48px 48px;mask-image:linear-gradient(to bottom,#0008,transparent 78%);
+}
+.app{max-width:1500px;padding-top:12px}
+
+/* Matière générale — moins de bleu plat, plus de verre noir / acier */
+.identity,.vitals,.turnbar,.card,.meta-strip{
+ background:linear-gradient(145deg,rgba(18,25,34,.96),rgba(8,12,18,.985));
+ border:1px solid #26313d;box-shadow:0 15px 44px #0008,inset 0 1px rgba(255,255,255,.025);
+}
+.card{position:relative;overflow:hidden}
+.card:before{
+ content:'';position:absolute;left:0;top:16px;bottom:16px;width:2px;border-radius:3px;
+ background:linear-gradient(180deg,transparent,var(--card-accent,#4f6677),transparent);opacity:.75;
+}
+.card h2{color:#eaf7fb;letter-spacing:-.01em}.card h3{color:#edf4f8}
+.meta{color:#95a2af}
+
+/* Identité — plus sobre, plus noble */
+.identity{padding:18px 112px 18px 19px;border-color:#2d3a46}
+.identity:after{content:'';position:absolute;right:-45px;top:-70px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#8fe7ff1b,transparent 64%);filter:blur(4px)}
+.identity .eyebrow{color:#8fe7ff;letter-spacing:.19em;font-weight:850}
+.identity h1{color:#f7fbfd;text-shadow:0 0 28px rgba(143,231,255,.09)}
+.identity p{color:#9ca8b5}
+.signature-icon{filter:drop-shadow(0 0 18px rgba(110,211,247,.22))}
+
+/* Vitals — cellules fines, sombres, sans look "tableau bleu" */
+.vitals{gap:7px;border-color:#283440}
+.stat{
+ background:linear-gradient(155deg,#0b1016,#0d141c);border:1px solid #222c36;border-radius:11px;
+ box-shadow:inset 0 1px rgba(255,255,255,.02);
+}
+.stat b{color:#f2f7fa}.stat small{color:#7f8c99;font-weight:800}
+.hpstat{background:linear-gradient(145deg,#101821,#0b1016)}
+.num{background:#070b10;border-color:#303b46;color:#fff}
+.mini{background:#111820;border-color:#303b46}.mini:hover{border-color:#78dfff;background:#15222c}
+
+/* Turnbar — effet cockpit métal noir */
+.turnbar{
+ z-index:44;border-color:#303b47;background:rgba(8,12,17,.92);box-shadow:0 12px 36px #000b,inset 0 1px #ffffff0a;
+ backdrop-filter:blur(18px) saturate(120%);
+}
+.round,.economy,.damage-turn,.turn-conc{
+ background:#0c1218!important;border:1px solid #28333e!important;border-radius:10px!important;
+}
+.economy{transition:.18s ease}.economy:hover{border-color:#6fcfea!important;background:#101c24!important}
+.economy.used{opacity:.34;filter:saturate(.35)}
+.damage-turn{border-color:#4c2b34!important;background:linear-gradient(145deg,#1a1015,#0d1015)!important}
+.damage-turn b{color:#e7a0ad}
+.next{background:linear-gradient(135deg,#b9eefb,#68cbe9);color:#071018;box-shadow:0 0 24px rgba(111,216,246,.18)}
+.next:hover{filter:brightness(1.08);box-shadow:0 0 30px rgba(111,216,246,.28)}
+.restquick{background:#0d141a;border-color:#34404b;color:#c6d0d8}.restquick:hover{border-color:#788a9a}
+
+/* Navigation desktop — inspiration Brack, mais signature Samoth */
+.nav{
+ gap:5px;padding:5px;margin-bottom:13px;border:1px solid #252f39;border-radius:14px;
+ background:rgba(9,13,18,.88);box-shadow:0 12px 30px #0007;backdrop-filter:blur(16px)
+}
+.nav button{
+ flex:1 0 auto;min-height:42px;padding:8px 12px;border-radius:10px;border:1px solid transparent;
+ background:transparent;color:#8f9daa;font-weight:800;letter-spacing:.01em;transition:.18s ease
+}
+.nav button:hover{color:#dce7ed;border-color:#34424d;background:#111923}
+.nav button.active{
+ color:#071016;background:linear-gradient(135deg,#dff9ff,#7ad8f2 78%);border-color:#bdecf8;
+ box-shadow:0 7px 20px rgba(91,200,234,.22),inset 0 1px #fff
+}
+.subnav,.mobile-subnav{
+ padding:4px;border:1px solid #26313b;border-radius:12px;background:#0b1016d9
+}
+.subnav button,.mobile-subnav button{border-radius:8px!important;background:transparent!important;border-color:transparent!important;color:#8d9ba8!important}
+.subnav button.active,.mobile-subnav button.active{background:#17232d!important;border-color:#3c5565!important;color:#dff8ff!important;box-shadow:inset 2px 0 #8fe7ff}
+
+/* Cartes premium — profondeur, liseré par rôle */
+.spell-caster{--card-accent:#8fe7ff;border-color:#35505e;background:
+ radial-gradient(circle at 92% 0,#78ddff14,transparent 22rem),
+ linear-gradient(145deg,#111a23,#090e14 72%)}
+.caster-head .eyebrow{color:#6ecbe8}.caster-head h2{font-size:1.25rem;color:#f3fbfd}
+.caster-resource{background:#0a1118;border-color:#385262;color:#a9e9fa;box-shadow:inset 0 0 14px #64cdf00a}
+.caster-picker{color:#8596a4}
+.caster-picker select,.compact-cast-fields input,.compact-cast-fields select{
+ background:#070c11;border-color:#34424d;color:#eef7fa;border-radius:9px
+}
+.caster-picker select:focus,.compact-cast-fields input:focus,.compact-cast-fields select:focus{border-color:#7adcf6;box-shadow:0 0 0 2px #72d7f326;outline:0}
+.caster-preview{
+ border-color:#2f3f4b!important;border-left-color:var(--role,#8fe7ff)!important;
+ background:linear-gradient(135deg,#111923,#0a1016);box-shadow:inset 0 1px #ffffff08
+}
+.caster-preview h3{color:#f1f7fa!important}.caster-preview p{color:#93a2ae}
+.caster-facts span{color:#aab8c3}
+.staff-source-toggle{
+ background:linear-gradient(120deg,#101b24,#0a1118)!important;border-color:#426474!important;
+ box-shadow:inset 2px 0 #77d9f0!important
+}
+.staff-source-toggle strong{color:#a8ebfb!important}
+.primary{
+ border-color:#4b9bb6;background:linear-gradient(135deg,#123848,#1c637b 58%,#2f93ae);color:#effcff;
+ box-shadow:inset 0 1px #ffffff22,0 8px 20px #0007;transition:.17s ease
+}
+.primary:hover:not(:disabled){transform:translateY(-1px);border-color:#b7effb;box-shadow:0 0 25px #64d6f22d,0 9px 24px #0008}
+.toggle{background:#0b1117;border-color:#2d3944;color:#9aa8b3}
+.toggle.on{background:#122c35;border-color:#67cde8;box-shadow:inset 2px 0 #8fe7ff,0 0 16px #62cee817;color:#e7faff}
+.flame-ribbon{
+ background:linear-gradient(105deg,#2b1d1d,#15141a 62%,#0d141a);border-color:#74544d;box-shadow:inset 2px 0 #c79072,0 8px 24px #0006
+}
+.flame-ribbon.armed{border-color:#ddb086;box-shadow:inset 3px 0 #f2c59a,0 0 22px #d8915b33}
+
+/* Métamagie : bande de préparation plus haut de gamme */
+.meta-strip{border-color:#2b3642;background:linear-gradient(145deg,#0f151d,#090d13)}
+.meta-strip-head strong{color:#dce6ec}.meta-strip-head small{color:#82909d}
+.meta-chip{
+ background:#0c1117!important;border-color:#2b3540!important;color:#9ba8b4!important;
+ box-shadow:none!important;transition:.17s ease!important
+}
+.meta-chip:hover:not(:disabled){border-color:#566878!important;color:#e5eef3!important}
+.meta-chip.selected{
+ color:#eafaff!important;border-color:#7cdcf4!important;background:linear-gradient(135deg,#142832,#10202a)!important;
+ box-shadow:inset 2px 0 #8fe7ff,0 0 18px #5ed2ef18!important
+}
+.meta-chip small{color:#6fcfe9!important}
+
+/* Sorts : moins "cellules", plus cartes de grimoire sombre */
+.spell-section{background:linear-gradient(145deg,#0f151c,#090d12);border-color:#26313b}
+.spell{
+ border:1px solid #27323c;border-left:2px solid var(--role,#647887);border-radius:11px;
+ background:linear-gradient(145deg,#10161e,#090e13);box-shadow:0 8px 22px #0005;
+ transition:.18s ease
+}
+.spell:hover{transform:translateY(-1px);border-color:#3d4e5d;box-shadow:0 12px 30px #0007}
+.spell h3{color:#eef4f7!important}.spell .eyebrow{opacity:.82}
+.spell-doc{border-top-color:#222d37}.spell-doc summary{color:#b3c4cf}
+.spell-doc-source{color:#78d9f3}
+.role-froid{--role:#7bddf8}.role-defense{--role:#ca9cad}.role-soutien{--role:#9f9be0}.role-controle{--role:#c9ab7b}.role-soin{--role:#76c5a6}.role-invocation{--role:#d7f8ff}.role-arcane{--role:#a7b6c8}
+
+/* Ressources et autres cellules */
+.resource-line,.item,.elixir-vial,.v3-card{
+ background:#0a1016!important;border-color:#26313b!important
+}
+.dot{border-color:#49606d;background:#0a0f14}.dot.on{background:#91e5f8;box-shadow:0 0 11px #6bd8f270}
+.ability{background:#0d141b;border-color:#2e3a45}.ability:hover{border-color:#5c7585;background:#111b23}
+
+/* Dialogues et feedback */
+dialog{background:linear-gradient(145deg,#101821,#080c12)!important;border-color:#40505d!important;box-shadow:0 30px 90px #000d!important}
+#result{border-color:#4c6d7c!important;background:linear-gradient(135deg,#10202a,#0a1117)!important;box-shadow:0 12px 34px #000a,0 0 24px #6cd8f018!important}
+
+/* Mobile — dock principal façon Brack, premium et stable */
+@media(max-width:700px){
+ .app{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+ .nav{display:none!important}
+ .mobile-nav{
+   display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:3px!important;
+   position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:90!important;
+   margin:0!important;padding:6px 7px max(7px,env(safe-area-inset-bottom))!important;
+   background:rgba(7,10,15,.94)!important;border-top:1px solid #2b3641!important;
+   backdrop-filter:blur(18px) saturate(130%)!important;box-shadow:0 -10px 30px #0008!important
+ }
+ .mobile-nav button{
+   min-height:54px!important;border:1px solid transparent!important;border-radius:10px!important;
+   background:transparent!important;color:#8493a0!important;font-size:.76rem!important;font-weight:800!important;line-height:1.08!important
+ }
+ .mobile-nav button.active{
+   color:#e9faff!important;border-color:#3b5665!important;background:linear-gradient(145deg,#14232c,#0e171e)!important;
+   box-shadow:inset 0 2px #7fe0f7,0 0 20px #5bd2ee16!important
+ }
+ .turnbar{top:4px;border-radius:12px}
+ .card{border-radius:13px}
+}
+@media(max-width:430px){
+ .identity{padding-right:86px}.identity h1{font-size:2rem}
+ .vitals{gap:5px}.stat{padding:8px}
+}
+
+/* ================= FX CINÉMATIQUES ================= */
+.samoth-fx{
+ position:fixed!important;inset:0!important;z-index:9999!important;pointer-events:none!important;overflow:hidden!important;
+ background:transparent;isolation:isolate
+}
+.samoth-fx:before{
+ content:'';position:absolute;inset:0;opacity:0;background:
+ radial-gradient(circle at 50% 50%,rgba(220,250,255,.22),rgba(52,145,179,.12) 23%,transparent 56%);
+ mix-blend-mode:screen
+}
+.samoth-fx.play:before{animation:premiumIceFlash 1.7s ease-out both}
+.samoth-fx:after{
+ content:'';position:absolute;inset:-8%;opacity:0;
+ background:radial-gradient(ellipse at center,transparent 34%,rgba(4,9,14,.38) 72%,rgba(2,5,8,.82));
+}
+.samoth-fx.play:after{animation:fxVignette 1.7s ease-out both}
+.fx-rune,.fx-shockwave,.fx-mist{position:absolute;left:50%;top:50%;pointer-events:none}
+.fx-rune{
+ width:min(66vmin,650px);aspect-ratio:1;border:1px solid rgba(205,247,255,.65);border-radius:50%;
+ transform:translate(-50%,-50%);opacity:0;box-shadow:0 0 28px rgba(124,223,248,.27),inset 0 0 22px rgba(124,223,248,.12)
+}
+.fx-rune:before,.fx-rune:after{
+ content:'';position:absolute;inset:8%;border:1px dashed rgba(179,238,251,.45);border-radius:50%
+}
+.fx-rune:after{inset:21%;border-style:solid;opacity:.55}
+.samoth-fx.play .fx-rune{animation:runeCharge 1.65s cubic-bezier(.2,.8,.2,1) both}
+.fx-shockwave{
+ width:9vmin;aspect-ratio:1;border-radius:50%;border:3px solid rgba(229,252,255,.95);
+ transform:translate(-50%,-50%);opacity:0;box-shadow:0 0 32px #b8efff
+}
+.samoth-fx.play .fx-shockwave{animation:iceShockwave 1.22s .16s cubic-bezier(.1,.7,.2,1) both}
+.fx-mist{
+ width:125vw;height:44vh;border-radius:50%;transform:translate(-50%,-20%);opacity:0;filter:blur(34px);
+ background:radial-gradient(ellipse,rgba(205,243,251,.32),rgba(83,156,183,.16) 38%,transparent 72%)
+}
+.samoth-fx.play .fx-mist{animation:groundMist 1.9s ease-out both}
+.samoth-fx i{
+ background:linear-gradient(180deg,#f5feff,#83d8ef 55%,#4b8da8)!important;
+ filter:drop-shadow(0 0 5px #a6ecff);opacity:0
+}
+.samoth-fx.play i{animation:premiumShard 1.55s var(--delay) cubic-bezier(.08,.72,.15,1) both}
+.samoth-fx.vortex .frost-form{box-shadow:0 0 48px #7adff49c,inset 0 0 42px #b7efff55!important}
+.samoth-fx.cone .frost-form{filter:drop-shadow(0 0 26px #abecff)!important}
+.samoth-fx.storm .frost-form{filter:drop-shadow(0 18px 30px #000) drop-shadow(0 0 30px #91e5fa)!important}
+.samoth-fx.wall .frost-form{filter:drop-shadow(0 24px 35px #000b) drop-shadow(0 0 38px #8ce3f8)!important}
+.samoth-fx.summon .fx-rune{width:min(78vmin,780px);border-width:2px;box-shadow:0 0 70px #82dff477,inset 0 0 60px #bcefff2d}
+.samoth-fx.summon .fx-shockwave{animation-duration:2s}
+.frost-dragon svg{filter:drop-shadow(0 0 28px #bff3ff) drop-shadow(0 0 70px #5bc9e455)!important}
+.dragon-summon-label{font-size:clamp(.75rem,1.8vw,1.08rem)!important;letter-spacing:.28em!important;text-shadow:0 0 22px #a9edff!important}
+@keyframes premiumIceFlash{0%{opacity:0}8%{opacity:.18}20%{opacity:.68}42%{opacity:.18}100%{opacity:0}}
+@keyframes fxVignette{0%{opacity:0}16%{opacity:.72}70%{opacity:.36}100%{opacity:0}}
+@keyframes runeCharge{0%{opacity:0;transform:translate(-50%,-50%) scale(.58) rotate(-38deg)}25%{opacity:.88}68%{opacity:.52;transform:translate(-50%,-50%) scale(1.03) rotate(72deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.17) rotate(112deg)}}
+@keyframes iceShockwave{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(12)}}
+@keyframes groundMist{0%{opacity:0;transform:translate(-50%,10%) scale(.7)}28%{opacity:.58}100%{opacity:0;transform:translate(-50%,-48%) scale(1.15)}}
+@keyframes premiumShard{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(0)}18%{opacity:1}78%{opacity:.92}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.2) rotate(420deg)}}
