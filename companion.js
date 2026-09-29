@@ -56,13 +56,16 @@ function effect(kind,level=0){
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const stage=document.querySelector('#samothFx');if(!stage)return;
  const summon=kind==='summon',major=summon||kind==='crit'||level>=5,scale=Math.max(1,Math.min(2.25,1+level*.24));
- const palette=kind==='meta'?'#d3b6ef':kind==='flame'?'#ffc98f':'#b6eaff';
+ const palette=kind==='meta'?'#b7b2ff':kind==='flame'?'#ffd0a3':'#9feaff';
  stage.className='samoth-fx '+kind;stage.replaceChildren();stage.style.setProperty('--glow',palette);stage.style.setProperty('--scale',scale);
+ const rune=document.createElement('div');rune.className='fx-rune';stage.append(rune);
+ const shock=document.createElement('div');shock.className='fx-shockwave';stage.append(shock);
+ const mist=document.createElement('div');mist.className='fx-mist';stage.append(mist);
  if(summon){const dragon=document.createElement('div');dragon.className='frost-dragon';dragon.innerHTML='<svg viewBox="0 0 900 620" aria-hidden="true"><path class="dragon-wing left" d="M427 319 Q292 68 31 124 Q164 178 159 290 Q241 258 345 359Z"/><path class="dragon-wing right" d="M473 319 Q608 68 869 124 Q736 178 741 290 Q659 258 555 359Z"/><path class="dragon-body" d="M430 272 Q356 295 365 398 Q392 490 450 580 Q508 490 535 398 Q544 295 470 272 L520 158 L486 184 L450 56 L414 184 L380 158Z"/><path class="dragon-head" d="M406 266 L372 218 L414 231 L450 188 L486 231 L528 218 L494 266 L500 330 L464 310 L450 360 L436 310 L400 330Z"/><path class="dragon-ridge" d="M450 75 L450 580 M370 220 Q450 270 530 220"/></svg><span class="dragon-summon-label">ESPRIT DRACONIQUE · ARGENT</span>';stage.append(dragon)}
  if(['vortex','storm','cone','hands','fog','wall','rayon','frostbite','breath','cold','crit'].includes(kind)){const form=document.createElement('div');form.className='frost-form';stage.append(form)}
- const count=summon?68:Math.round((major?32:10)+level*6);
+ const count=summon?96:Math.round((major?46:18)+level*8);
  for(let i=0;i<count;i++){const shard=document.createElement('i');const angle=Math.random()*Math.PI*2,span=(major?330:145)*scale*(.45+Math.random());shard.style.setProperty('--x',Math.cos(angle)*span+'px');shard.style.setProperty('--y',Math.sin(angle)*span+'px');shard.style.setProperty('--delay',(Math.random()*(summon?.62:.28))+'s');shard.style.setProperty('--size',(3+Math.random()*10*scale)+'px');stage.append(shard)}
- stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');clearTimeout(effect.timer);effect.timer=setTimeout(()=>{stage.classList.remove('play');stage.replaceChildren()},summon?3400:major?1900:1250);
+ stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');clearTimeout(effect.timer);effect.timer=setTimeout(()=>{stage.classList.remove('play');stage.replaceChildren()},summon?3900:major?2300:1750);
 }
 function commit(before,title,detail,kind='action',visual=null){let snapshot=clone(before);snapshot.undo=null;state.undo=snapshot;state.history.unshift({at:new Date().toISOString(),round:state.round,actor:state.phase,title,detail,kind});state.history=state.history.slice(0,150);persist();render();message(`${title}\n${detail}`);if(visual)effect(visual.kind,visual.level);else if(['crit','summon','flame'].includes(kind))effect(kind);else if(/Dragon · Souffle|Souffle du dragon/i.test(title))effect('breath');else if(/Dragon · Déchirement/.test(title))effect('dragon');else if(/froid|givre|grêle|glace/i.test(title+' '+detail))effect('cold');else if(/métamagie|sorcellerie/i.test(title))effect('meta')}
 function transaction(title,fn){const before=clone(state),result=fn();if(result===false)return false;commit(before,title,typeof result==='string'?result:'');return true}
