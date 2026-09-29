@@ -863,3 +863,201 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
 @keyframes iceSelectPulse{0%{box-shadow:0 0 0 #8fe7ff00}30%{border-color:#8fe7ff;box-shadow:0 0 17px #79dbf34a,inset 0 0 12px #9be9ff12}100%{box-shadow:0 0 0 #8fe7ff00}}
 @keyframes iceSelectTrace{0%{opacity:0;transform:scaleX(.15)}32%{opacity:1}100%{opacity:0;transform:scaleX(1)}}
 @media(max-width:600px){.vortex-hand{left:14%}.vortex-impact{left:66%}.vortex-flight{left:16%}}
+
+
+/* 7.5 — VORTEX BANKAI : pression, faille verticale, lames de blizzard, gel terminal */
+/* Remplace entièrement l'ancienne lecture circulaire / roue. */
+.samoth-fx.vortex{
+  background:
+    radial-gradient(ellipse 72vmin 42vmin at 50% 56%,rgba(116,211,238,.12),transparent 60%),
+    linear-gradient(180deg,rgba(2,5,10,.28),rgba(1,7,12,.58));
+}
+.samoth-fx.vortex.play{
+  animation:bankaiScreenPressure 3.45s cubic-bezier(.16,.72,.2,1) both;
+}
+.samoth-fx.vortex .fx-rune,
+.samoth-fx.vortex .fx-shockwave{
+  display:none!important;
+}
+.bankai-vortex{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.bankai-vortex span{position:absolute;display:block;opacity:0}
+
+/* Pression spirituelle : le froid envahit l'écran avant la rupture. */
+.bankai-pressure{
+  inset:-8%;
+  background:
+    radial-gradient(ellipse at 50% 58%,rgba(212,248,255,.16),transparent 34%),
+    repeating-linear-gradient(96deg,transparent 0 31px,rgba(174,229,243,.035) 33px 34px,transparent 35px 67px);
+  filter:blur(1px);
+}
+.samoth-fx.vortex.play .bankai-pressure{animation:bankaiPressure 3.15s ease-out both}
+
+/* Faille centrale : verticale, tranchante, jamais circulaire. */
+.bankai-rift{
+  left:50%;top:8%;bottom:10%;width:5px;
+  transform:translateX(-50%) scaleY(.08);
+  transform-origin:center;
+  background:linear-gradient(180deg,transparent,#eafdff 18%,#9deaf8 52%,#f9ffff 78%,transparent);
+  box-shadow:0 0 8px #efffff,0 0 22px #9ce9f7,0 0 64px rgba(86,197,224,.5);
+}
+.samoth-fx.vortex.play .bankai-rift{animation:bankaiRift 2.35s .28s cubic-bezier(.12,.76,.18,1) both}
+
+/* Lames de blizzard : trois coupes obliques, irrégulières. */
+.bankai-blade{
+  left:50%;top:50%;width:min(76vw,840px);height:10px;
+  transform-origin:center;
+  background:linear-gradient(90deg,transparent 2%,rgba(219,250,255,.72) 24%,#fbffff 49%,rgba(155,225,242,.62) 74%,transparent 98%);
+  filter:drop-shadow(0 0 8px #bdefff) drop-shadow(0 0 18px rgba(87,201,228,.45));
+  clip-path:polygon(0 48%,15% 34%,32% 45%,50% 20%,68% 43%,84% 29%,100% 51%,84% 67%,67% 57%,49% 79%,31% 58%,14% 71%);
+}
+.blade-a{transform:translate(-50%,-50%) rotate(-13deg)}
+.blade-b{transform:translate(-50%,-50%) rotate(9deg)}
+.blade-c{transform:translate(-50%,-50%) rotate(32deg)}
+.samoth-fx.vortex.play .blade-a{animation:bankaiBladeA 1.22s .86s ease-out both}
+.samoth-fx.vortex.play .blade-b{animation:bankaiBladeB 1.18s 1.02s ease-out both}
+.samoth-fx.vortex.play .blade-c{animation:bankaiBladeC 1.1s 1.16s ease-out both}
+
+/* Colonne de blizzard : la faille explose vers le haut, pas de tornade ronde. */
+.bankai-pillar{
+  left:50%;top:52%;width:min(42vmin,420px);height:min(78vh,720px);
+  transform:translate(-50%,-50%) scale(.35,.08);
+  transform-origin:50% 72%;
+  clip-path:polygon(43% 100%,31% 77%,36% 64%,18% 50%,31% 39%,19% 23%,42% 28%,50% 0,58% 28%,81% 23%,69% 39%,82% 50%,64% 64%,69% 77%,57% 100%);
+  background:
+    linear-gradient(90deg,transparent,rgba(163,225,241,.12) 22%,rgba(239,253,255,.76) 49%,rgba(133,216,239,.14) 78%,transparent),
+    repeating-linear-gradient(101deg,transparent 0 13px,rgba(219,250,255,.22) 14px 16px,transparent 17px 29px);
+  filter:drop-shadow(0 0 15px #c8f5ff) drop-shadow(0 0 46px rgba(76,196,224,.38));
+}
+.samoth-fx.vortex.play .bankai-pillar{animation:bankaiPillar 1.68s 1.08s cubic-bezier(.08,.7,.18,1) both}
+
+/* Gel terminal irrégulier. */
+.bankai-freeze{
+  left:50%;top:76%;width:min(76vmin,760px);height:min(25vmin,240px);
+  transform:translate(-50%,-50%) scale(.18);
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse,rgba(248,255,255,.9) 0 4%,rgba(173,232,247,.4) 21%,rgba(84,177,207,.12) 49%,transparent 72%);
+  box-shadow:0 0 42px rgba(170,238,252,.35);
+}
+.samoth-fx.vortex.play .bankai-freeze{animation:bankaiFreeze 1.22s 1.88s ease-out both}
+
+.bankai-cracks{
+  left:50%;top:77%;width:min(84vmin,820px);height:min(22vmin,220px);
+  transform:translate(-50%,-50%) scale(.25);
+  background:
+    linear-gradient(77deg,transparent 47%,rgba(230,252,255,.68) 48% 49%,transparent 50%),
+    linear-gradient(102deg,transparent 45%,rgba(177,235,248,.5) 46% 47%,transparent 48%),
+    linear-gradient(121deg,transparent 52%,rgba(234,253,255,.55) 53% 54%,transparent 55%),
+    linear-gradient(58deg,transparent 51%,rgba(151,222,241,.48) 52% 53%,transparent 54%);
+  filter:drop-shadow(0 0 5px #c9f7ff);
+}
+.samoth-fx.vortex.play .bankai-cracks{animation:bankaiCracks 1.1s 2.02s ease-out both}
+
+.bankai-haze{
+  left:50%;bottom:4%;width:min(88vw,980px);height:24vh;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at 50% 70%,rgba(219,248,255,.22),rgba(109,198,221,.08) 36%,transparent 72%);
+  filter:blur(12px);
+}
+.samoth-fx.vortex.play .bankai-haze{animation:bankaiHaze 2.15s 1.42s ease-out both}
+
+/* Tiers : même Bankai, davantage de présence seulement. */
+.bankai-tier-1{--bankai-scale:.82;--bankai-bright:.78}
+.bankai-tier-2{--bankai-scale:1;--bankai-bright:.94}
+.bankai-tier-3{--bankai-scale:1.18;--bankai-bright:1}
+.bankai-tier-1 .blade-c{display:none}
+.bankai-tier-1 .bankai-cracks{opacity:.55}
+.bankai-tier-3 .bankai-rift{width:7px;box-shadow:0 0 11px #fff,0 0 32px #a4effd,0 0 90px rgba(82,201,229,.58)}
+.bankai-tier-3 .bankai-pillar{width:min(52vmin,520px);height:min(88vh,820px)}
+.bankai-tier-3 .bankai-freeze{width:min(94vmin,930px)}
+.bankai-tier-3 .bankai-haze{height:31vh}
+
+/* Flammes pures sur le Bankai : veines blanc-or dans la faille et les lames, pas d'overlay autonome. */
+.samoth-fx.vortex.pure-infused .bankai-rift{
+  background:linear-gradient(180deg,transparent,#fff9e8 17%,#c8f5ff 39%,#ffd99b 53%,#e8fcff 77%,transparent);
+  box-shadow:0 0 9px #fff8df,0 0 25px #ffd79d,0 0 62px rgba(105,214,238,.5);
+}
+.samoth-fx.vortex.pure-infused .bankai-blade{
+  background:linear-gradient(90deg,transparent 2%,rgba(207,246,255,.72) 20%,#fff7df 46%,#ffdba4 52%,rgba(171,235,249,.66) 76%,transparent 98%);
+}
+.samoth-fx.vortex.pure-infused .pure-thread{opacity:.38}
+.samoth-fx.vortex.pure-infused.play .pure-glint{animation-delay:1.84s}
+
+/* Les éclats accompagnent la pression et la rupture plutôt qu'une rotation. */
+.samoth-fx.vortex.play > i{
+  animation:bankaiShard 2.45s var(--delay,0s) cubic-bezier(.12,.74,.2,1) both!important;
+}
+
+@keyframes bankaiScreenPressure{
+  0%,100%{opacity:0}
+  8%{opacity:.72}
+  18%,78%{opacity:1}
+}
+@keyframes bankaiPressure{
+  0%{opacity:0;transform:scale(1.08);filter:blur(4px)}
+  22%{opacity:.62}
+  66%{opacity:.86;transform:scale(1)}
+  100%{opacity:0;transform:scale(.98)}
+}
+@keyframes bankaiRift{
+  0%{opacity:0;transform:translateX(-50%) scaleY(.04)}
+  18%{opacity:1}
+  54%{opacity:1;transform:translateX(-50%) scaleY(var(--bankai-scale,1))}
+  82%{opacity:.95}
+  100%{opacity:0;transform:translateX(-50%) scaleY(calc(var(--bankai-scale,1) * 1.08))}
+}
+@keyframes bankaiBladeA{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(-13deg) scaleX(.08)}
+  28%{opacity:var(--bankai-bright,.9)}
+  68%{opacity:1;transform:translate(-50%,-50%) rotate(-13deg) scaleX(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(-13deg) scaleX(1.18)}
+}
+@keyframes bankaiBladeB{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(9deg) scaleX(.1)}
+  30%{opacity:var(--bankai-bright,.9)}
+  70%{opacity:1;transform:translate(-50%,-50%) rotate(9deg) scaleX(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(9deg) scaleX(1.14)}
+}
+@keyframes bankaiBladeC{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(32deg) scaleX(.08)}
+  30%{opacity:.82}
+  70%{opacity:.95;transform:translate(-50%,-50%) rotate(32deg) scaleX(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(32deg) scaleX(1.1)}
+}
+@keyframes bankaiPillar{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.35,.06)}
+  22%{opacity:.86}
+  62%{opacity:var(--bankai-bright,.95);transform:translate(-50%,-50%) scale(var(--bankai-scale,1),1)}
+  100%{opacity:0;transform:translate(-50%,-56%) scale(calc(var(--bankai-scale,1) * 1.05),1.08)}
+}
+@keyframes bankaiFreeze{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.18)}
+  24%{opacity:1}
+  72%{opacity:.92;transform:translate(-50%,-50%) scale(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(calc(var(--bankai-scale,1) * 1.14))}
+}
+@keyframes bankaiCracks{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+  28%{opacity:.92}
+  78%{opacity:.78;transform:translate(-50%,-50%) scale(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(calc(var(--bankai-scale,1) * 1.08))}
+}
+@keyframes bankaiHaze{
+  0%{opacity:0;transform:translateX(-50%) scale(.5)}
+  38%{opacity:.58}
+  78%{opacity:.5;transform:translateX(-50%) scale(var(--bankai-scale,1))}
+  100%{opacity:0;transform:translateX(-50%) scale(1.14)}
+}
+@keyframes bankaiShard{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}
+  25%{opacity:.9;transform:translate(calc(-50% + var(--x)*.18),calc(-50% + var(--y)*.12)) scale(.6)}
+  62%{opacity:1;transform:translate(calc(-50% + var(--x)*.52),calc(-50% + var(--y)*.5)) scale(.9)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.15)}
+}
+@media(max-width:600px){
+  .bankai-blade{width:92vw}
+  .bankai-pillar{width:54vmin}
+  .bankai-tier-3 .bankai-pillar{width:64vmin}
+}
