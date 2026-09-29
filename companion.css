@@ -371,3 +371,8 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
 /* 6.2.1 — largeur légèrement augmentée pour l'emplacement de sort */
 .compact-cast-fields .compact-field.cast-choice{width:156px}
 @media(max-width:700px){.compact-cast-fields .compact-field.cast-choice{width:100%}}
+
+
+/* 6.2.2 — ajustement fin du sélecteur d'emplacement */
+.compact-cast-fields .compact-field.cast-choice{width:172px}
+@media(max-width:700px){.compact-cast-fields .compact-field.cast-choice{width:100%}}
