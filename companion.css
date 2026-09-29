@@ -656,3 +656,58 @@ dialog{background:linear-gradient(145deg,#101821,#080c12)!important;border-color
 #notesPreview{margin-top:9px;border:1px solid #28343e;border-radius:10px;background:#080d12;overflow:hidden}#notesPreview summary{padding:9px 11px;color:#a9bac4;font-weight:800;cursor:pointer}#notesPreview pre{margin:0;padding:11px;border-top:1px solid #24303a;white-space:pre-wrap;color:#c8d3da;font:13px/1.5 ui-sans-serif,system-ui}
 .journal-npc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.journal-npc-head h3{margin:0;color:#e6eff3}.journal-npc-head small{color:#788793}#npcBody{display:grid;gap:7px}.npc-row{border-color:#293640!important;background:#090f15!important;border-radius:11px!important}
 @media(max-width:800px){.journal-note-grid{grid-template-columns:1fr}.journal-premium-head{align-items:flex-start}.journal-tabs{width:100%}.journal-tabs button{flex:1}}@media(max-width:500px){.journal-toolbar{align-items:stretch;flex-direction:column}#journalSearch{width:100%;max-width:none;min-width:0}.journal-premium{padding:11px}.journal-entry-top{align-items:flex-start;flex-direction:column;gap:3px}}
+
+
+/* 7.2 — Combat premium : argent, glace noire, violet arcanique */
+#combat{position:relative}
+#combat:before{content:'';position:absolute;inset:-10px -8px auto;height:320px;pointer-events:none;z-index:-1;background:
+ radial-gradient(ellipse at 72% 0,rgba(156,129,220,.10),transparent 46%),
+ radial-gradient(ellipse at 22% 10%,rgba(112,215,244,.10),transparent 42%)}
+#combat[data-spell-role="froid"] .spell-caster{--combat-glow:#72daf5;--combat-secondary:#b9f3ff}
+#combat[data-spell-role="arcane"] .spell-caster{--combat-glow:#9e93e6;--combat-secondary:#c9c3ff}
+#combat[data-spell-role="defense"] .spell-caster{--combat-glow:#d093a7;--combat-secondary:#f2c4d1}
+#combat[data-spell-role="soutien"] .spell-caster{--combat-glow:#9e96df;--combat-secondary:#d5d0ff}
+#combat[data-spell-role="controle"] .spell-caster{--combat-glow:#c5a46e;--combat-secondary:#eed3a6}
+#combat[data-spell-role="soin"] .spell-caster{--combat-glow:#73c7a5;--combat-secondary:#bcead5}
+#combat[data-spell-role="invocation"] .spell-caster{--combat-glow:#d6f8ff;--combat-secondary:#8edcf3}
+.spell-caster{
+ border-color:color-mix(in srgb,var(--combat-glow,#72daf5) 38%,#2b3540)!important;
+ background:
+ radial-gradient(circle at 93% 0,color-mix(in srgb,var(--combat-glow,#72daf5) 13%,transparent),transparent 19rem),
+ radial-gradient(circle at 8% 110%,rgba(159,139,226,.06),transparent 18rem),
+ linear-gradient(145deg,#101720,#080d13 72%)!important;
+ box-shadow:0 18px 48px #000a,inset 0 1px #ffffff08,inset 3px 0 color-mix(in srgb,var(--combat-glow,#72daf5) 75%,transparent)!important
+}
+.spell-caster .caster-head h2{background:linear-gradient(90deg,#f7fbfd,var(--combat-secondary,#b9f3ff));-webkit-background-clip:text;background-clip:text;color:transparent}
+.caster-resource{border-color:color-mix(in srgb,var(--combat-glow,#72daf5) 46%,#263541)!important;color:var(--combat-secondary,#b9f3ff)!important}
+.caster-preview{border-left-color:var(--combat-glow,#72daf5)!important;box-shadow:inset 0 1px #ffffff08,0 0 28px color-mix(in srgb,var(--combat-glow,#72daf5) 8%,transparent)!important}
+.caster-cast{background:linear-gradient(135deg,#18242c,color-mix(in srgb,var(--combat-glow,#72daf5) 48%,#153646) 58%,color-mix(in srgb,var(--combat-glow,#72daf5) 70%,#183746))!important;border-color:color-mix(in srgb,var(--combat-glow,#72daf5) 78%,#46616e)!important}
+.meta-strip{border-color:#3c3555!important;background:linear-gradient(145deg,#12121b,#090d13 72%)!important;box-shadow:0 14px 38px #0008,inset 2px 0 #8172c755}
+.meta-strip-head strong{color:#e5e0ff!important}.meta-strip-head small{color:#948cad!important}
+.meta-chip.selected{border-color:#a89aeb!important;background:linear-gradient(135deg,#201c34,#151827)!important;box-shadow:inset 2px 0 #b9abff,0 0 22px #9484df22!important}
+.meta-chip.selected small{color:#c8bdff!important}
+#combat .turn-conc:not(.used){border-color:#66588b!important;box-shadow:inset 2px 0 #9e8de0!important}
+
+/* 7.2 — Sorcellerie & pouvoirs : formes plus organiques */
+.power-resource-grid{gap:14px}
+.sorcery-card,.metamagic-confirmed,.conversion-card,.power-card{border-radius:20px!important;overflow:hidden}
+.sorcery-card{background:
+ radial-gradient(circle at 7% 12%,rgba(130,215,240,.08),transparent 15rem),
+ linear-gradient(145deg,#101820,#090e14)!important}
+#resourcesBody{display:grid;gap:10px;margin-top:12px}
+.resource-flow{display:flex;align-items:center;gap:13px;padding:11px 13px;border:1px solid #303d48;border-radius:999px 18px 18px 999px;background:linear-gradient(105deg,#111c25,#0a1016 68%);box-shadow:inset 0 1px #ffffff08}
+.resource-orb{width:62px;height:62px;flex:none;border-radius:50%;display:grid;grid-template-columns:auto auto;place-content:center;gap:0 3px;text-align:center;border:1px solid #6bbed5;background:radial-gradient(circle at 35% 28%,#d9f9ff,#5db9d5 19%,#173747 54%,#080e14 77%);box-shadow:0 0 22px #61cce844,inset 0 0 18px #dffaff33}
+.resource-orb span{grid-column:1/-1;font-size:.57rem;letter-spacing:.12em;color:#dff9ff}.resource-orb strong{font-size:1.55rem;line-height:1;color:#fff}.resource-orb small{align-self:end;color:#b5deea;font-size:.65rem}
+.resource-flow-copy{display:grid;gap:2px;min-width:0;flex:1}.resource-flow-copy b{color:#edf7fa}.resource-flow-copy small{color:#8798a5}
+.resource-action{display:grid;gap:1px;min-width:120px;padding:8px 11px;border:1px solid #374854;border-radius:14px;background:#0b1218;color:#e7f2f6;text-align:left;cursor:pointer}.resource-action span,.resource-action small{font-size:.68rem;color:#82939f}.resource-action strong{font-size:1rem;color:#bfeefa}
+.resource-feature{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #514973;border-radius:14px 999px 999px 14px;background:linear-gradient(105deg,#171629,#0c1018);box-shadow:inset 2px 0 #9a8be0}
+.resource-feature-mark{font-size:1.2rem;color:#c3b9ff;text-shadow:0 0 12px #9b89e8}.resource-feature>div{display:grid;gap:1px;flex:1}.resource-feature b{color:#e8e3ff}.resource-feature small{color:#938da8}.resource-feature-state{padding:4px 8px;border:1px solid #635a8a;border-radius:999px;color:#c9c0ff;font-size:.66rem;font-weight:900;letter-spacing:.08em}
+.metamagic-confirmed{background:radial-gradient(circle at 90% 8%,#9e8de01a,transparent 15rem),linear-gradient(145deg,#141521,#0a0e14)!important;border-color:#3d3853!important}
+.metamagic-confirmed .eyebrow{color:#a99de9}.metamagic-confirmed p{color:#a7b0b9}.confirmed-feature{display:flex;align-items:center;gap:9px;margin-top:11px;padding:9px;border:1px solid #46405f;border-radius:14px;background:#0d1019}.confirmed-feature>span{color:#c6bcff;font-size:1.25rem}.confirmed-feature>div{display:grid;flex:1}.confirmed-feature small{color:#8f899f}.confirmed-feature .fixed{min-height:34px;padding:5px 9px;border-radius:999px!important;opacity:1!important;color:#cfc7ff!important;border-color:#62598b!important;background:#181529!important}
+.conversion-card{background:linear-gradient(145deg,#11161d,#090d12)!important}.conversion-card select{border-radius:12px!important;background:#080d12!important;border-color:#34414c!important}
+.power-card{background:radial-gradient(circle at 88% 0,#76d7f010,transparent 14rem),linear-gradient(145deg,#10171e,#090d13)!important}
+.power-stack{display:grid;gap:8px;margin-top:10px}.power-ribbon{display:flex;align-items:center;gap:10px;padding:9px 10px 9px 13px;border:1px solid #2c3944;border-radius:16px 999px 999px 16px;background:linear-gradient(105deg,#0d151c,#090e13);box-shadow:inset 2px 0 var(--ribbon,#6e8998)}
+.power-ribbon>div{display:grid;gap:1px;flex:1;min-width:0}.power-ribbon small{color:#768895;text-transform:uppercase;font-size:.6rem;letter-spacing:.08em}.power-ribbon b{color:#edf5f8}.power-ribbon span{color:#82919d;font-size:.72rem}.power-ribbon-action{flex:none;border:1px solid #354651;border-radius:999px;background:#101a21;color:#d9e8ee;padding:7px 10px;cursor:pointer;font-size:.72rem}
+.power-ribbon.staff{--ribbon:#75d8f1}.power-ribbon.wings{--ribbon:#a497e6}.power-ribbon.flame{--ribbon:#d49b72}.power-ribbon.heal{--ribbon:#79c6a6}
+.power-resist{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border:1px solid #365260;border-radius:999px;background:#0d1720;color:#dff7fd;cursor:pointer}.power-resist strong{padding:3px 7px;border-radius:999px;background:#162b35;color:#9fe8f9;font-size:.72rem}
+@media(max-width:600px){.resource-flow{border-radius:18px}.resource-action{min-width:0}.power-ribbon{border-radius:15px}.power-ribbon-action{padding:7px 9px}.resource-feature{border-radius:14px}}
