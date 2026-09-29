@@ -223,3 +223,5 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
 @keyframes dragonEmerge{0%{opacity:0;transform:translateY(75vh) scale(.15)}32%{opacity:.95;transform:translateY(12vh) scale(.75)}66%{opacity:1;transform:translateY(-7vh) scale(1.25)}85%{opacity:1;transform:translateY(-19vh) scale(1.58)}100%{opacity:0;transform:translateY(-40vh) scale(2.2)}}
 @keyframes wingUnfurl{0%{transform:scaleX(.05)}42%{transform:scaleX(.4)}70%,100%{transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){.samoth-fx,.frost-dragon{display:none!important}}
+
+@media(max-width:500px){.cast-fields .cast-choice{flex-basis:100%}}
