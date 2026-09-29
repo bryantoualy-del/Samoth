@@ -193,3 +193,33 @@ dialog.hit-confirm::backdrop{background:#03070bd9;backdrop-filter:blur(7px)}
 /* Emblème détouré, centré dans la zone d’identité. */
 .signature-icon{top:50%;bottom:auto;transform:translateY(-50%);display:grid;place-items:center}
 .signature-icon img{object-fit:contain;border-radius:0}
+
+/* Incantation sans étapes modales : tous les choix se font avant Résoudre. */
+.cast-setup{margin-top:11px;padding:11px 13px;border:1px solid color-mix(in srgb,var(--cast-tint,#9bd5e6) 62%,#283b49);border-radius:11px;background:linear-gradient(125deg,#101e28e8,#182b37b8);box-shadow:inset 0 1px #e7faff18}
+.cast-setup-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;color:#f0faff}.cast-setup-head b{font-family:Georgia,serif;font-size:1rem}.cast-setup-head small{color:#a8d7e7}
+.cast-fields{display:flex;gap:10px;flex-wrap:wrap;margin-top:9px}.cast-fields label{display:flex;flex:1 1 150px;flex-direction:column;gap:5px;min-width:0;color:#c5e6ef;font-size:.77rem;font-weight:750}.cast-fields input,.cast-fields select{width:100%;min-height:44px;border:1px solid #7898a9;border-radius:8px;background:#0e1a24;color:#f5fbff;padding:8px 10px;font-size:1rem}.cast-setup p{margin:8px 0 0;color:#b8d8e4;font-size:.78rem;line-height:1.4}
+.flame-ribbon{display:flex;width:100%;align-items:center;gap:11px;margin-top:10px;padding:8px 12px;min-height:54px;border:1px solid #a97954;border-radius:10px;background:linear-gradient(100deg,#482a22,#251d22 65%,#161e27);color:#f5dfca;text-align:left;box-shadow:inset 3px 0 #e6ad77,0 3px 12px #0006}.flame-ribbon>span:nth-child(2){display:grid;gap:2px;flex:1}.flame-ribbon b{font-size:.89rem}.flame-ribbon small{font-size:.72rem;color:#e3c4aa}.flame-ribbon .flame-mark{font-size:1.45rem;color:#ffd9a1;text-shadow:0 0 12px #ffb565}.flame-ribbon.armed{border-color:#f5c88c;background:linear-gradient(100deg,#7a3c23,#442c28 68%,#25232a);box-shadow:inset 3px 0 #fff0c1,0 0 20px #ed934a44}.flame-ribbon:disabled{opacity:.55;cursor:default}
+@media(max-width:500px){.cast-setup-head{display:grid}.cast-fields label{flex-basis:130px}.flame-ribbon{padding:9px 10px}}
+
+/* Forms follow the spell geometry: ray, frostbite bloom, vortex, hail, cone. */
+.samoth-fx.vortex,.samoth-fx.storm,.samoth-fx.cone,.samoth-fx.crit{background:radial-gradient(ellipse 80vmin 48vmin at 50% 52%,#b4edff4a,#4d83a52b 52%,transparent 78%)}
+.samoth-fx .frost-form{position:absolute;width:min(62vmin,590px);height:min(62vmin,590px);border:2px solid #d9faffdd;box-shadow:0 0 25px #a9eaff, inset 0 0 32px #bceeff77;opacity:0}
+.samoth-fx.play .frost-form{animation:frostBloom 1.35s cubic-bezier(.08,.65,.2,1) both}
+.samoth-fx.rayon .frost-form{height:9px;width:75vw;border-radius:70%;transform-origin:left center;background:linear-gradient(90deg,transparent,#f8ffff,#73d6f5);box-shadow:0 0 28px #abefff;animation-name:frostRay}
+.samoth-fx.frostbite .frost-form{width:min(32vmin,230px);height:min(32vmin,230px);clip-path:polygon(50% 0,60% 35%,85% 12%,67% 45%,100% 50%,67% 55%,85% 88%,60% 65%,50% 100%,40% 65%,15% 88%,33% 55%,0 50%,33% 45%,15% 12%,40% 35%);background:#b3ecff99}
+.samoth-fx.vortex .frost-form{border-radius:50%;background:repeating-conic-gradient(from 25deg,#d4f6ff6b 0 8deg,transparent 8deg 31deg);animation-name:frostVortex}
+.samoth-fx.storm .frost-form{width:min(70vw,700px);height:44vh;border-radius:50%;transform:perspective(500px) rotateX(58deg);background:radial-gradient(ellipse,#e6faff8c,transparent 65%);animation-name:frostHail}
+.samoth-fx.cone .frost-form{width:min(78vw,700px);height:min(70vh,650px);clip-path:polygon(50% 77%,5% 7%,95% 7%);background:linear-gradient(0deg,transparent,#aeeaff9c,#e7faffaa);animation-name:frostCone}
+.samoth-fx i{width:var(--size,4px);height:calc(var(--size,4px) * 2);clip-path:polygon(50% 0,100% 65%,50% 100%,0 65%)}
+.samoth-fx.play:not(.summon){animation-duration:1.7s}.samoth-fx.play:not(.summon) i{animation-duration:1.4s}
+.samoth-fx.summon{background:radial-gradient(ellipse at 50% 60%,#eafaff6b,#4f8fb744 35%,#111d3763 60%,transparent 78%)}.samoth-fx.summon.play{animation:frostSummon 3.35s ease both}.samoth-fx.summon.play:before{width:min(90vmin,850px);animation:frostPortal 3.15s ease both}.samoth-fx.summon.play i{animation-duration:2.4s}
+.frost-dragon{position:absolute;width:min(130vw,1100px);height:min(110vh,860px);display:grid;place-items:center;opacity:0;filter:drop-shadow(0 0 20px #d6f8ff) drop-shadow(0 0 80px #66c9f5);animation:dragonEmerge 3.25s cubic-bezier(.18,.66,.22,1) both}.frost-dragon svg{width:100%;max-height:90%;overflow:visible;fill:none;stroke:#e4f9ff;stroke-width:6;stroke-linejoin:round}.frost-dragon .dragon-wing{fill:#9edff38c;stroke-width:4;transform-origin:50% 55%;animation:wingUnfurl 3s ease both}.frost-dragon .dragon-wing.left{transform-origin:45% 60%}.frost-dragon .dragon-wing.right{transform-origin:55% 60%;animation-direction:normal}.frost-dragon .dragon-body{fill:#92dff1d9;stroke:#f4feff}.frost-dragon .dragon-head{fill:#effdff;stroke:#a8eaff}.frost-dragon .dragon-ridge{stroke:#c7f6ff;stroke-width:10;filter:drop-shadow(0 0 8px #b2f5ff)}.dragon-summon-label{position:absolute;bottom:7%;font:700 clamp(.8rem,2.2vw,1.5rem) Georgia,serif;letter-spacing:.18em;color:#efffff;text-shadow:0 0 18px #69d6ff;text-align:center}
+@keyframes frostBloom{0%{opacity:0;transform:scale(.15) rotate(0)}35%{opacity:.85}100%{opacity:0;transform:scale(var(--scale,1)) rotate(15deg)}}
+@keyframes frostRay{0%{opacity:0;transform:scaleX(.05)}30%{opacity:1}100%{opacity:0;transform:scaleX(1.4)}}
+@keyframes frostVortex{0%{opacity:0;transform:scale(.08) rotate(-90deg)}42%{opacity:.95}100%{opacity:0;transform:scale(var(--scale,1)) rotate(190deg)}}
+@keyframes frostHail{0%{opacity:0;transform:perspective(500px) rotateX(58deg) scale(.2) translateY(-90px)}40%{opacity:1}100%{opacity:0;transform:perspective(500px) rotateX(58deg) scale(var(--scale,1)) translateY(90px)}}
+@keyframes frostCone{0%{opacity:0;transform:scale(.15) translateY(45vh)}40%{opacity:.95}100%{opacity:0;transform:scale(var(--scale,1)) translateY(-8vh)}}
+@keyframes frostSummon{0%,100%{opacity:0}18%,76%{opacity:1}}@keyframes frostPortal{0%{opacity:0;transform:scale(.05)}28%,70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.7)}}
+@keyframes dragonEmerge{0%{opacity:0;transform:translateY(75vh) scale(.15)}32%{opacity:.95;transform:translateY(12vh) scale(.75)}66%{opacity:1;transform:translateY(-7vh) scale(1.25)}85%{opacity:1;transform:translateY(-19vh) scale(1.58)}100%{opacity:0;transform:translateY(-40vh) scale(2.2)}}
+@keyframes wingUnfurl{0%{transform:scaleX(.05)}42%{transform:scaleX(.4)}70%,100%{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.samoth-fx,.frost-dragon{display:none!important}}
