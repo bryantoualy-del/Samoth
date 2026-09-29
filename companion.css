@@ -711,3 +711,13 @@ dialog{background:linear-gradient(145deg,#101821,#080c12)!important;border-color
 .power-ribbon.staff{--ribbon:#75d8f1}.power-ribbon.wings{--ribbon:#a497e6}.power-ribbon.flame{--ribbon:#d49b72}.power-ribbon.heal{--ribbon:#79c6a6}
 .power-resist{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border:1px solid #365260;border-radius:999px;background:#0d1720;color:#dff7fd;cursor:pointer}.power-resist strong{padding:3px 7px;border-radius:999px;background:#162b35;color:#9fe8f9;font-size:.72rem}
 @media(max-width:600px){.resource-flow{border-radius:18px}.resource-action{min-width:0}.power-ribbon{border-radius:15px}.power-ribbon-action{padding:7px 9px}.resource-feature{border-radius:14px}}
+
+
+/* 7.2.1 — Confirmation de repos dans le même ruban central que Touché / Raté */
+dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f39,#101820);box-shadow:0 25px 90px #000,0 0 35px #83dff02b}
+.rest-confirm #resolutionTitle{color:#afeaf6}
+.rest-confirm .rest-symbol{font:800 clamp(2.4rem,9vw,4.2rem)/1 Georgia,serif;color:#eefcff;text-shadow:0 0 26px #8fe7ff70;margin:7px 0 3px}
+.rest-confirm .rest-detail{margin:8px auto 2px;max-width:390px;color:#b9cbd4;font-size:.86rem;line-height:1.45}
+.rest-confirm .dialog-actions{grid-template-columns:1fr}
+.rest-confirm .dialog-actions .rest-yes{min-height:54px;background:linear-gradient(135deg,#174457,#23738c);border-color:#8edff1;color:#effcff;box-shadow:0 0 20px #63cfe72b}
+.rest-confirm .dialog-actions .cancel{grid-column:auto}
