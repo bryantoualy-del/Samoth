@@ -1452,3 +1452,27 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
 .dragon-summon-echo img.ready{
   filter:brightness(1.18) contrast(1.4) saturate(.72)!important;
 }
+
+
+/* 8.0 — Dragon : vrai détourage par masque alpha, aucun fond noir */
+.dragon-summon-art img,
+.dragon-summon-echo img{
+  mix-blend-mode:normal!important;
+  background:transparent!important;
+  -webkit-mask-image:url("assets/fx/dragon-alpha-mask.webp")!important;
+  mask-image:url("assets/fx/dragon-alpha-mask.webp")!important;
+  -webkit-mask-repeat:no-repeat!important;
+  mask-repeat:no-repeat!important;
+  -webkit-mask-position:center!important;
+  mask-position:center!important;
+  -webkit-mask-size:100% 100%!important;
+  mask-size:100% 100%!important;
+  -webkit-mask-mode:alpha;
+  mask-mode:alpha;
+}
+.dragon-summon-art img.ready{
+  filter:brightness(1.05) contrast(1.08) saturate(1.02)!important;
+}
+.dragon-summon-echo img.ready{
+  filter:brightness(1.14) contrast(1.12) saturate(.78)!important;
+}
