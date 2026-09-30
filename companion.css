@@ -1249,3 +1249,170 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
   .dragon-summon-portal{width:96vmin;height:78vmin}
   .dragon-summon-label{bottom:-1%;font-size:.68rem;letter-spacing:.13em}
 }
+
+
+/* 7.7 — Invocation dragon : matérialisation premium, sans porte ni portail */
+/* Le dragon ne "passe" plus dans une forme géométrique : sa silhouette se condense dans le froid. */
+.samoth-fx.summon.materialize,
+.samoth-fx.summon{
+  background:
+    radial-gradient(ellipse 86vw 70vh at 50% 55%,rgba(105,210,239,.17),rgba(22,76,105,.11) 37%,rgba(3,10,18,.76) 72%,rgba(1,4,9,.95));
+}
+.samoth-fx.summon.play{animation:dragonMaterializeStage 4.4s ease-out both}
+.samoth-fx.summon .fx-mist{opacity:.64;filter:blur(13px)}
+.dragon-summon-scene.materialize{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.dragon-summon-scene.materialize .dragon-summon-rift,
+.dragon-summon-scene.materialize .dragon-summon-portal{display:none!important}
+
+.dragon-materialize-aura{
+  left:50%;top:53%;
+  width:min(112vw,1320px);height:min(82vh,900px);
+  transform:translate(-50%,-50%) scale(.72);
+  border-radius:48%;
+  background:
+    radial-gradient(ellipse at 50% 54%,rgba(232,253,255,.18) 0 12%,rgba(149,230,248,.10) 28%,rgba(63,160,198,.07) 48%,transparent 71%),
+    repeating-radial-gradient(ellipse at center,transparent 0 34px,rgba(187,242,254,.035) 35px 36px,transparent 37px 64px);
+  filter:blur(7px);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-materialize-aura{animation:dragonAuraCondense 3.8s .15s ease-out both}
+
+.dragon-materialize-scan{
+  left:50%;top:14%;bottom:8%;width:min(104vw,1220px);
+  transform:translateX(-50%);
+  background:
+    linear-gradient(180deg,transparent 0 5%,rgba(227,251,255,.05) 10%,rgba(145,226,246,.18) 50%,rgba(232,253,255,.07) 82%,transparent 96%);
+  clip-path:polygon(48% 0,52% 0,66% 24%,84% 50%,68% 76%,53% 100%,47% 100%,32% 76%,16% 50%,34% 24%);
+  filter:blur(14px);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-materialize-scan{animation:dragonSpectralScan 2.85s .48s ease-out both}
+
+.dragon-materialize-stars{
+  inset:0;
+  background:
+    radial-gradient(circle at 18% 31%,#effeff 0 1px,transparent 2px),
+    radial-gradient(circle at 27% 62%,#bfefff 0 1px,transparent 2px),
+    radial-gradient(circle at 37% 22%,#effeff 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 44% 73%,#bcefff 0 1px,transparent 2px),
+    radial-gradient(circle at 58% 19%,#f6ffff 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 66% 67%,#c6f2ff 0 1px,transparent 2px),
+    radial-gradient(circle at 76% 34%,#f2ffff 0 1px,transparent 2px),
+    radial-gradient(circle at 84% 59%,#b9ecfb 0 1px,transparent 2px);
+  filter:drop-shadow(0 0 7px #9ce9fb);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-materialize-stars{animation:dragonStarsGather 3.55s .25s ease-out both}
+
+.dragon-summon-echo{
+  position:absolute;left:50%;top:54%;
+  width:min(97vw,1090px);
+  transform:translate(-50%,-48%) scale(.78);
+  transform-origin:50% 65%;
+  opacity:0;
+  filter:blur(15px) brightness(1.65) saturate(.2) drop-shadow(0 0 34px #d9fbff) drop-shadow(0 0 105px rgba(83,204,236,.58));
+  mix-blend-mode:screen;
+}
+.dragon-summon-echo img{display:block;width:100%;height:auto;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.samoth-fx.summon.play .dragon-summon-echo{animation:dragonEchoResolve 2.45s .52s cubic-bezier(.16,.72,.2,1) both}
+
+.dragon-summon-art{
+  left:50%;top:54%;
+  width:min(97vw,1090px);
+  transform:translate(-50%,-48%) scale(.82);
+  transform-origin:50% 68%;
+  opacity:0;
+  filter:blur(9px) brightness(1.32) saturate(.76) drop-shadow(0 0 18px rgba(220,251,255,.8)) drop-shadow(0 0 74px rgba(73,185,221,.4));
+}
+.dragon-summon-art img{
+  display:block;width:100%;height:auto;object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 90%,transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 90%,transparent 100%);
+}
+.samoth-fx.summon.play .dragon-summon-art{animation:dragonMaterializeResolve 3.45s .78s cubic-bezier(.18,.7,.2,1) both}
+
+.dragon-summon-frost{
+  left:50%;bottom:-5%;width:min(126vw,1420px);height:34vh;
+  transform:translateX(-50%) scale(.72);
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at 50% 84%,rgba(241,255,255,.72) 0 3%,rgba(169,233,248,.27) 18%,rgba(77,176,209,.09) 41%,transparent 70%),
+    linear-gradient(90deg,transparent,rgba(218,249,255,.12),transparent);
+  filter:blur(7px);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-summon-frost{animation:dragonFrostCondense 3.1s .95s ease-out both}
+
+.dragon-summon-label{bottom:3%}
+.samoth-fx.summon.play .dragon-summon-label{animation:dragonMaterializeLabel 2.2s 1.62s ease-out both}
+
+.samoth-fx.summon.play>i{
+  animation:dragonMaterializeShard 3.05s var(--delay,0s) cubic-bezier(.14,.72,.18,1) both!important;
+  filter:drop-shadow(0 0 6px #e3fcff) drop-shadow(0 0 13px #67cde9)!important;
+}
+
+@keyframes dragonMaterializeStage{
+  0%,100%{opacity:0}
+  7%{opacity:.76}
+  15%,84%{opacity:1}
+}
+@keyframes dragonAuraCondense{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(1.18);filter:blur(22px)}
+  28%{opacity:.36}
+  58%{opacity:.7;transform:translate(-50%,-50%) scale(.94);filter:blur(8px)}
+  82%{opacity:.52;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.08);filter:blur(12px)}
+}
+@keyframes dragonSpectralScan{
+  0%{opacity:0;transform:translateX(-50%) scaleY(.22)}
+  22%{opacity:.42}
+  56%{opacity:.76;transform:translateX(-50%) scaleY(.98)}
+  82%{opacity:.36}
+  100%{opacity:0;transform:translateX(-50%) scaleY(1.06)}
+}
+@keyframes dragonStarsGather{
+  0%{opacity:0;transform:scale(1.12)}
+  28%{opacity:.72}
+  62%{opacity:.92;transform:scale(.96)}
+  84%{opacity:.48;transform:scale(.9)}
+  100%{opacity:0;transform:scale(.86)}
+}
+@keyframes dragonEchoResolve{
+  0%{opacity:0;transform:translate(-50%,-45%) scale(.66);filter:blur(24px) brightness(2) saturate(0)}
+  32%{opacity:.72}
+  64%{opacity:.86;transform:translate(-50%,-49%) scale(.94);filter:blur(9px) brightness(1.65) saturate(.2)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.04);filter:blur(16px) brightness(1.45) saturate(.35)}
+}
+@keyframes dragonMaterializeResolve{
+  0%{opacity:0;transform:translate(-50%,-46%) scale(.74);filter:blur(14px) brightness(1.55) saturate(.55)}
+  18%{opacity:.32}
+  42%{opacity:.88;transform:translate(-50%,-49%) scale(.93);filter:blur(3px) brightness(1.2) saturate(.9)}
+  64%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0) brightness(1.06) saturate(1)}
+  83%{opacity:1;transform:translate(-50%,-51%) scale(1.025);filter:blur(0) brightness(1.05)}
+  100%{opacity:0;transform:translate(-50%,-55%) scale(1.07);filter:blur(3px) brightness(1.12)}
+}
+@keyframes dragonFrostCondense{
+  0%{opacity:0;transform:translateX(-50%) scale(.45);filter:blur(14px)}
+  32%{opacity:.66}
+  68%{opacity:.54;transform:translateX(-50%) scale(1);filter:blur(5px)}
+  100%{opacity:0;transform:translateX(-50%) scale(1.14);filter:blur(10px)}
+}
+@keyframes dragonMaterializeLabel{
+  0%{opacity:0;transform:translate(-50%,12px);letter-spacing:.3em}
+  30%{opacity:.92;transform:translate(-50%,0)}
+  72%{opacity:.74}
+  100%{opacity:0;transform:translate(-50%,-8px);letter-spacing:.2em}
+}
+@keyframes dragonMaterializeShard{
+  0%{opacity:0;transform:translate(var(--x),var(--y)) scale(.15) rotate(0)}
+  28%{opacity:.88}
+  58%{opacity:1;transform:translate(calc(var(--x)*.32),calc(var(--y)*.32)) scale(.86) rotate(90deg)}
+  80%{opacity:.76;transform:translate(calc(var(--x)*.12),calc(var(--y)*.12)) scale(1) rotate(135deg)}
+  100%{opacity:0;transform:translate(calc(var(--x)*-.18),calc(var(--y)*-.18)) scale(.72) rotate(180deg)}
+}
+@media(max-width:600px){
+  .dragon-summon-art,.dragon-summon-echo{width:120vw;top:53%}
+  .dragon-materialize-aura{width:132vw;height:78vh}
+  .dragon-summon-label{bottom:0;font-size:.68rem;letter-spacing:.13em}
+}
