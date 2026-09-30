@@ -54,7 +54,7 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));queueMicr
 function roll(sides){return Math.floor(Math.random()*sides)+1}
 function dice(n,s,cold=false){let raw=Array.from({length:n},()=>roll(s));return{raw,values:raw.map(v=>cold&&v===1?2:v),get total(){return this.values.reduce((a,b)=>a+b,0)}}}
 function damageDice(n,s,cold=false,empowered=false){let d=dice(n,s,cold),before=[...d.values];if(empowered){let indexes=d.values.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]).slice(0,3);for(let[,i]of indexes){d.raw[i]=roll(s);d.values[i]=cold&&d.raw[i]===1?2:d.raw[i]}}return{total:d.total,detail:d.values.join('+')+(empowered?' [relance '+before.join('+')+']':'')}}
-const DRAGON_ASSET_URL='assets/fx/samoth-dragon-hd.jpg?v=1';
+const DRAGON_ASSET_URL='assets/fx/samoth-dragon-transparent.webp?v=1';
 const dragonPreload=new Image();dragonPreload.src=DRAGON_ASSET_URL;
 let resultTimer;function message(msg){let lines=String(msg).split('\n');$('#resultTitle').textContent=lines.shift()||'Dernier résultat';$('#resultText').textContent=lines.join(' · ')||'Action enregistrée.';$('#result').classList.remove('collapsed');clearTimeout(resultTimer);resultTimer=setTimeout(()=>$('#result').classList.add('collapsed'),3800)}
 function effect(kind,level=0,opts={}){
