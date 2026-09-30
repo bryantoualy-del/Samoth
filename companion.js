@@ -92,17 +92,17 @@ function effect(kind,level=0,opts={}){
    stage.append(infusion);
   }
  if(summon){
-   const scene=document.createElement('div');scene.className='dragon-summon-scene';
-   scene.innerHTML='<span class="dragon-summon-darkfall"></span><span class="dragon-summon-rift"></span><span class="dragon-summon-portal"></span><span class="dragon-summon-frost"></span><div class="dragon-summon-art"><img alt="" decoding="async"><span class="dragon-summon-label">ESPRIT DRACONIQUE · ARGENT</span></div>';
+   const scene=document.createElement('div');scene.className='dragon-summon-scene materialize';
+   scene.innerHTML='<span class="dragon-summon-darkfall"></span><span class="dragon-materialize-aura"></span><span class="dragon-materialize-scan"></span><span class="dragon-materialize-stars"></span><span class="dragon-summon-frost"></span><div class="dragon-summon-echo"><img alt="" decoding="async"></div><div class="dragon-summon-art"><img alt="" decoding="async"><span class="dragon-summon-label">ESPRIT DRACONIQUE · ARGENT</span></div>';
    stage.append(scene);
-   const dragonImg=scene.querySelector('.dragon-summon-art img');
-   const applyDragon=src=>{if(src&&dragonImg?.isConnected){dragonImg.src=src;dragonImg.classList.add('ready')}};
+   const dragonImgs=[...scene.querySelectorAll('.dragon-summon-art img,.dragon-summon-echo img')];
+   const applyDragon=src=>{if(!src)return;dragonImgs.forEach(img=>{if(img?.isConnected){img.src=src;img.classList.add('ready')}})};
    if(dragonAssetDataUrl)applyDragon(dragonAssetDataUrl);else loadDragonAsset().then(applyDragon);
   }
  if(['storm','cone','hands','fog','wall','rayon','frostbite','breath','cold','crit'].includes(kind)){const form=document.createElement('div');form.className='frost-form';stage.append(form)}
  const count=summon?96:kind==='vortex'?(level>=5?104:level>=4?76:48):kind==='flame'?54:Math.round((major?46:18)+level*8);
  for(let i=0;i<count;i++){const shard=document.createElement('i');const angle=Math.random()*Math.PI*2,span=(major?330:145)*scale*(.45+Math.random());shard.style.setProperty('--x',Math.cos(angle)*span+'px');shard.style.setProperty('--y',Math.sin(angle)*span+'px');shard.style.setProperty('--delay',(Math.random()*(summon?.62:.28))+'s');shard.style.setProperty('--size',(3+Math.random()*10*scale)+'px');stage.append(shard)}
- stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');clearTimeout(effect.timer);effect.timer=setTimeout(()=>{stage.classList.remove('play');stage.replaceChildren()},summon?4300:kind==='vortex'?(level>=5?3650:level>=4?3250:2850):kind==='flame'?2350:major?2300:1750);
+ stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');clearTimeout(effect.timer);effect.timer=setTimeout(()=>{stage.classList.remove('play');stage.replaceChildren()},summon?4550:kind==='vortex'?(level>=5?3650:level>=4?3250:2850):kind==='flame'?2350:major?2300:1750);
 }
 function commit(before,title,detail,kind='action',visual=null){let snapshot=clone(before);snapshot.undo=null;state.undo=snapshot;state.history.unshift({at:new Date().toISOString(),round:state.round,actor:state.phase,title,detail,kind});state.history=state.history.slice(0,150);persist();render();message(`${title}\n${detail}`);if(visual)effect(visual.kind,visual.level,{pureFlame:!!visual.pureFlame});else if(['crit','summon','flame'].includes(kind))effect(kind);else if(/Dragon · Souffle|Souffle du dragon/i.test(title))effect('breath');else if(/Dragon · Déchirement/.test(title))effect('dragon');else if(/froid|givre|grêle|glace/i.test(title+' '+detail))effect('cold');else if(/métamagie|sorcellerie/i.test(title))effect('meta')}
 function transaction(title,fn){const before=clone(state),result=fn();if(result===false)return false;commit(before,title,typeof result==='string'?result:'');return true}
