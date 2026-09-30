@@ -54,13 +54,13 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));queueMicr
 function roll(sides){return Math.floor(Math.random()*sides)+1}
 function dice(n,s,cold=false){let raw=Array.from({length:n},()=>roll(s));return{raw,values:raw.map(v=>cold&&v===1?2:v),get total(){return this.values.reduce((a,b)=>a+b,0)}}}
 function damageDice(n,s,cold=false,empowered=false){let d=dice(n,s,cold),before=[...d.values];if(empowered){let indexes=d.values.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]).slice(0,3);for(let[,i]of indexes){d.raw[i]=roll(s);d.values[i]=cold&&d.raw[i]===1?2:d.raw[i]}}return{total:d.total,detail:d.values.join('+')+(empowered?' [relance '+before.join('+')+']':'')}}
-const DRAGON_ASSET_PARTS=Array.from({length:8},(_,i)=>`assets/fx/dragon-parts/p${String(i+1).padStart(2,'0')}.txt`);
+const DRAGON_ASSET_PARTS=Array.from({length:10},(_,i)=>`assets/fx/dragon-parts/p${String(i+1).padStart(2,'0')}.txt`);
 let dragonAssetDataUrl='',dragonAssetPromise=null;
 function loadDragonAsset(){
  if(dragonAssetDataUrl)return Promise.resolve(dragonAssetDataUrl);
  if(dragonAssetPromise)return dragonAssetPromise;
  dragonAssetPromise=Promise.all(DRAGON_ASSET_PARTS.map(path=>fetch(path,{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(`Dragon asset ${r.status}`);return r.text()})))
-  .then(parts=>{const b64=parts.join('').replace(/\s+/g,'');if(b64.length!==62740)throw Error('Dragon asset incomplet');dragonAssetDataUrl='data:image/webp;base64,'+b64;return dragonAssetDataUrl})
+  .then(parts=>{const b64=parts.join('').replace(/\s+/g,'');if(b64.length!==71700)throw Error('Dragon HD incomplet');dragonAssetDataUrl='data:image/jpeg;base64,'+b64;return dragonAssetDataUrl})
   .catch(()=>{dragonAssetPromise=null;return ''});
  return dragonAssetPromise;
 }
