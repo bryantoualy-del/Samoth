@@ -1088,3 +1088,164 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
   .bankai-pillar{width:54vmin}
   .bankai-tier-3 .bankai-pillar{width:64vmin}
 }
+
+
+/* 7.6 — Invocation d'esprit draconique : reveal visuel façon apparition de Wonq, version givre */
+.samoth-fx.summon{
+  background:
+    radial-gradient(ellipse at 50% 61%,rgba(132,223,247,.16),rgba(22,61,85,.16) 34%,rgba(2,7,14,.76) 72%,rgba(1,4,9,.94));
+}
+.samoth-fx.summon.play{
+  animation:dragonSummonStage 4.15s ease-out both;
+}
+.samoth-fx.summon:before{display:none!important}
+.samoth-fx.summon .fx-rune,
+.samoth-fx.summon .fx-shockwave{display:none!important}
+.samoth-fx.summon .fx-mist{opacity:.52;filter:blur(10px)}
+
+.dragon-summon-scene{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.dragon-summon-scene>span,
+.dragon-summon-art{position:absolute;display:block}
+
+.dragon-summon-darkfall{
+  inset:0;
+  background:
+    radial-gradient(ellipse at 50% 58%,rgba(58,137,171,.08),transparent 36%),
+    linear-gradient(180deg,rgba(2,6,13,.72),rgba(1,5,10,.5));
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-summon-darkfall{animation:dragonDarkfall 3.9s ease-out both}
+
+.dragon-summon-rift{
+  left:50%;top:51%;width:5px;height:0;
+  transform:translate(-50%,-50%);
+  background:linear-gradient(180deg,transparent,#f4feff 17%,#83dff5 48%,#eafcff 79%,transparent);
+  box-shadow:0 0 14px #dffbff,0 0 38px #83def5,0 0 95px rgba(75,180,220,.5);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-summon-rift{animation:dragonRift 1.7s .18s cubic-bezier(.14,.72,.18,1) both}
+
+.dragon-summon-portal{
+  left:50%;top:56%;width:min(78vmin,760px);height:min(64vmin,600px);
+  transform:translate(-50%,-50%) scale(.18);
+  border-radius:50%;
+  border:1px solid rgba(196,243,255,.72);
+  background:
+    radial-gradient(ellipse at center,rgba(239,253,255,.12) 0 18%,rgba(117,212,237,.12) 36%,rgba(52,124,157,.08) 54%,transparent 72%);
+  box-shadow:
+    0 0 25px rgba(219,250,255,.62),
+    0 0 72px rgba(91,202,230,.42),
+    0 0 150px rgba(39,119,159,.2),
+    inset 0 0 75px rgba(151,232,250,.1);
+  opacity:0;
+}
+.dragon-summon-portal:before,
+.dragon-summon-portal:after{
+  content:'';
+  position:absolute;
+  inset:7%;
+  border-radius:50%;
+  border:1px solid rgba(180,236,249,.32);
+  box-shadow:0 0 22px rgba(142,224,244,.2);
+}
+.dragon-summon-portal:after{inset:16%;border-color:rgba(226,249,255,.24)}
+.samoth-fx.summon.play .dragon-summon-portal{animation:dragonPortalReveal 3.25s .55s cubic-bezier(.18,.62,.2,1) both}
+
+.dragon-summon-art{
+  left:50%;top:55%;
+  width:min(92vw,1040px);
+  transform:translate(-50%,-45%) scale(.58);
+  transform-origin:50% 72%;
+  opacity:0;
+  filter:blur(11px) brightness(1.35) saturate(.78) drop-shadow(0 0 20px rgba(206,249,255,.72)) drop-shadow(0 0 70px rgba(79,193,226,.42));
+}
+.dragon-summon-art img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.samoth-fx.summon.play .dragon-summon-art{animation:dragonArtReveal 3.35s .72s cubic-bezier(.16,.7,.2,1) both}
+
+.dragon-summon-label{
+  position:absolute;
+  left:50%;bottom:2%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  font:700 clamp(.72rem,2vw,1.25rem) Georgia,serif;
+  letter-spacing:.18em;
+  color:#f0fdff;
+  text-shadow:0 0 13px #fff,0 0 28px #77d9f1;
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-summon-label{animation:dragonLabelReveal 2.35s 1.35s ease-out both}
+
+.dragon-summon-frost{
+  left:50%;bottom:-3%;
+  width:min(118vw,1280px);height:31vh;
+  transform:translateX(-50%) scale(.7);
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at 50% 82%,rgba(238,254,255,.7) 0 3%,rgba(177,236,249,.28) 17%,rgba(87,183,215,.1) 39%,transparent 67%),
+    repeating-linear-gradient(103deg,transparent 0 31px,rgba(220,250,255,.13) 32px 34px,transparent 35px 65px);
+  filter:blur(5px);
+  opacity:0;
+}
+.samoth-fx.summon.play .dragon-summon-frost{animation:dragonFrostGround 2.9s 1.02s ease-out both}
+
+.samoth-fx.summon.play>i{
+  animation-duration:2.75s!important;
+  filter:drop-shadow(0 0 6px #d8f9ff) drop-shadow(0 0 11px #65cae7)!important;
+}
+
+@keyframes dragonSummonStage{
+  0%,100%{opacity:0}
+  8%{opacity:.78}
+  16%,82%{opacity:1}
+}
+@keyframes dragonDarkfall{
+  0%{opacity:0}
+  18%{opacity:.84}
+  72%{opacity:.7}
+  100%{opacity:0}
+}
+@keyframes dragonRift{
+  0%{height:0;opacity:0}
+  18%{height:64vh;opacity:1}
+  56%{width:44px;height:72vh;opacity:1}
+  82%{width:15px;height:74vh;opacity:.72}
+  100%{width:0;height:76vh;opacity:0}
+}
+@keyframes dragonPortalReveal{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.14);filter:blur(7px)}
+  24%{opacity:.72;filter:blur(1px)}
+  58%{opacity:.82;transform:translate(-50%,-50%) scale(1)}
+  82%{opacity:.4;transform:translate(-50%,-50%) scale(1.08)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2);filter:blur(4px)}
+}
+@keyframes dragonArtReveal{
+  0%{opacity:0;clip-path:inset(72% 0 0 0);transform:translate(-50%,-33%) scale(.55);filter:blur(12px) brightness(1.5) saturate(.7) drop-shadow(0 0 26px #d9fbff)}
+  24%{opacity:.82;clip-path:inset(30% 0 0 0);filter:blur(4px) brightness(1.25) saturate(.86) drop-shadow(0 0 34px #b6f1ff)}
+  52%{opacity:1;clip-path:inset(0 0 0 0);transform:translate(-50%,-48%) scale(.92);filter:blur(0) brightness(1.08) saturate(1) drop-shadow(0 0 28px #d8fbff) drop-shadow(0 0 72px rgba(83,195,225,.48))}
+  76%{opacity:1;transform:translate(-50%,-51%) scale(1.03)}
+  100%{opacity:0;transform:translate(-50%,-57%) scale(1.11);filter:blur(2px) brightness(1.08) drop-shadow(0 0 18px #bcefff)}
+}
+@keyframes dragonLabelReveal{
+  0%{opacity:0;transform:translate(-50%,12px);letter-spacing:.28em}
+  28%{opacity:.9;transform:translate(-50%,0)}
+  72%{opacity:.72}
+  100%{opacity:0;transform:translate(-50%,-8px)}
+}
+@keyframes dragonFrostGround{
+  0%{opacity:0;transform:translateX(-50%) scale(.55)}
+  28%{opacity:.72}
+  68%{opacity:.56;transform:translateX(-50%) scale(1)}
+  100%{opacity:0;transform:translateX(-50%) scale(1.16)}
+}
+@media(max-width:600px){
+  .dragon-summon-art{width:118vw;top:54%}
+  .dragon-summon-portal{width:96vmin;height:78vmin}
+  .dragon-summon-label{bottom:-1%;font-size:.68rem;letter-spacing:.13em}
+}
