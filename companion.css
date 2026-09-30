@@ -1432,3 +1432,23 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
   .dragon-summon-art{width:min(94vw,1160px)}
   .dragon-summon-echo{width:min(96vw,1180px)}
 }
+
+
+/* 7.9 — Dragon summon : suppression visuelle fiable du fond noir */
+.dragon-summon-scene.materialize{
+  isolation:isolate;
+}
+.dragon-summon-art img,
+.dragon-summon-echo img{
+  background:transparent!important;
+  mix-blend-mode:screen!important;
+  mask-image:radial-gradient(ellipse 84% 80% at 50% 52%,#000 0 63%,rgba(0,0,0,.98) 72%,rgba(0,0,0,.76) 83%,transparent 100%)!important;
+  -webkit-mask-image:radial-gradient(ellipse 84% 80% at 50% 52%,#000 0 63%,rgba(0,0,0,.98) 72%,rgba(0,0,0,.76) 83%,transparent 100%)!important;
+}
+.dragon-summon-art img.ready{
+  image-rendering:auto;
+  filter:brightness(1.08) contrast(1.32) saturate(.96)!important;
+}
+.dragon-summon-echo img.ready{
+  filter:brightness(1.18) contrast(1.4) saturate(.72)!important;
+}
