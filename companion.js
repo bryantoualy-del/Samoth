@@ -54,17 +54,8 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));queueMicr
 function roll(sides){return Math.floor(Math.random()*sides)+1}
 function dice(n,s,cold=false){let raw=Array.from({length:n},()=>roll(s));return{raw,values:raw.map(v=>cold&&v===1?2:v),get total(){return this.values.reduce((a,b)=>a+b,0)}}}
 function damageDice(n,s,cold=false,empowered=false){let d=dice(n,s,cold),before=[...d.values];if(empowered){let indexes=d.values.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]).slice(0,3);for(let[,i]of indexes){d.raw[i]=roll(s);d.values[i]=cold&&d.raw[i]===1?2:d.raw[i]}}return{total:d.total,detail:d.values.join('+')+(empowered?' [relance '+before.join('+')+']':'')}}
-const DRAGON_ASSET_PARTS=Array.from({length:10},(_,i)=>`assets/fx/dragon-parts/p${String(i+1).padStart(2,'0')}.txt`);
-let dragonAssetDataUrl='',dragonAssetPromise=null;
-function loadDragonAsset(){
- if(dragonAssetDataUrl)return Promise.resolve(dragonAssetDataUrl);
- if(dragonAssetPromise)return dragonAssetPromise;
- dragonAssetPromise=Promise.all(DRAGON_ASSET_PARTS.map(path=>fetch(path,{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(`Dragon asset ${r.status}`);return r.text()})))
-  .then(parts=>{const b64=parts.join('').replace(/\s+/g,'');if(b64.length!==71700)throw Error('Dragon HD incomplet');dragonAssetDataUrl='data:image/jpeg;base64,'+b64;return dragonAssetDataUrl})
-  .catch(()=>{dragonAssetPromise=null;return ''});
- return dragonAssetPromise;
-}
-loadDragonAsset();
+const DRAGON_ASSET_URL='assets/fx/samoth-dragon-hd.jpg?v=1';
+const dragonPreload=new Image();dragonPreload.src=DRAGON_ASSET_URL;
 let resultTimer;function message(msg){let lines=String(msg).split('\n');$('#resultTitle').textContent=lines.shift()||'Dernier résultat';$('#resultText').textContent=lines.join(' · ')||'Action enregistrée.';$('#result').classList.remove('collapsed');clearTimeout(resultTimer);resultTimer=setTimeout(()=>$('#result').classList.add('collapsed'),3800)}
 function effect(kind,level=0,opts={}){
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -96,8 +87,7 @@ function effect(kind,level=0,opts={}){
    scene.innerHTML='<span class="dragon-summon-darkfall"></span><span class="dragon-materialize-aura"></span><span class="dragon-materialize-scan"></span><span class="dragon-materialize-stars"></span><span class="dragon-summon-frost"></span><div class="dragon-summon-echo"><img alt="" decoding="async"></div><div class="dragon-summon-art"><img alt="" decoding="async"><span class="dragon-summon-label">ESPRIT DRACONIQUE · ARGENT</span></div>';
    stage.append(scene);
    const dragonImgs=[...scene.querySelectorAll('.dragon-summon-art img,.dragon-summon-echo img')];
-   const applyDragon=src=>{if(!src)return;dragonImgs.forEach(img=>{if(img?.isConnected){img.src=src;img.classList.add('ready')}})};
-   if(dragonAssetDataUrl)applyDragon(dragonAssetDataUrl);else loadDragonAsset().then(applyDragon);
+   dragonImgs.forEach(img=>{img.src=DRAGON_ASSET_URL;img.classList.add('ready')});
   }
  if(['storm','cone','hands','fog','wall','rayon','frostbite','breath','cold','crit'].includes(kind)){const form=document.createElement('div');form.className='frost-form';stage.append(form)}
  const count=summon?96:kind==='vortex'?(level>=5?104:level>=4?76:48):kind==='flame'?54:Math.round((major?46:18)+level*8);
