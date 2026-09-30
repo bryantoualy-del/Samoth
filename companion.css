@@ -1416,3 +1416,19 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
   .dragon-materialize-aura{width:132vw;height:78vh}
   .dragon-summon-label{bottom:0;font-size:.68rem;letter-spacing:.13em}
 }
+
+
+/* 7.8 — Dragon HD iPad : intégration douce du master 1200×900 */
+.dragon-summon-art img,
+.dragon-summon-echo img{
+  mask-image:radial-gradient(ellipse 76% 72% at 50% 52%,#000 0 57%,rgba(0,0,0,.96) 66%,rgba(0,0,0,.7) 76%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 76% 72% at 50% 52%,#000 0 57%,rgba(0,0,0,.96) 66%,rgba(0,0,0,.7) 76%,transparent 100%);
+}
+.dragon-summon-art img.ready{
+  image-rendering:auto;
+  filter:contrast(1.035) saturate(1.04);
+}
+@media(min-width:768px){
+  .dragon-summon-art{width:min(94vw,1160px)}
+  .dragon-summon-echo{width:min(96vw,1180px)}
+}
