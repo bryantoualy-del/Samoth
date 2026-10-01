@@ -633,7 +633,7 @@ dialog{background:linear-gradient(145deg,#101821,#080c12)!important;border-color
 .social-v3-tabs{display:flex;gap:6px;overflow-x:auto;margin:9px 0;padding:5px;border:1px solid #2a3641;border-radius:12px;background:#0b1117cf}
 .social-v3-tabs button{flex:1 0 auto;min-height:42px;padding:7px 10px;border:1px solid transparent;border-radius:9px;background:transparent;color:#8f9daa;font-size:12px;font-weight:800;cursor:pointer}
 .social-v3-tabs button.active{border-color:#5b8497;color:#effcff;background:#14232c;box-shadow:inset 2px 0 #8fe7ff}
-.social-v3-mode{display:flex;gap:6px;margin:10px 0}.social-v3-mode button{flex:1;min-height:44px;border:1px solid #2a3540;border-radius:11px;background:#0d1319;color:#9aa7b2;padding:8px 11px;cursor:pointer}
+.social-v3-mode{display:flex;gap:6px;position:sticky;top:max(4px,env(safe-area-inset-top));z-index:61;margin:10px 0;padding:6px;border:1px solid #2a3641;border-radius:12px;background:#0b1117ee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.social-v3-mode button{flex:1;min-height:44px;border:1px solid #2a3540;border-radius:11px;background:#0d1319;color:#9aa7b2;padding:8px 11px;cursor:pointer}
 .social-v3-mode button.active{border-color:#73d8f0;background:#152832;color:#eafaff;box-shadow:inset 2px 0 #8fe7ff}
 .social-v3-card{background:linear-gradient(145deg,#0f151d,#090d13);border:1px solid #28333e;border-radius:16px;padding:15px;margin:8px 0;box-shadow:0 12px 30px #0006}
 .social-v3-card h3{margin:0 0 10px;font-size:17px;color:#e9f3f7}.social-v3-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
