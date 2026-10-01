@@ -13,7 +13,7 @@
 [data-rpg-passive="1"]{display:none!important}
 @media(max-width:520px){#rpg-state-strip{margin:5px 0;padding:6px 8px;gap:7px}#rpg-state-strip .rpglabel{font-size:9px}#rpg-state-strip .rpgstate{font-size:11px}#rpg-mini-status{font-size:9px;min-height:28px;padding:4px 8px}}
 </style>
-</head><body>
+<link rel="stylesheet" href="companion-turnbar.css?v=1">\n</head><body>
 <main class="app">
 <section class="top"><div class="identity"><div class="eyebrow">Compagnie Créole</div><h1>Samoth</h1><p>Ensorceleur 10 · Ancêtre draconique d’argent · Givre spectral</p><div class="signature-icon" aria-hidden="true"><img src="assets/emblem-transparent.png?v=2" alt=""></div></div>
 <div class="vitals"><div class="stat hpstat"><small>Points de vie · max 72</small><div class="hpbox"><label><span class="sr">PV actuels</span><input id="hp" class="num" type="number" min="0" max="72" aria-label="PV actuels"></label><label><span class="sr">PV temporaires</span><input id="tempHp" class="num" type="number" min="0" aria-label="PV temporaires" placeholder="Temp."></label></div><div class="hp-actions"><button class="mini" data-hp="damage">Dégâts</button><button class="mini" data-hp="heal">Soins</button></div></div><div class="stat"><small>CA</small><b>15</b></div><div class="stat"><small>Initiative</small><b>+1</b></div><div class="stat"><small>Vitesse</small><b>9 m</b></div><div class="stat"><small>DD sorts</small><b>18</b></div><div class="stat"><small>Attaque</small><b>+10</b></div></div></section>
@@ -59,4 +59,4 @@ function boot(){
 document.readyState==="loading"?document.addEventListener("DOMContentLoaded",boot):boot();
 })();
 </script>
-</body></html>
+<script src="companion-turnbar.js?v=1"></script>\n</body></html>
