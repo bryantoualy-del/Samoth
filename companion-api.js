@@ -34,8 +34,11 @@
   const DAMAGE_WORDS=['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'];
   const canonDamageType=v=>{const k=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'').trim();return DAMAGE_WORDS.find(x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'')===k)||''};
   function recentResolutionText(){
-    const nodes=[document.querySelector('#rbody'),document.querySelector('#ribbonText'),document.querySelector('.log-entry:first-child .log-body'),document.querySelector('#log .log-entry:first-child'),document.querySelector('#log')].filter(Boolean);
-    return nodes.map(n=>n.innerText||n.textContent||'').filter(Boolean).join('\n').slice(0,2400);
+    const parts=[],push=n=>{const t=n&&(n.innerText||n.textContent||'');if(t)parts.push(t)};
+    push(document.querySelector('#rbody'));push(document.querySelector('#ribbonText'));
+    const entries=[...document.querySelectorAll('#log .log-entry,.log-entry')].slice(0,3);
+    if(entries.length)entries.forEach(push);else{const raw=document.querySelector('#log');if(raw)parts.push((raw.innerText||raw.textContent||'').slice(0,1000))}
+    return parts.join('\n').slice(0,1800);
   }
   function inferDamageComponents(total){
     try{const explicit=bridge.lastDamage?.();if(Array.isArray(explicit)&&explicit.length)return explicit.map(c=>({amount:Math.max(0,Math.trunc(Number(c.amount)||0)),type:canonDamageType(c.type)})).filter(c=>c.amount>0)}catch{}
