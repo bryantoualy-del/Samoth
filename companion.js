@@ -64,7 +64,9 @@ const ANIMATED_OBJECT_PROFILES={
 const animatedProfile=key=>ANIMATED_OBJECT_PROFILES[key]||ANIMATED_OBJECT_PROFILES.tiny;
 const DRAGON_ASSET_URL='assets/fx/samoth-dragon-hd.jpg?v=2';
 const dragonPreload=new Image();dragonPreload.src=DRAGON_ASSET_URL;
-let resultTimer;function message(msg){let lines=String(msg).split('\n');$('#resultTitle').textContent=lines.shift()||'Dernier résultat';$('#resultText').textContent=lines.join(' · ')||'Action enregistrée.';$('#result').classList.remove('collapsed');clearTimeout(resultTimer);resultTimer=setTimeout(()=>$('#result').classList.add('collapsed'),3800)}
+let resultTimer;function resultTone(title,detail){const t=String(title||'').toLowerCase(),x=t+' '+String(detail||'').toLowerCase();if(t==='dégâts reçus'||/pv perdus|pv perdu/.test(x))return'damage';if(t==='soins reçus'||/pv récupérés|pv rendus/.test(x))return'heal';if(/déjà|aucun|aucune|absent|indisponible|impossible|invalide|raté|échec|terminée|terminé|terminez|rien à annuler|annul/.test(x))return'neutral';return'info'}
+function applyResultTone(title,detail){const result=$('#result');if(!result)return;result.classList.remove('tone-neutral','tone-damage','tone-heal');const tone=resultTone(title,detail);if(tone!=='info')result.classList.add('tone-'+tone)}
+function message(msg){let lines=String(msg).split('\n'),title=lines.shift()||'Dernier résultat',detail=lines.join(' · ')||'Action enregistrée.';$('#resultTitle').textContent=title;$('#resultText').textContent=detail;applyResultTone(title,detail);$('#result').classList.remove('collapsed');clearTimeout(resultTimer);resultTimer=setTimeout(()=>$('#result').classList.add('collapsed'),3800)}
 function effect(kind,level=0,opts={}){
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const stage=document.querySelector('#samothFx');if(!stage)return;
