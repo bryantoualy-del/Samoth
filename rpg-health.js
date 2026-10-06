@@ -6,7 +6,7 @@
  const copy=x=>JSON.parse(JSON.stringify(x));
  const persist=()=>{if(pending)localStorage.setItem(key,JSON.stringify(pending));else localStorage.removeItem(key)};
  const notice=text=>{const el=document.querySelector('.rpg-connect-message');if(el){el.textContent=text;el.hidden=false}document.dispatchEvent(new CustomEvent('rpg-health:notice',{detail:text}))};
- const formatResult=r=>r.armed?r.targetName+' : Ancre préparée, soin à la prochaine attaque':r.maxHpReduction?r.targetName+' : −'+r.maxHpReduction+' PV max (Marque)':r.damageTaken?r.targetName+' : '+r.damageTaken+' dégâts ('+r.tempAbsorbed+' absorbés)':r.kept?r.targetName+' : PV temporaires conservés':r.targetName+' : '+r.appliedAmount+(pending?.family==='tempHp:request'?' PV temporaires':pending?.family==='maxHp:request'?' PV max':' PV rendus');
+ const formatResult=r=>r.armed?r.targetName+' : Ancre préparée, soin à la prochaine attaque':r.maxHpReduction?r.targetName+' : −'+r.maxHpReduction+' PV max (Marque)':r.damageTaken!==undefined?r.targetName+' : '+r.damageTaken+' dégâts ('+r.tempAbsorbed+' absorbés)':r.kept?r.targetName+' : PV temporaires conservés':r.targetName+' : '+r.appliedAmount+(pending?.family==='tempHp:request'?' PV temporaires':pending?.family==='maxHp:request'?' PV max':' PV rendus');
  const authoritative=()=>!!bridge.read().rpgHealthAuthorityActive||!!context.healthCapabilities?.includes('HEAL');
  const online=()=>net.getStatus().connected&&context.healthCapabilities?.includes('HEAL');
  const room=()=>net.getStatus().room;
@@ -30,7 +30,7 @@
   choosing=true;try{return await window.RPGMultiTargetUI.chooseTargets({list:(context.allyCatalog||[]).filter(t=>(lifeStatus==='dead'?t.lifeStatus==='dead':t.lifeStatus!=='dead')&&filter(t)),min,max,title})}finally{choosing=false}
  }
  function perform({family='heal:request',source,amount,targetIds,...details},consume){
-  if(!online()||pending||!['heal:request','tempHp:request','maxHp:request','revive:request'].includes(family)||!Number.isSafeInteger(amount)||(amount<=0&&!(family==='maxHp:request'&&details.operation==='expire'))||!targetIds?.length)return false;
+  if(!online()||pending||!['heal:request','tempHp:request','maxHp:request','revive:request','summon:damage'].includes(family)||!Number.isSafeInteger(amount)||(amount<=0&&!(family==='maxHp:request'&&details.operation==='expire'))||!targetIds?.length)return false;
   const s=bridge.read();if(family==='tempHp:request'&&targetIds.length===1&&targetIds[0]===context.healthActorId&&source!=='Cri de ralliement'&&['kentaro','nans'].includes(bridge.id)&&details.replace===undefined){const temp=Number(s.temp??s.tempHp)||0,old=s.tempSource||'';if(temp>0&&old!==source&&(bridge.id==='nans'||old)){if(!confirm('Remplacer '+temp+' PV temporaires ('+(old||'source inconnue')+') par '+amount+' ('+source+') ?'))return false;details.replace=true}}const before=copy(s);consume?.();
   pending={family,room:room(),turnStamp:JSON.stringify([s.turn,s.round,s.phase,s.turnPhase]),effect:{...details,actionId:crypto.randomUUID(),source,amount,targetIds,combatId:context.combatId??null},changes:changes(before,s)};
   try{persist()}catch(error){for(const c of pending.changes)set(s,c.path,c.before);pending=null;notice('Soin annulé · sauvegarde réseau indisponible');return false}

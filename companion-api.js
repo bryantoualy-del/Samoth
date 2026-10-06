@@ -28,12 +28,12 @@
     return copy({characterId:bridge.id,stateEpoch,stateRevision,characterName:bridge.name,hp:{current:hp,max,temp,tempSource:s.tempSource||'',tempMetadata:s.tempMetadata||{},authorityRevision:s.rpgHealthRevision||0},ac:bridge.ac?.(s)??null,
       turn:{number:s.turn??s.round??1,round:s.round??s.turn??1,active:s.phase||s.turnPhase||true,
         action:available(bridge.ecoKeys?.action||'action'),bonus:available(bridge.ecoKeys?.bonus||'bonus'),
-        reaction:available(bridge.ecoKeys?.reaction||'reaction'),movement:available(bridge.ecoKeys?.movement||'move'),damage:s.turnDamage??s.dmg??0},
+        reaction:available(bridge.ecoKeys?.reaction||'reaction'),movement:available(bridge.ecoKeys?.movement||'move'),damage:s.phase==='dragon'?s.dragonDamage:(s.turnDamage??s.dmg??0)},
       concentration:(()=>{const c=s.concentration??s.concSpell??s.conc;return typeof c==='string'?c.trim()||null:c&&typeof c==='object'?String(c.name||c.spell||'').trim()||null:c===true?'Concentration':null})(),resources,
       inventorySummary:inventory.map(i=>({id:i.id??i.name,name:i.name,quantity:i.qty??i.quantity??1})),
       statuses:bridge.statuses?.(s)||[],
       defenses:(()=>{const d=bridge.defenses?.(s)||{};const arr=v=>[...new Set((Array.isArray(v)?v:[]).map(x=>String(x||'').trim().toLowerCase()).filter(Boolean))];return{resistances:arr(d.resistances),immunities:arr(d.immunities),vulnerabilities:arr(d.vulnerabilities),conditionImmunities:arr(d.conditionImmunities),sources:Array.isArray(d.sources)?copy(d.sources):[]}})(),
-      custom:bridge.custom?.(s)||{},updatedAt:lastUpdated});
+      custom:{...(bridge.custom?.(s)||{}),summons:bridge.summons?.()||[]},updatedAt:lastUpdated});
   }
   const DAMAGE_WORDS=['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'];
   const canonDamageType=v=>{const k=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'').trim();return DAMAGE_WORDS.find(x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'')===k)||''};
