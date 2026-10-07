@@ -1,0 +1,2 @@
+/* Slot selection delegates entirely to Samoth's native spell implementation. */
+(()=>{const b=window.__CompanionBridge,e=window.RPGReactions;if(!b?.counterspell||!e)return;for(let slot=3;slot<=9;slot++)e.register({id:'counterspell-'+slot,label:'Contresort · emplacement N'+slot,matches:q=>q.kind==='spell-cast'&&Number(q.spellLevel)>0,available:()=>!!b.read().slots[slot]&&!b.read().eco.reaction,execute:q=>b.counterspell(q,slot),recover:q=>b.counterspellResult(q.reactionId)});})();

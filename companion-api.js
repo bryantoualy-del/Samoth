@@ -34,7 +34,7 @@
       inventorySummary:inventory.map(i=>({id:i.id??i.name,name:i.name,quantity:i.qty??i.quantity??1})),
       statuses:bridge.statuses?.(s)||[],
       defenses:(()=>{const d=bridge.defenses?.(s)||{};const arr=v=>[...new Set((Array.isArray(v)?v:[]).map(x=>String(x||'').trim().toLowerCase()).filter(Boolean))];return{resistances:arr(d.resistances),immunities:arr(d.immunities),vulnerabilities:arr(d.vulnerabilities),conditionImmunities:arr(d.conditionImmunities),sources:Array.isArray(d.sources)?copy(d.sources):[]}})(),
-      custom:{...(bridge.custom?.(s)||{}),summons:bridge.summons?.()||[]},updatedAt:lastUpdated});
+      custom:{...(bridge.custom?.(s)||{}),reactionKinds:bridge.reactionKinds||[],summons:bridge.summons?.()||[]},updatedAt:lastUpdated});
   }
   const DAMAGE_WORDS=['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'];
   const canonDamageType=v=>{const k=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'').trim();return DAMAGE_WORDS.find(x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'')===k)||''};
