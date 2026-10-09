@@ -282,10 +282,15 @@ const desktopGroups={combat:[['combat','Attaques'],['dragon','Dragon']],powers:[
 const desktopNav=document.createElement('nav');desktopNav.className='samoth-desktop-nav';desktopNav.setAttribute('aria-label','Navigation principale');
 const desktopSubnav=document.createElement('nav');desktopSubnav.className='samoth-desktop-subnav';desktopSubnav.setAttribute('aria-label','Sous-sections');
 desktopNav.innerHTML='<button data-desktop-group="combat">Combat</button><button data-desktop-group="powers">Sorts & pouvoirs</button><button data-desktop-group="social">Social</button><button data-desktop-group="history">Journal</button>';
-document.querySelector('.nav')?.after(desktopNav,desktopSubnav);
+const desktopSubnavRow=document.createElement('div');desktopSubnavRow.className='samoth-desktop-subnav-row';desktopSubnavRow.append(desktopSubnav);
+document.querySelector('.nav')?.after(desktopNav,desktopSubnavRow);
+const desktopLayout=window.matchMedia('(min-width:768px)');
+function placeCombatTools(){const tools=document.querySelector('.rpg-combat-tools');if(!tools)return;if(desktopLayout.matches)desktopSubnavRow.append(tools);else document.querySelector('#combat')?.prepend(tools)}
+desktopLayout.addEventListener('change',placeCombatTools);
+document.addEventListener('DOMContentLoaded',placeCombatTools,{once:true});
 desktopNav.onclick=e=>{const key=e.target.closest('[data-desktop-group]')?.dataset.desktopGroup;if(key)view(desktopGroups[key][0][0])};
 desktopSubnav.onclick=e=>{const key=e.target.closest('[data-desktop-view]')?.dataset.desktopView;if(key)view(key)};
-function updateDesktopNavigation(id){const group=Object.keys(desktopGroups).find(key=>desktopGroups[key].some(([view])=>view===id))||'combat';desktopNav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.desktopGroup===group));desktopSubnav.innerHTML=desktopGroups[group].map(([key,label])=>`<button data-desktop-view="${key}" class="${key===id?'active':''}">${label}</button>`).join('')}
+function updateDesktopNavigation(id){const group=Object.keys(desktopGroups).find(key=>desktopGroups[key].some(([view])=>view===id))||'combat';desktopNav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.desktopGroup===group));desktopSubnavRow.dataset.group=group;desktopSubnavRow.hidden=desktopGroups[group].length===1;desktopSubnav.innerHTML=desktopGroups[group].length>1?desktopGroups[group].map(([key,label])=>`<button data-desktop-view="${key}" class="${key===id?'active':''}">${label}</button>`).join(''):''}
 function view(id){$$('.view').forEach(e=>e.classList.toggle('active',e.id===id));$$('.nav button').forEach(e=>e.classList.toggle('active',e.dataset.view===id));updateMobileNavigation(id);updateDesktopNavigation(id);if(window.matchMedia('(min-width:768px)').matches)window.scrollTo({top:0,behavior:'instant'})}
 function selectedSpell(){return getSpell(state.selectedSpell)||SPELLS[0]}
 function metaFits(s,meta){return meta==='none'||meta==='quick'&&s.kind!=='reaction'&&s.castTime!=='bonus'||meta==='twin'&&!!s.twin||meta==='empower'&&['attack','save','storm','automatic'].includes(s.kind)||meta==='heighten'&&state.intensified&&(['save','storm'].includes(s.kind)||s.id==='radiance')}

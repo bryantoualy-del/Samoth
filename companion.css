@@ -1538,3 +1538,12 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
   .animated-pending{grid-template-columns:1fr}
   .animated-pending .ability{grid-column:1;grid-row:auto;margin-top:6px}
 }
+
+/* iPad: sous-sections et outils tactiques sur une seule ligne. */
+.samoth-desktop-subnav-row{display:none}
+@media(min-width:768px){
+ .samoth-desktop-subnav-row:not([hidden]){display:flex;align-items:center;gap:8px;margin:0 0 12px}
+ .samoth-desktop-subnav-row>.samoth-desktop-subnav{flex:1;min-width:0;margin:0}
+ .samoth-desktop-subnav-row>.rpg-combat-tools{flex:0 0 auto;flex-wrap:nowrap;margin:0}
+ .samoth-desktop-subnav-row:not([data-group="combat"])>.rpg-combat-tools{display:none}
+}
