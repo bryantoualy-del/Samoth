@@ -125,7 +125,7 @@ function choose(title,body,buttons,variant=''){return new Promise(resolve=>{
 function confirmHit(title,attack){
  if(pendingHitDecision)return Promise.resolve({choice:null,data:{}});
  window.__lastAttackHit=null;
- const bonus=attack.bonus??10;window.__pendingAttack={actor:state.phase,attackKind:attack.kind||(state.phase==='dragon'?'weapon':'spell'),name:title,total:attack.nat+bonus,nat:attack.nat,crit:attack.nat===20};const buttons=attack.nat===1?[{label:'Confirmer le raté · 1 naturel',value:'no'},{label:'Annuler',value:null}]:attack.nat===20?[{label:'Confirmer le critique · 20 naturel',value:'yes'},{label:'Annuler',value:null}]:[{label:'Raté',value:'no'},{label:'Touché',value:'yes'},{label:'Annuler',value:null}];
+ const bonus=attack.bonus??10;window.__pendingAttack={actor:state.phase,attackKind:attack.kind||(state.phase==='dragon'?'weapon':'spell'),name:title,total:attack.nat+bonus,nat:attack.nat,crit:attack.nat===20,...(state.rpgPendingCast?.current?.attackId?{attackId:state.rpgPendingCast.current.attackId}:{})};const buttons=attack.nat===1?[{label:'Confirmer le raté · 1 naturel',value:'no'},{label:'Annuler',value:null}]:attack.nat===20?[{label:'Confirmer le critique · 20 naturel',value:'yes'},{label:'Annuler',value:null}]:[{label:'Raté',value:'no'},{label:'Touché',value:'yes'},{label:'Annuler',value:null}];
  return choose(title,`<div class="hit-roll">${attack.nat+bonus}</div><div class="hit-detail">${esc(attack.display)} + bonus ${bonus}</div><p class="hit-question">Est-ce que cette attaque touche la cible ?</p>`,buttons,'hit').then(result=>{const choice=result.choice==='yes'?'hit':result.choice==='no'?'miss':null;window.__pendingAttack=null;window.__lastAttackHit=choice===null?null:choice==='hit';return {...result,choice}})
 }
 async function askNumber(label,def=1,min=0,max=999){let x=await choose(label,`<label>${esc(label)} <input name="amount" type="number" min="${min}" max="${max}" value="${def}"></label>`,[{label:'Valider',value:'ok'},{label:'Annuler',value:null}]);if(x.choice===null)return null;let n=Number(x.data.amount);if(!Number.isFinite(n)||n<min||n>max){message('Valeur invalide.');return null}return Math.floor(n)}
@@ -137,9 +137,9 @@ function applyCast(s,level,meta,free,guard){if(!free&&level)state.slots[level]--
 function rpgSaveContext(options={}){try{const rc=window.RPGConnect,x0=rc?.getStatus?.()||{};if(!x0.connected)return{connected:false,target:null,targets:[]};if(options.targetMode)rc?.prepareTargets?.({...options,open:false});const x=rc?.getStatus?.()||x0,targets=Array.isArray(x.targets)?x.targets:(x.target?[x.target]:[]);return{connected:true,target:targets[0]||null,targets}}catch{return{connected:false,target:null,targets:[]}}}
 function saveConditionForSpell(s){if(s.id==='frostbite')return{name:'Désavantage prochaine attaque',durationType:'untilEnd',consumeOnMatch:true,source:s.name};if(s.id==='bindingice')return{name:'Vitesse 0 (glace)',durationType:'indefinite',source:s.name};return null}
 function sendEncounterSave(payload){try{return !!window.RPGConnect?.requestSave?.(payload)}catch{return false}}
-async function cast(id){let s=getSpell(id);if(!s)return;if(pendingHitDecision){message('Attaque en attente de la décision du MJ.');return}if(id==='counter'&&window.RPGConnect?.getStatus().connected){message('Choisissez Contresort dans la fenêtre de réaction ouverte par Encounter.');return}let draft=readCastDraft(s);if(draft.useStaff&&STAFF_SPELLS[id]){await useStaffSpell(id);return}let meta=state.meta,free=s.id==='cure'&&draft.free&&!!state.cureFree,level=free?1:Number(draft.level)||s.lv;
- if(s.lv&&!free&&(!Number.isInteger(level)||level<s.lv||level>5||!state.slots[level])){message('Choisissez un emplacement disponible dans la préparation du sort.');return}
- let guard=usableSpell(s,level,meta,free);if(!guard)return;
+async function cast(id,resume=null){let s=getSpell(id);if(!s)return;if(pendingHitDecision){message('Attaque en attente de la décision du MJ.');return}if(id==='counter'&&window.RPGConnect?.getStatus().connected){message('Choisissez Contresort dans la fenêtre de réaction ouverte par Encounter.');return}let draft=resume?.draft||readCastDraft(s);if(draft.useStaff&&STAFF_SPELLS[id]){await useStaffSpell(id);return}let meta=resume?.meta??state.meta,free=resume?.free??(s.id==='cure'&&draft.free&&!!state.cureFree),level=resume?.level??(free?1:Number(draft.level)||s.lv);
+ if(!resume&&s.lv&&!free&&(!Number.isInteger(level)||level<s.lv||level>5||!state.slots[level])){message('Choisissez un emplacement disponible dans la préparation du sort.');return}
+ let guard=resume?.guard||usableSpell(s,level,meta,free);if(!guard)return;
  if(['haste','invisibility','shield'].includes(id)&&window.RPGCombatEffectsClient?.online()){await window.__CompanionBridge.connectedCast(s,level,meta,free,guard,()=>{const freshGuard=usableSpell(s,level,meta,free);if(!freshGuard)return false;const before=clone(state);applyCast(s,level,meta,free,freshGuard);commit(before,s.name,'Effet confié à Encounter.','spell');});return;}
  if(['haste','invisibility','shield','animateobjects'].includes(id)&&window.RPGHealth?.authoritative()&&!RPGHealth.online())return message('Connexion Encounter requise · aucune ressource dépensée.');
  if(s.kind==='heal'&&window.RPGHealth?.online()){
@@ -160,13 +160,21 @@ async function cast(id){let s=getSpell(id);if(!s)return;if(pendingHitDecision){m
  let fail=0,success=0;
  if(saveLike&&!networkSave){fail=Number(draft.fail);success=Number(draft.success);if(!Number.isInteger(fail)||!Number.isInteger(success)||fail<0||success<0||fail+success>50||(meta==='twin'&&fail+success>2)){message('Nombre de cibles invalide.');return}}
  let summonResistance='';if(s.kind==='summon'){summonResistance=draft.resistance;if(!['froid','acide','feu','foudre','poison'].includes(summonResistance)){message('Choisissez la résistance partagée.');return}}
- if(s.kind==='summon'&&window.RPGHealth?.authoritative()&&!RPGHealth.online())return message('Connexion Encounter requise.');const before=clone(state);applyCast(s,level,meta,free,guard);if(s.kind==='summon')state.sharedResistance=summonResistance;
+ if(s.kind==='summon'&&window.RPGHealth?.authoritative()&&!RPGHealth.online())return message('Connexion Encounter requise.');const before=resume?.before||clone(state);if(!resume)applyCast(s,level,meta,free,guard);if(s.kind==='summon')state.sharedResistance=summonResistance;
  // Native spell costs are paid at launch, before the MJ's hit/save decision.
  if(s.kind==='attack'){
    if(rpgSave.connected&&!rpgSave.target){Object.assign(state,before);persist();render();message('Sélectionnez une cible Encounter avant de lancer.');return}
    persist();render();window.CompanionAPI?.sync();
    const hits=meta==='twin'?2:1;
-   for(let i=0;i<hits;i++){const ar=attackRoll(),nat=ar.nat,r=await confirmHit(`${s.name} · cible ${i+1}`,ar);if(!r.choice){Object.assign(state,before);persist();render();return}attackResults.push({nat,hit:r.choice==='hit'});}
+   attackResults=resume?.attackResults||[];
+   for(let i=attackResults.length;i<hits;i++){
+    const ar=(resume?.current?.index===i?resume.current.ar:null)||attackRoll(),nat=ar.nat;
+    if(rpgSave.connected){state.rpgPendingCast={id,draft:clone(draft),meta,free,level,guard:clone(guard),before,attackResults:clone(attackResults),current:{index:i,ar:clone(ar),attackId:resume?.current?.index===i?resume.current.attackId:crypto.randomUUID()}};persist();}
+    const r=await confirmHit(`${s.name} · cible ${i+1}`,ar);
+    if(!r.choice){delete state.rpgPendingCast;Object.assign(state,before);persist();render();return}
+    attackResults.push({nat,hit:r.choice==='hit'});resume=null;
+   }
+   delete state.rpgPendingCast;persist();
  }
 
  if(s.kind==='attack'){let pieces=[];window.__lastDamageComponents=[];for(let [i,r]of attackResults.entries()){if(!r.hit){pieces.push(`Cible ${i+1} : ${r.nat}+10=${r.nat+10} · raté${r.nat===1?' (1 naturel)':''}`);continue}let[n,faces]=spellDice(s,level),d=damageDice(n*(r.nat===20?2:1),faces,!!s.cold,meta==='empower'),bonus=s.cold?3:0;let extra=state.flameArmed&&level>0?damageDice(level,10):null;if(extra){pureFlameFx=true;state.flameArmed=false;state.flame=0}let amount=d.total+bonus+(extra?.total||0);window.__lastDamageComponents.push({amount:d.total+bonus,type:s.cold?'froid':s.element||''});if(extra)window.__lastDamageComponents.push({amount:extra.total,type:'radiants'});pendingDamage+=amount;critical ||=r.nat===20;pieces.push(`Cible ${i+1} : ${r.nat}+10=${r.nat+10}${r.nat===20?' · CRITIQUE':''}\n${amount} dégâts (${d.total}${s.cold?' froid':s.element?' '+s.element:''}${bonus?' + 3 affinité':''}${extra?' + '+extra.total+' radiant':''}) · dés ${d.detail}`)}detail=pieces.join('\n');}
@@ -419,3 +427,8 @@ window.__CompanionBridge.healthFeedback=r=>{const detail=r.ok?r.results.map(x=>R
 window.__CompanionBridge.summons=()=>{const a=state.animatedObjects;if(a){if(!a.instanceId){a.instanceId=crypto.randomUUID();persist()}return Array.from({length:a.max},(_,index)=>({kind:'animated-object',instanceId:a.instanceId+'-'+index,index,size:a.size,hp:a.hpEach,actionUsed:false}));}const d=state.dragon;if(!d)return [];if(!d.instanceId){d.instanceId=crypto.randomUUID();d.createdAt=Date.now();persist()}return [{kind:'dragon',instanceId:d.instanceId,createdAt:d.createdAt,hp:d.hp,temp:d.tempHp||0,actionUsed:state.dragonEco.action||state.dragonEco.rends>=2}]};
 window.__CompanionBridge.applySummons=rows=>{if(state.animatedObjects){const a=state.animatedObjects,group=rows.filter(p=>p.kind==='animated-object'&&p.instanceId.startsWith(a.instanceId+'-'));if(group.length){a.objects=group;a.active=group.filter(p=>p.active).length;if(!a.active){state.animatedObjects=null;if(state.concentration==='Animation d’objets')state.concentration='';}render();persist();}}const d=state.dragon;if(!d)return;const p=rows.find(x=>x.kind==='dragon'&&x.instanceId===d.instanceId);if(!p)return;if(p.active){d.hp=p.health.current;d.max=p.health.max;d.tempHp=p.health.temp;d.conditions=p.conditions}else{state.dragon=null;state.sharedResistance='';if(state.concentration==='Convocation d’esprit draconique')state.concentration='';if(state.phase==='dragon')state.phase='samoth'}render();persist()};
 window.__CompanionBridge.setSummonPhase=kind=>{if(kind==='dragon'&&state.dragon)state.phase='dragon';else if(kind==='owner')state.phase='samoth';render();persist()};
+
+// Recreate only the waiting continuation; Encounter still decides hit or miss.
+function resumePendingCast(){if(!state.rpgPendingCast||pendingHitDecision||!window.CompanionAPI||!window.RPGConnect?.getStatus?.().connected)return;const saved=clone(state.rpgPendingCast);cast(saved.id,saved).catch(error=>{console.error('Pending spell recovery failed',error);message('Sort en attente : reconnexion nécessaire.');});}
+window.addEventListener('rpg-connect:authority',e=>{if(e.detail?.connected)queueMicrotask(resumePendingCast)});
+window.addEventListener('companionapi:ready',resumePendingCast);
