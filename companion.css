@@ -1559,3 +1559,6 @@ dialog.rest-confirm{border-color:#87d7eb;background:linear-gradient(150deg,#202f
 .rpg-multi-action-ui button:hover:not(:disabled){border-color:#b4f1fa;background:#214c59}
 .rpg-multi-action-ui button:focus-visible{outline:2px solid #a5ecf6;outline-offset:3px}
 .rpg-multi-action-ui button:disabled{opacity:.5}
+
+/* Lot 4: mode de jet distinct pour les deux Déchirements de l'esprit draconique. */
+.dragon-roll-modes{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}.dragon-roll-modes .toggle{min-height:38px;flex:1 1 92px;padding:6px 10px;touch-action:manipulation}
