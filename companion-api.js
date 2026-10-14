@@ -36,7 +36,7 @@
       inventorySummary:inventory.map(i=>({id:i.id??i.name,name:i.name,quantity:i.qty??i.quantity??1})),
       statuses:bridge.statuses?.(s)||[],
       defenses:(()=>{const d=bridge.defenses?.(s)||{};const arr=v=>[...new Set((Array.isArray(v)?v:[]).map(x=>String(x||'').trim().toLowerCase()).filter(Boolean))];return{resistances:arr(d.resistances),immunities:arr(d.immunities),vulnerabilities:arr(d.vulnerabilities),conditionImmunities:arr(d.conditionImmunities),sources:Array.isArray(d.sources)?copy(d.sources):[]}})(),
-      custom:{...(bridge.custom?.(s)||{}),reactionKinds:bridge.reactionKinds||[],summons:bridge.summons?.()||[]},updatedAt:lastUpdated});
+      custom:{...(bridge.custom?.(s)||{}),concentrationModifier:bridge.concentrationProfile?.()?.modifier,saveModifiers:Object.fromEntries(['FOR','DEX','CON','INT','SAG','CHA'].map(a=>[a,bridge.saveProfile?.(a,{conditions:[]})?.modifier])),reactionKinds:bridge.reactionKinds||[],summons:bridge.summons?.()||[]},updatedAt:lastUpdated});
   }
   const DAMAGE_WORDS=['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'];
   const canonDamageType=v=>{const k=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'').trim();return DAMAGE_WORDS.find(x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/s$/,'')===k)||''};
@@ -79,7 +79,7 @@
         try{if(pending&&typeof pending==='object'&&!pending.attackId)pending.attackId=pendingId}catch{}
         pendingDamageBaseline=Number(current?.turn?.damage)||0;
         const rawRoll=pending.total??pending.roll?.total??pending.roll??pending.attackTotal??pending.attack??null,numericRoll=(rawRoll!==null&&rawRoll!==''&&Number.isFinite(Number(rawRoll)))?Number(rawRoll):null;
-        emit('attack:rolled',{attackId:pendingId,actor:pending.actor||bridge.id,attackKind:pending.attackKind||'spell',roll:numericRoll??rawRoll,total:numericRoll,nat:(()=>{const n=pending.nat??pending.roll?.nat??pending.roll?.raw??pending.roll?.d20;return n!=null&&Number.isFinite(Number(n))?Number(n):null})(),detail:pending.detail??pending.roll?.detail??'',crit:!!(pending.crit??pending.roll?.crit),name:pending.name??pending.label??pending.kind??'Attaque'},pendingId+':rolled');
+        emit('attack:rolled',{attackId:pendingId,actor:pending.actor||bridge.id,attackKind:pending.attackKind||'spell',roll:numericRoll??rawRoll,total:numericRoll,nat:(()=>{const n=pending.nat??pending.roll?.nat??pending.roll?.raw??pending.roll?.d20;return n!=null&&Number.isFinite(Number(n))?Number(n):null})(),detail:pending.detail??pending.roll?.detail??'',crit:!!(pending.crit??pending.roll?.crit),blessRoll:pending.blessRoll??pending.roll?.blessRoll??0,dice:pending.dice??pending.rolls??pending.roll?.rolls??pending.roll?.dice??(pending.roll?.a!=null?[pending.roll.a,...(pending.roll.b!=null?[pending.roll.b]:[])]:null),mode:pending.modeOfRoll??pending.roll?.mode??(['normal','adv','dis','manual'].includes(pending.mode)?pending.mode:null),...(pending.spiritualWeapon?{spiritualWeapon:pending.spiritualWeapon}:{}),name:pending.name??pending.label??pending.kind??'Attaque'},pendingId+':rolled');
         emit('attack:pending-hit',{attackId:pendingId,actor:pending.actor||bridge.id},pendingId+':pending');
       }
       else if(!key&&pendingKey&&pendingId){
