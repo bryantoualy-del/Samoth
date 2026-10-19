@@ -17,3 +17,7 @@ Validation : `npm test`, `npm run test:e2e` (Chromium/WebKit, largeurs 390 et 11
 Compatibilité : lecture de `Encounter/rpg-samoth-authority.js` et exécution ciblée des tests mécaniques `rpg-samoth-automatismes.test.js` (le test d’installation des six Companions exige leurs checkouts et reste hors périmètre). La suspension précède l’application des dégâts ; les critiques sont conservés, les refus et la reprise sont idempotents, Ailes ne modifie pas la CA persistante.
 
 Résultats locaux : 3 tests unitaires réussis ; 13 tests mécaniques Encounter ciblés réussis ; Chromium 153 aux largeurs 390/1180, tous les scénarios navigateur réussis. WebKit est prévu en GitHub Actions ; pas encore exécuté localement.
+
+## Nettoyage demandé après revue sur iPad
+
+Les rappels du don dans la réserve de sorcellerie et la carte Métamagie sont retirés. Soins et Ailes restent disponibles dans les pouvoirs existants. La boîte « Attaque locale » et le choix de Bénédiction des sauvegardes locales sont supprimés dans les six Companions de la CC ; le bonus local est géré à la table. Les conditions envoyées par Encounter restent appliquées en mode connecté. Les variantes de sauvegarde de Rufus et Inflexible de Brack restent en place. Test navigateur `e2e/local-table-effects.mjs` sur les six modules réels : attaque native directe, aucun dé de Bénédiction local, sauvegarde locale préservée, bonus connecté et absence de nouveau jet sur répétition de requête.

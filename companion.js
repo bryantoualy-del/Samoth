@@ -342,8 +342,7 @@ function renderResources(){
    <div class="resource-orb resource-orb-sp"><span>SP</span><strong>${state.sp}</strong><small>/ 10</small></div>
    <div class="resource-flow-copy"><b>Réserve de sorcellerie</b><small>10 points maximum · aucune réserve séparée</small></div>
    <button class="resource-action" data-ability="hitDice"><span>Dés de vie</span><strong>${state.hitDice}/10</strong><small>Dépenser</small></button>
- </div>
- <div class="resource-feature"><span class="resource-feature-mark">✦</span><div><b>Don des dragons métalliques</b><small>Niveau 8 · Guérison draconique et Ailes protectrices</small></div><span class="resource-feature-state">ACTIF</span></div>`;
+ </div>`;
  const options=[['none','Aucune','Sort normal',0],['quick','Accéléré','Action → bonus',2],['twin','Jumeau','Deux cibles · coût du niveau',1],['empower','Renforcé','Relance 3 dés faibles',1]];
  $('#combatSp').textContent=`${state.sp}/10 SP`;
  $('#metaBody').innerHTML=options.map(([key,label,description,cost])=>{let selected=state.meta===key,spell=selectedSpell(),points=key==='twin'?(spell.lv||1):cost,unavailable=state.phase==='dragon'||!canPoints(points)||!metaFits(spell,key),price=key==='none'?'':key==='twin'?points+(spell.lv?'+':'')+' SP':cost+' SP';return `<button class="meta-chip ${selected?'selected':''}" data-meta="${key}" aria-pressed="${selected}" aria-label="${label}${price?' · '+price:''} · ${description}" title="${unavailable&&!metaFits(spell,key)?'Non applicable à '+spell.name:description}" ${unavailable?'disabled':''}><span>${label}</span>${price?`<small>${price}</small>`:''}</button>`}).join('');
