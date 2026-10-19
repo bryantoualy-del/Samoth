@@ -11,6 +11,6 @@
  }
  const proficiency=()=>2+Math.floor((profile.level-1)/4);
  const healingModifier=s=>Math.floor((profile.scores[s.draconicHealingAbility??profile.castingAbility]-10)/2);
- const wingsEligible=q=>q.visible!==false&&q.targetVisible!==false&&(q.self||q.rangeFeet==null||Number.isFinite(q.rangeFeet)&&q.rangeFeet>=0&&q.rangeFeet<=5);
+ const wingsEligible=q=>q.magicMissile!==true&&q.visible!==false&&q.targetVisible!==false&&(q.self||q.rangeFeet==null||Number.isFinite(q.rangeFeet)&&q.rangeFeet>=0&&q.rangeFeet<=5);
  globalThis.SamothFeatRules={profile,migrate,proficiency,healingModifier,wingsEligible};
 })();

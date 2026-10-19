@@ -12,7 +12,7 @@ function reactions(){const s={eco:{reaction:false},wings:4,slots:{1:2}},descript
  vm.runInContext(fs.readFileSync('rpg-samoth-automatismes.js','utf8'),ctx);return{s,d:descriptors.get('samoth-wings'),ctx};}
 test('wings validate range/visibility, claim without cost, consume once on grant',async()=>{
  const{s,d,ctx}=reactions(),q={kind:'defensive-ac',wingsAllowed:true,reactionId:'attack1',self:false,rangeFeet:5,visible:true};
- assert.ok(d.matches(q));assert.ok(d.available(q));assert.equal(d.available({...q,rangeFeet:6}),false);assert.equal(d.available({...q,visible:false}),false);
+ assert.ok(d.matches(q));assert.ok(d.available(q));assert.equal(d.available({...q,magicMissile:true}),false);assert.equal(d.available({...q,rangeFeet:6}),false);assert.equal(d.available({...q,visible:false}),false);
  assert.ok(await d.beforeClaim(q));assert.equal(s.wings,4);const out=d.execute(q);assert.equal(out.acBonus,4);assert.equal(s.wings,3);assert.equal(s.eco.reaction,true);assert.equal(d.execute(q),out);assert.equal(d.recover(q),out);assert.equal(s.wings,3);
  assert.equal(d.available({...q,reactionId:'attack2'}),false);s.eco.reaction=false;s.wings=0;assert.equal(d.available(q),false);
  s.wings=4;ctx.RPGDialogs.confirm=async()=>false;assert.equal(await d.beforeClaim({...q,reactionId:'declined',rangeFeet:null,visible:undefined}),null);assert.equal(s.wings,4);
