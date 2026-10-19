@@ -5,7 +5,7 @@
  const maps={
  kentaro:{slots:['slots',2],curseReady:['curseReady',1,'bool'],biteReady:['biteReady',1,'bool'],stoneReady:['stoneReady',1,'bool'],rayStepReady:['rayStepReady',1,'bool']},
  brackmard:{superiorityDice:['sup',5],fougue:['surge',1],secondWind:['second',1],indomitable:['indom',1],breath:['breath',1],hitDice:['hitDice',10]},
- samoth:{sorceryPoints:['sp',10],featPoints:['featSp',2],wings:['wings',4],staffCharges:['staff',8],cureFree:['cureFree',1],flame:['flame',1],vial:['vial',1],hitDice:['hitDice',10]},
+ samoth:{sorceryPoints:['sp',10],wings:['wings',4],staffCharges:['staff',8],cureFree:['cureFree',1],flame:['flame',1],vial:['vial',1],hitDice:['hitDice',10]},
  nans:{rages:['rages',4],horn:['horn',5],voltoEnergy:['hits',6],voltoStored:['storedCount',5],barkReady:['barkReady',1,'bool'],capeReady:['capeReady',1,'bool'],ancReady:['ancReady',1,'bool'],exhaust:['exhaust',6]},
  rufus:{psiDie:['psiDie',8],lucky:['lucky',3],hexCharges:['hexCharges',5],psiReconstitutionReady:['psiReconstitutionReady',1,'bool'],ravenShadow:['linceul.ravenShadow',2],pilgrim:['linceul.pilgrim',1,'bool'],judgment:['linceul.judgment',1,'bool'],lastBreath:['linceul.lastBreath',1,'bool'],fireBladeReady:['fireBlade.ready',1,'bool'],visionUses:['vision.uses',100],woundReady:['woundReady',1,'bool'],invisibilityReady:['invisibilityReady',1,'bool']},
  zephyr:{layOnHands:['lay',50],channel:['channel',1],arrows:['arrows',3],binahChromatic:['binahChromatic',3],binahWall:['binahWall',1],sense:['sense',5],decree:['decree',1],anchor:['anchor',1]}};
