@@ -427,3 +427,5 @@ window.__CompanionBridge.hasteAttack=async weapon=>{if(pendingHitDecision||state
 window.__CompanionBridge.quickActionCost=selector=>{if(selector!=='#combatCast')return null;const s=getSpell(document.querySelector('#combatSpell')?.value);return s?.kind==='reaction'?'reaction':s?.castTime==='bonus'||state.meta==='quick'?'bonus':'action';};
 
 window.__CompanionBridge.quickActionAvailable=selector=>{const s=selector==='#combatCast'?getSpell(document.querySelector('#combatSpell')?.value):selector==='[data-cast=shield]'?getSpell('shield'):null;return s?!spellBlocked(s):true;};
+
+window.__CompanionBridge.localAcBonus=s=>s.rpgTableShieldActive?5:0;
