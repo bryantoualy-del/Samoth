@@ -119,3 +119,13 @@ test('later ribbon observer cannot overwrite structured result for the same acti
 });
 
 test('Samoth heals display actual dice after accepted resolution',()=>{const s=fs.readFileSync(path.join(root,'companion.js'),'utf8');new vm.Script(s);assert.match(s,/originalDice:empowered\?before:null/);assert.match(s,/eventId:crypto\.randomUUID\(\),title:s\.name,heals:/);assert.match(s,/if\(structuredResult\)window\.CompanionResultFocus\?\.showStructured/);});
+
+test('Samoth spell attacks preserve d20, blessing and real elemental dice',()=>{
+ const s=fs.readFileSync(path.join(root,'companion.js'),'utf8');
+ new vm.Script(s,{filename:'companion.js'});
+ assert.match(s,/attack\.blessRoll=bless/);
+ assert.match(s,/rolls:ar\.rolls,mode:ar\.mode/);
+ assert.match(s,/dice:d\.dice,formula:\(n\*\(r\.nat===20\?2:1\)\)/);
+ assert.match(s,/extra:r\.blessRoll,total:r\.nat\+r\.bonus\+r\.blessRoll/);
+ assert.match(s,/title:s\.name\+' · cible '\+\(i\+1\)\+' — RATÉ'/);
+});
