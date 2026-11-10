@@ -131,3 +131,14 @@ test('Samoth spell attacks preserve d20, blessing and real elemental dice',()=>{
 });
 
 test('Samoth saving throws and automatic spells preserve typed dice',()=>{const s=fs.readFileSync(path.join(root,'companion.js'),'utf8');new vm.Script(s);assert.match(s,/structuredResult=\{eventId:crypto\.randomUUID\(\),title:s\.name\+' — sauvegarde '/);assert.match(s,/formula:'4d6',bonus:3/);assert.match(s,/title:s\.name\+' — toucher automatique'/);});
+
+
+test('V1.4: structured result stays visible until explicit close and uses no emoji damage glyphs',()=>{
+ assert.doesNotMatch(source,/setTimeout\(hide,\s*8500\)/);
+ assert.doesNotMatch(source,/[🔥❄⚡💥🧪☠✨🧠🔮🪨🗡]/u);
+ const {normalizeType,semanticColors}=ctx.module.exports;
+ for(const [label,type] of [['feu','fire'],['froid','cold'],['foudre','lightning'],['tonnerre','thunder'],['acide','acid'],['poison','poison'],['nécrotiques','necrotic'],['radiants','radiant'],['psychiques','psychic'],['force','force'],['contondants','bludgeoning'],['perforants','piercing'],['tranchants','slashing']]){
+  assert.equal(normalizeType(label),type);
+  assert.match(semanticColors[type],/^#[0-9A-Fa-f]{6}$/);
+ }
+});
