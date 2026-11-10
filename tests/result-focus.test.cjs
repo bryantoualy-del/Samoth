@@ -33,3 +33,30 @@ test('temporary DOM card displays amounts and closes without editing any history
  assert.equal(blocks.length,2);assert.equal(blocks[0].children[1].textContent,'27');assert.equal(blocks[1].children[1].textContent,'22');
  w.CompanionResultFocus.hide();assert.equal(popup.hidden,true);
 });
+
+test('universal typed damage palette and bilingual normalization',()=>{
+ const {semanticColors,normalizeType}=ctx.module.exports;
+ assert.equal(semanticColors.fire,'#FF6538');
+ assert.equal(semanticColors.healing,'#34D399');
+ assert.equal(semanticColors.temporary,'#38BDF8');
+ assert.equal(semanticColors.attack,'#E5B963');
+ assert.equal(normalizeType('nécrotiques'),'necrotic');
+ assert.equal(normalizeType('contondants'),'bludgeoning');
+ assert.equal(normalizeType('lightning'),'lightning');
+ const mixed=read('22 contondants + 8 radiants');
+ assert.equal(mixed.parts.length,2);
+ assert.equal(mixed.parts[0].amount,22);
+ assert.equal(mixed.parts[0].type,'bludgeoning');
+});
+test('temporary HP remains distinct from healing and social roll is excluded',()=>{
+ const {isSocial}=ctx.module.exports;
+ const temporary=read('11 PV temporaires');
+ assert.equal(temporary.temp,11);
+ assert.equal(temporary.heal,null);
+ assert.equal(isSocial('Persuasion'),true);
+ assert.equal(isSocial('Jet social'),true);
+ assert.equal(isSocial('Sauvegarde Constitution'),false);
+});
+test('results never infer a past d20 roll from click history',()=>{
+ assert.doesNotMatch(source,/previousRoll|captureRoll/);
+});
