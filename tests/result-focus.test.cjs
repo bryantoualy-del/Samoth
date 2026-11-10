@@ -129,3 +129,5 @@ test('Samoth spell attacks preserve d20, blessing and real elemental dice',()=>{
  assert.match(s,/extra:r\.blessRoll,total:r\.nat\+r\.bonus\+r\.blessRoll/);
  assert.match(s,/title:s\.name\+' · cible '\+\(i\+1\)\+' — RATÉ'/);
 });
+
+test('Samoth saving throws and automatic spells preserve typed dice',()=>{const s=fs.readFileSync(path.join(root,'companion.js'),'utf8');new vm.Script(s);assert.match(s,/structuredResult=\{eventId:crypto\.randomUUID\(\),title:s\.name\+' — sauvegarde '/);assert.match(s,/formula:'4d6',bonus:3/);assert.match(s,/title:s\.name\+' — toucher automatique'/);});
