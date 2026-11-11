@@ -1,0 +1,58 @@
+/* V1.6 : Grimoire de Samoth, architecture et pictogrammes du grimoire Kobe. */
+#spellList{display:block;min-width:0}
+#spellList .samoth-kobe-grimoire{display:flex;flex-direction:column;gap:12px;width:100%;min-width:0;
+  --book-line:#506575;--book-ink:#eaf6fb;--book-muted:#bbd0dc;--book-accent:#8bcdea;
+  color:var(--book-ink);background:linear-gradient(165deg,#152632,#101821);padding:14px;
+  border:1px solid #526b7b;border-radius:16px;box-shadow:inset 0 1px 0 #ffffff12}
+#spellList .samoth-book-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#spellList .samoth-book-heading h2{color:#d5eef9;font-size:1.3rem;margin:0}
+#spellList .samoth-book-heading small{display:block;color:var(--book-muted);font-size:.75rem;margin-top:4px}
+#spellList .samoth-book-slots{margin:0!important;padding:10px 12px;border-color:#47677e}
+#spellList .samoth-book-slots h2{font-size:.92rem}
+#spellList .samoth-book-slots .meta{font-size:.7rem}
+#spellList .samoth-book-tools{display:flex;gap:8px;align-items:center}
+#spellList .samoth-book-search{flex:1;min-width:0;min-height:43px;border:1px solid #557589;border-radius:9px;
+  padding:8px 12px;background:#0c1923;color:#eaf6fb;font-size:.88rem}
+#spellList .samoth-book-fav{flex:none;min-height:43px;padding:8px 12px;border:1px solid #6885a0;border-radius:9px;
+  background:#192837;color:#d8eafa;font-weight:700}
+#spellList .samoth-book-fav[aria-pressed=true]{background:#29455a;border-color:#9be3f6;color:#fff}
+#spellList .samoth-book-filters{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:3px 0;margin:0!important}
+#spellList .samoth-book-filters button{font-size:.75rem;padding:7px 10px;min-height:36px}
+#spellList .samoth-book-layout{display:grid;grid-template-columns:minmax(260px,42%) minmax(0,1fr);
+  gap:12px;align-items:stretch;min-width:0}
+#spellList .samoth-book-list{display:flex;flex-direction:column;gap:6px;min-width:0;
+  max-height:min(64dvh,650px);overflow-y:auto;overscroll-behavior:contain;
+  background:#0b1620;border:1px solid #3f5b70;border-radius:13px;padding:7px;scrollbar-width:thin}
+#spellList .samoth-book-entry{display:flex;align-items:stretch;gap:3px;min-width:0;background:#162431;border:1px solid #415768;border-radius:10px}
+#spellList .samoth-book-entry:has([aria-pressed=true]){border-color:#b8e8ff;background:#254458}
+#spellList .samoth-book-select{display:flex;align-items:center;gap:9px;text-align:left;flex:1;min-width:0;
+  background:transparent;border:0;color:#e7f3fa;padding:9px 7px;cursor:pointer;min-height:62px}
+#spellList .samoth-spell-glyph{width:38px;height:38px;flex:none;object-fit:contain;filter:drop-shadow(0 0 8px #72d0ed33)}
+#spellList .samoth-book-name{display:flex;flex-direction:column;min-width:0;flex:1;gap:3px}
+#spellList .samoth-book-name strong{font-size:.9rem;white-space:normal;overflow-wrap:anywhere}
+#spellList .samoth-book-name small{color:#aac0cf;font-size:.72rem}
+#spellList .samoth-book-cast{font-size:.68rem;color:#b9dcea;text-align:right;max-width:77px}
+#spellList .samoth-book-star{flex:none;align-self:center;padding:4px;font-size:20px;color:#e6c377;
+  background:transparent;border:none;min-width:30px;min-height:36px}
+#spellList .samoth-book-star[disabled]{opacity:.2}
+#spellList .samoth-book-detail{min-width:0;border:1px solid #4e7b92;border-radius:13px;
+  background:linear-gradient(160deg,#1c3342,#11202b);padding:13px;
+  max-height:min(64dvh,650px);overflow:auto}
+#spellList .samoth-book-sheet-title{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #496171}
+#spellList .samoth-book-sheet-title .samoth-spell-glyph{width:48px;height:48px}
+#spellList .samoth-book-sheet-title h3{margin:3px 0 0;color:#e4f7ff;font-size:1.15rem}
+#spellList .samoth-book-sheet-title small{color:#a9c4d4}
+#spellList .samoth-book-sheet{display:flex;flex-direction:column;gap:10px;background:transparent!important;
+  border:0!important;box-shadow:none!important;padding:0!important;min-width:0}
+#spellList .samoth-book-sheet>h3{display:none}
+#spellList .samoth-book-sheet .eyebrow{color:#90cde7}
+#spellList .samoth-book-sheet .meta{font-size:.83rem;line-height:1.35}
+#spellList .samoth-book-sheet .spell-doc{margin:0;max-height:none}
+#spellList .samoth-book-sheet .spell-doc-body{font-size:.83rem;line-height:1.48}
+#spellList .samoth-book-sheet [data-cast]{min-height:48px;margin-top:auto}
+#spellList .samoth-book-empty{font-size:.85rem;color:#bfced8;padding:12px}
+@media(max-width:780px){
+  #spellList .samoth-book-layout{grid-template-columns:1fr}
+  #spellList .samoth-book-list{max-height:260px}
+  #spellList .samoth-book-detail{max-height:none}
+}
