@@ -216,3 +216,16 @@ test('Samoth N6: Encounter save refusal restores spell slot and sorcery points b
  const accepted={slots:{6:0},sp:8},okay=fn({source:'Désintégration'},()=>true,accepted,before,()=>{},()=>{},()=>{});
  assert.equal(okay,true);assert.equal(accepted.slots[6],0);
 });
+
+test('Samoth legacy level 10 import preserves missing HP and expended resources',()=>{
+ const source=fs.readFileSync(path.join(root,'companion.js'),'utf8');
+ assert.match(source,/next\.hp=Math\.max\(0,Math\.min\(78,old\.hp>0\?old\.hp\+6:0\)\)/);
+ assert.match(source,/next\.sp=Math\.max\(0,Math\.min\(11,Number\(old\.spCore\?\?10\)\+1\)\)/);
+ assert.match(source,/next\.staff=Math\.max\(0,Math\.min\(10,Number\(old\.staff\?\?8\)\+2\)\)/);
+ const hp=(old)=>Math.max(0,Math.min(78,old>0?old+6:0));
+ assert.equal(hp(72),78);assert.equal(hp(32),38);assert.equal(hp(0),0);
+ const sp=(old)=>Math.max(0,Math.min(11,Number(old??10)+1));
+ assert.equal(sp(10),11);assert.equal(sp(0),1);
+ const staff=(old)=>Math.max(0,Math.min(10,Number(old??8)+2));
+ assert.equal(staff(8),10);assert.equal(staff(0),2);
+});
