@@ -48,6 +48,23 @@ try{
   assert.equal(restored.notes,'level11-e2e-preserved');
   assert.deepEqual(errors,[],'no browser runtime errors');
   await page.close();
+  const legacy=await browser.newPage({viewport:{width,height:820}});
+  await legacy.goto(base);
+  await legacy.evaluate(()=>{
+    localStorage.clear();
+    localStorage.setItem('samoth-v3',JSON.stringify({
+      schema:3,hp:32,slots:{1:1,2:0,3:0,4:0,5:0},
+      spCore:0,staff:0,round:3
+    }));
+  });
+  await legacy.reload();await legacy.waitForFunction(()=>window.__CompanionBridge?.id==='samoth');
+  const fromLegacy=await legacy.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,sp:s.sp,staff:s.staff,slot6:s.slots?.[6]}});
+  assert.equal(fromLegacy.hp,38,'legacy level 10 damage is conserved when gaining 6 HP');
+  assert.equal(fromLegacy.max,78);
+  assert.equal(fromLegacy.sp,1,'legacy depleted sorcery points gain only the level-up point');
+  assert.equal(fromLegacy.staff,2,'legacy depleted staff gains only the level-up charges');
+  assert.equal(fromLegacy.slot6,1,'legacy character receives one level 6 slot');
+  await legacy.close();
  }
  console.log('Samoth level 11 browser smoke passed',process.env.E2E_BROWSER||'chromium');
 }finally{await browser?.close();await new Promise(ok=>server.close(ok))}
