@@ -183,10 +183,17 @@ async function cast(id){let s=getSpell(id);if(!s)return;if(pendingHitDecision){m
  else if(s.id==='absorb')detail='Résistance au type déclencheur jusqu’au début du prochain tour ; bonus à la prochaine attaque de mêlée.';
  else if(s.id==='radiance')detail='Zone maintenue. Pour chaque exposition : CON DD18, échec 4d10 radiant et 1 épuisement. Concentrez-vous.';
  else detail=`${s.desc}${s.concentration?' · Concentration active.':''}`;
+ if(networkSavePayload&&!sendEncounterSave(networkSavePayload)){
+   // La requête Encounter a été refusée : annuler l'incantation et ses coûts.
+   for(const key of Object.keys(state))if(!Object.prototype.hasOwnProperty.call(before,key))delete state[key];
+   Object.assign(state,before);persist();render();
+   message('JdS non transmis : incantation et ressources restaurées. Vérifiez les cibles ou la connexion RPG Connect.');
+   return;
+ }
  if(s.lv>=1&&['attack','save','storm','automatic'].includes(s.kind)&&(pendingDamage>0||!!networkSavePayload))state.malachorTriggerRound=state.round;
  state.turnDamage+=pendingDamage;commit(before,s.name,detail+(meta!=='none'?`\nMétamagie : ${meta} (${guard.points} point(s)).`:''),critical?'crit':s.kind==='summon'?'summon':'spell',{kind:s.kind==='summon'?'summon':critical?'crit':s.cold||s.id==='storm'?s.id:s.id==='orb'&&orbCold?'vortex':s.id==='missile'?'meta':s.id==='cure'?'heal':'meta',level,pureFlame:pureFlameFx});
  if(structuredResult)window.CompanionResultFocus?.showStructured?.(structuredResult);
- if(networkSavePayload&&!sendEncounterSave(networkSavePayload))message('JdS non transmis : vérifiez la connexion RPG Connect.');
+
  if(s.id==='animateobjects'&&state.animatedObjects){let a=state.animatedObjects;window.CompanionAPI?.emitLocal('summon:created',{actor:'animated-objects',owner:'samoth',kind:'animated-objects',count:a.max,size:a.size,ac:a.ac,hpEach:a.hpEach,attackBonus:a.attackBonus,damage:{dice:`${a.damage[0]}d${a.damage[1]}`,bonus:a.damageBonus},expiresRound:a.expiresRound});}
 }
 async function dragonAction(type){if(window.RPGHealth?.authoritative()&&!RPGHealth.online())return message('Connexion Encounter requise.');if(type==='damage'||type==='heal'){if(window.RPGHealth?.authoritative()){if(!state.dragon||!RPGHealth.online())return message('Connexion Encounter requise.');const n=await askNumber(type==='damage'?'Dégâts au dragon':'Soins du dragon',1,1,999);if(n!==null)return type==='damage'?RPGSummons.damage('dragon',n):RPGSummons.heal('dragon',n);return}if(!state.dragon){message('Dragon absent.');return}let n=await askNumber(type==='damage'?'Dégâts au dragon':'Soins du dragon',1,0,999);if(n===null)return;transaction(type==='damage'?'Dragon blessé':'Dragon soigné',()=>{let d=state.dragon,old=d.hp;d.hp=Math.min(d.max,Math.max(0,d.hp+(type==='heal'?n:-n)));let line=`${old} → ${d.hp}/${d.max} PV.`;if(!d.hp){state.dragon=null;state.sharedResistance='';state.concentration='';line+=' Invocation terminée.';if(state.phase==='dragon')state.phase='samoth';state.rpgTableShieldActive=false;state.round++;state.eco={action:false,bonus:false,reaction:false,move:false};state.bonusSpell=false;state.leveledAction=false}return line});return}
