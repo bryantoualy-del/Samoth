@@ -56,3 +56,20 @@
   #spellList .samoth-book-list{max-height:260px}
   #spellList .samoth-book-detail{max-height:none}
 }
+
+
+/* Paysage tablette : les deux colonnes défilent indépendamment, sans perte de contenu. */
+@media (min-width:781px) and (orientation:landscape) {
+  #spellList, #spellList .samoth-kobe-grimoire, #spellList .samoth-book-layout,
+  #spellList .samoth-book-list, #spellList .samoth-book-detail {min-width:0;max-width:100%;box-sizing:border-box}
+  #spellList .samoth-kobe-grimoire {gap:8px;padding:10px}
+  #spellList .samoth-book-layout {grid-template-columns:minmax(210px,38%) minmax(0,1fr);gap:9px}
+  #spellList .samoth-book-list, #spellList .samoth-book-detail {max-height:clamp(240px,58dvh,590px);overflow-y:auto;overflow-x:hidden}
+  #spellList .samoth-book-select {min-height:52px;padding:6px}
+  #spellList .samoth-spell-glyph {width:31px;height:31px}
+  #spellList .samoth-book-sheet-title {gap:8px;margin-bottom:8px;padding-bottom:8px}
+  #spellList .samoth-book-sheet-title .samoth-spell-glyph {width:39px;height:39px}
+  #spellList .samoth-book-sheet, #spellList .samoth-book-name, #spellList .samoth-book-sheet .spell-doc {min-width:0;max-width:100%;overflow-wrap:anywhere}
+  #spellList .samoth-book-sheet .spell-doc-body {white-space:normal;overflow-wrap:anywhere;word-break:normal}
+  #spellList .samoth-book-header, #spellList .samoth-book-tools, #spellList .samoth-book-sheet-title {min-width:0;flex-wrap:wrap}
+}
