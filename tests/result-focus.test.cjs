@@ -195,3 +195,24 @@ test('all D&D skill results, including Histoire, are excluded from the combat po
  }
  assert.equal(isSocial('Trait de feu'),false);
 });
+
+test('Samoth N6: Encounter save refusal restores spell slot and sorcery points before commit',()=>{
+ const source=fs.readFileSync(path.join(root,'companion.js'),'utf8');
+ assert.match(source,/id:'disintegrate',name:'Désintégration',lv:6/);
+ assert.match(source,/MAX=\{1:4,2:3,3:3,4:3,5:2,6:1\}/);
+ const start=source.indexOf('if(networkSavePayload&&!sendEncounterSave(networkSavePayload)){');
+ const end=source.indexOf("if(s.lv>=1&&['attack','save','storm','automatic']",start);
+ assert.ok(start>0&&end>start,'failure branch precedes spell commit');
+ const branch=source.slice(start,end);
+ const fn=vm.runInNewContext('(function(networkSavePayload,sendEncounterSave,state,before,persist,render,message){'+branch+'return true;})');
+ const state={slots:{6:0},sp:8,eco:{action:true},malachorTriggerRound:3,uncommitted:true};
+ const before={slots:{6:1},sp:11,eco:{action:false},malachorTriggerRound:0};
+ let saves=0,renders=0,msg='';
+ const result=fn({source:'Désintégration'},()=>false,state,before,()=>saves++,()=>renders++,m=>msg=m);
+ assert.equal(result,undefined);
+ assert.deepEqual(JSON.parse(JSON.stringify(state)),before);
+ assert.equal(saves,1);assert.equal(renders,1);
+ assert.match(msg,/ressources restaurées/);
+ const accepted={slots:{6:0},sp:8},okay=fn({source:'Désintégration'},()=>true,accepted,before,()=>{},()=>{},()=>{});
+ assert.equal(okay,true);assert.equal(accepted.slots[6],0);
+});
