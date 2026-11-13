@@ -11,7 +11,7 @@ test('presentation links are isolated from journal code',()=>{const h=fs.readFil
 
 
 test('temporary DOM card displays amounts and closes without editing any history',()=>{
- let mutation;
+ let mutation,reveal;
  class Node{
   constructor(){this.children=[];this.textContent='';this.hidden=false;this.parentElement=null;this.className='';}
   append(...nodes){this.children.push(...nodes)}
@@ -24,11 +24,11 @@ test('temporary DOM card displays amounts and closes without editing any history
  const title=new Node();title.textContent='Frappe';
  const body=new Node();
  const doc={readyState:'complete',body,querySelector:selector=>selector==='#source'?sourceNode:selector==='#title'?title:null,createElement:()=>new Node(),addEventListener(){}};
- const w={document:doc,CompanionResultFocusConfig:{name:'Essai',sources:['#source'],labels:['#title']},setTimeout:()=>1,clearTimeout:()=>{}};
+ const w={document:doc,CompanionResultFocusConfig:{name:'Essai',sources:['#source'],labels:['#title']},setTimeout:(callback)=>{reveal=callback;return 1},clearTimeout:()=>{}};
  vm.runInNewContext(source,{window:w,document:doc,Date,MutationObserver:class{constructor(callback){mutation=callback}observe(){}}});
  sourceNode.textContent='Jet : 18 + 9 = 27 · 22 dégâts';mutation();
  assert.equal(body.children.length,1);const popup=body.children[0];
- assert.equal(popup.hidden,false);
+ assert.equal(popup.hidden,true);reveal();assert.equal(popup.hidden,false);
  const blocks=popup.children[2].children;
  assert.equal(blocks.length,2);assert.equal(blocks[0].children[1].textContent,'27');assert.equal(blocks[1].children[1].textContent,'22');
  w.CompanionResultFocus.hide();assert.equal(popup.hidden,true);
