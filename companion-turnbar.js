@@ -64,9 +64,21 @@ function boot(){
    }
    let d=txt(get(cfg.damage)).replace(/\s*dégâts?.*$/i,'');setText(damage.querySelector('.cc-turn-label'),(d||'0')+' dégâts');
    const cEl=get(cfg.conc),ct=txt(get(cfg.concText))||(cEl?txt(cEl.querySelector('b')):'')||'—';setText(conc.querySelector('.cc-turn-state'),ct);conc.classList.toggle('is-active',!/aucune|—|none/i.test(ct));
+   // Persistent highlighting driven by combat state, not by the Group tab lifecycle.
+   if(id()==='samoth'){
+     const own=window.CompanionAPI?.getState?.();
+     if(own?.turn){
+       for(const [btn,key] of [[action,'action'],[bonus,'bonus'],[reaction,'reaction']]){
+         if(own.turn[key]===true)btn.dataset.rpgEconomyGlow=key;
+         else delete btn.dataset.rpgEconomyGlow;
+       }
+       if(own.concentration)conc.dataset.rpgEconomyGlow='concentration';
+       else delete conc.dataset.rpgEconomyGlow;
+     }
+   }
    const n=get(cfg.next);if(n){const label=txt(n);setText(next.querySelector('.cc-turn-state'),/spectre/i.test(label)?label.replace(/^↻\s*/,''):'')}
  }
- const mo=new MutationObserver(mutations=>{if(mutations.every(m=>bar.contains(m.target)))return;sync()});mo.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','disabled']});sync();
+ const mo=new MutationObserver(mutations=>{if(mutations.every(m=>bar.contains(m.target)))return;sync()});mo.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','disabled']});sync();if(id()==='samoth')window.CompanionAPI?.subscribe?.(sync);
  function rpgVisibility(){
    const strip=$('#rpg-state-strip');if(!strip)return;
    const banner=$('.rpg-session-banner'), networkStatus=$('.rpg-connect-status');
