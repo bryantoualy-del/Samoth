@@ -32,3 +32,19 @@
  #combat .caster-controls{display:grid;grid-template-columns:minmax(0,1fr)}
  #attackControls{flex-wrap:wrap}
 }
+#malachorCombat{display:grid;grid-template-columns:auto minmax(120px,1fr) minmax(0,2fr);gap:6px 12px;align-items:center;padding:9px 12px}
+.malachor-identity{display:flex;align-items:center;gap:8px}
+.malachor-identity h2{font-size:1rem;margin:0}
+#malachorStageLabel{color:#dbc2ff;font-size:.82rem}
+.malachor-readout{display:grid;gap:2px;color:#e4d6ff}
+.malachor-actions{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end}
+.malachor-actions button,.malachor-actions select{min-height:42px}
+.malachor-actions button{font-size:.75rem;padding:5px 8px}
+#malachorLocalSave{align-self:center;font-size:.75rem}
+#malachorLocalSave[hidden],.malachor-actions button[hidden]{display:none}
+.malachor-details{grid-column:1/-1;min-width:0}
+.malachor-details summary{cursor:pointer;color:#dcc6ff;font-size:.82rem;padding-block:5px}
+@media(max-width:710px){
+ #malachorCombat{grid-template-columns:auto minmax(0,1fr)}
+ .malachor-actions{grid-column:1/-1;justify-content:flex-start}
+}

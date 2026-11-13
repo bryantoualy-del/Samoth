@@ -45,7 +45,7 @@ function migrateOld(){let oldRaw=localStorage.getItem('samoth-v3');if(!oldRaw)re
 let state;let loadError='';try{let raw=localStorage.getItem(KEY);state=raw?JSON.parse(raw):migrateOld();if(state.schema!==3||!Array.isArray(state.history)||!Array.isArray(state.items)||!state.slots||!state.eco)throw Error('Sauvegarde incompatible');}catch(e){state=fresh();loadError='Ancienne sauvegarde illisible conservée : exportez-la depuis le stockage du navigateur avant remise à zéro.';}
 if(!['normal','adv','dis'].includes(state.rollMode))state.rollMode='normal';if(!['normal','adv','dis'].includes(state.dragonRollMode))state.dragonRollMode='normal';
 // Don de niveau 8 corrigé sans réinitialiser les ressources.
-SamothFeatRules.migrate(state);if(!state.level11Migrated){const oldMax=Number(state.maxHp)||72;if(oldMax===72){state.maxHp=78;state.hp=Math.min(78,Math.max(0,Number(state.hp)||0)+(Number(state.hp)>0?6:0));state.sp=Math.min(11,(Number(state.sp)||0)+1);state.hitDice=Math.min(11,(Number(state.hitDice)||0)+1);state.staff=Math.min(10,(Number(state.staff)||0)+2);}state.slots={...state.slots,6:1};state.level11Migrated=true;}if(!state.malachorStage)state.malachorStage='dormant';if(state.malachorUses===undefined)state.malachorUses=3;if(state.malachorThoughts===undefined)state.malachorThoughts=1;if(state.malachorSuggestion===undefined)state.malachorSuggestion=1;if(state.malachorCurseReady===undefined)state.malachorCurseReady=true;if(state.malachorTriggerRound===undefined)state.malachorTriggerRound=0;state.maxHp=78;state.sp=Math.min(11,Math.max(0,Number(state.sp)||0));if(!('animatedObjects' in state))state.animatedObjects=null;
+SamothFeatRules.migrate(state);if(!state.level11Migrated){const oldMax=Number(state.maxHp)||72;if(oldMax===72){state.maxHp=78;state.hp=Math.min(78,Math.max(0,Number(state.hp)||0)+(Number(state.hp)>0?6:0));state.sp=Math.min(11,(Number(state.sp)||0)+1);state.hitDice=Math.min(11,(Number(state.hitDice)||0)+1);state.staff=Math.min(10,(Number(state.staff)||0)+2);}state.slots={...state.slots,6:1};state.level11Migrated=true;}if(!['awakened','dormant'].includes(state.malachorStage))state.malachorStage='awakened';if(state.malachorUses===undefined)state.malachorUses=3;if(state.malachorThoughts===undefined)state.malachorThoughts=1;if(state.malachorSuggestion===undefined)state.malachorSuggestion=1;if(state.malachorCurseReady===undefined)state.malachorCurseReady=true;if(state.malachorTriggerRound===undefined)state.malachorTriggerRound=0;state.maxHp=78;state.sp=Math.min(11,Math.max(0,Number(state.sp)||0));if(!('animatedObjects' in state))state.animatedObjects=null;
 if(!state.items.some(i=>/malachor/i.test(i.name)))state.items.push({id:crypto.randomUUID(),name:'Couronne Noire de Malachor',category:'equipment',qty:1,note:'Vestige de la Divergence, harmonisation. Résistance psychique, télépathie, emprise gravitationnelle et sorts selon état. Malédiction résiduelle.',image:'',equipped:true});
 if(!state.items.some(i=>/broche protectrice/i.test(i.name))){state.items.push({id:crypto.randomUUID(),name:'Broche protectrice',category:'equipment',qty:1,note:'Broche équipée : +1 CA. CA de Samoth portée à 15.',image:'',equipped:true});persist?.();}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],clone=x=>structuredClone(x),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -190,7 +190,7 @@ async function cast(id){let s=getSpell(id);if(!s)return;if(pendingHitDecision){m
    message('JdS non transmis : incantation et ressources restaurées. Vérifiez les cibles ou la connexion RPG Connect.');
    return;
  }
- if(s.lv>=1&&['attack','save','storm','automatic'].includes(s.kind)&&(pendingDamage>0||!!networkSavePayload))state.malachorTriggerRound=state.round;
+ if(s.lv>=1&&['attack','save','storm','automatic'].includes(s.kind)&&pendingDamage>0)state.malachorTriggerRound=state.round;
  state.turnDamage+=pendingDamage;commit(before,s.name,detail+(meta!=='none'?`\nMétamagie : ${meta} (${guard.points} point(s)).`:''),critical?'crit':s.kind==='summon'?'summon':'spell',{kind:s.kind==='summon'?'summon':critical?'crit':s.cold||s.id==='storm'?s.id:s.id==='orb'&&orbCold?'vortex':s.id==='missile'?'meta':s.id==='cure'?'heal':'meta',level,pureFlame:pureFlameFx});
  if(structuredResult)window.CompanionResultFocus?.showStructured?.(structuredResult);
 
@@ -356,11 +356,15 @@ async function useStaffSpell(id){const s=STAFF_SPELLS[id];if(!s)return;if(!requi
 /* Vestige de Malachor : l'état exalté n'est pas débloqué. */
 function renderMalachor(){
  const box=document.getElementById('malachorState');if(!box)return;
- box.value=state.malachorStage||'dormant';
+ box.value=state.malachorStage;
  const awake=state.malachorStage==='awakened';
  const count=document.getElementById('malachorUses');if(count)count.textContent=(state.malachorUses??3)+'/3';
- const status=document.getElementById('malachorStatus');
- if(status)status.textContent='Résistance psychique · Télépathie 18 m · DD 17 · '+(awake?'Éveillé : Emprise 3d8 / 4,5 m · Suggestion':'Dormant : Emprise 2d8 / 3 m')+(state.malachorTriggerRound===state.round?' · Sort offensif de N1+ utilisé ce tour':'');
+ $('#malachorStageLabel').textContent=awake?'Éveillé':'Dormant';
+ $('#malachorEmprise').textContent=(awake?'3d8 · 4,5 m':'2d8 · 3 m')+(state.malachorTriggerRound===state.round?' · déclenchable':' · après dégâts N1+');
+ $('#malachorStatus').textContent='Résistance psychique · Télépathie réciproque à vue, 18 m · DD 17.';
+ $('#malachorThoughts').textContent=state.malachorThoughts+'/1';
+ $('#malachorSuggestionUses').textContent=state.malachorSuggestion+'/1';
+ $('#malachorLocalSave').hidden=!!window.RPGConnect?.getStatus?.()?.controlled||state.malachorTriggerRound!==state.round||state.eco.bonus||!state.malachorUses||state.phase==='dragon';
  for(const b of document.querySelectorAll('[data-malachor]')){
   const action=b.dataset.malachor;
   if(action==='push'||action==='pull')b.disabled=state.malachorUses<=0||state.eco.bonus||state.malachorTriggerRound!==state.round||state.phase==='dragon';
@@ -368,7 +372,7 @@ function renderMalachor(){
   if(action==='suggestion')b.disabled=!awake||!state.malachorSuggestion||state.eco.action||state.phase==='dragon';
  }
  const suggestion=document.getElementById('malachorSuggestion');if(suggestion)suggestion.hidden=!awake;
- const curse=document.getElementById('malachorCurse');if(curse)curse.textContent=state.malachorCurseReady?'Écho de Vecna : risque actif sur le prochain sort de la couronne':'Écho de Vecna : déjà résolu depuis la dernière aube';
+ const curse=document.getElementById('malachorCurse');if(curse)curse.textContent=state.malachorCurseReady?'Écho de Vecna · prochain sort':'Écho de Vecna · résolu';
 }
 function malachorCurse(){
  if(!state.malachorCurseReady)return '';
@@ -377,8 +381,8 @@ function malachorCurse(){
  if(d20>=13)return ' · Écho de Vecna : SAG '+d20+' contre DD13 — réussi.';
  const damage=roll(6)+roll(6);
  if(!window.RPGHealth?.authoritative()){
-  state.hp=Math.max(0,state.hp-damage);
-  return ' · Écho de Vecna : SAG '+d20+' contre DD13 — échec, '+damage+' psychiques appliqués à Samoth.';
+  state.hp=Math.max(0,state.hp-Math.floor(damage/2));
+  return ' · Écho de Vecna : SAG '+d20+' contre DD13 — échec, '+damage+' psychiques bruts, '+Math.floor(damage/2)+' après résistance.';
  }
  return ' · Écho de Vecna : SAG '+d20+' contre DD13 — échec, '+damage+' psychiques à faire appliquer par Encounter (ne modifie pas les PV du MJ).';
 }
@@ -387,11 +391,18 @@ async function useMalachor(type){
  if(type==='thoughts'||type==='suggestion'){
   if(state.phase==='dragon'||state.eco.action)return message('Malachor : action indisponible.');
   if(type==='thoughts'&&!state.malachorThoughts||type==='suggestion'&&(state.malachorStage!=='awakened'||!state.malachorSuggestion))return;
-  transaction('Malachor · '+(type==='thoughts'?'Détection des pensées':'Suggestion'),()=>{
-   state.eco.action=true;
-   if(type==='thoughts')state.malachorThoughts--;else state.malachorSuggestion--;
-   return 'Sans emplacement ni composantes · '+(type==='suggestion'?'Suggestion SAG DD17.':'Détection des pensées.')+malachorCurse();
-  });
+  const name=type==='thoughts'?'Détection des pensées':'Suggestion';
+  const spell={name,lv:2,concentration:true};
+  const guard=usableSpell(spell,2,'none',true);
+  if(!guard)return;
+  const before=clone(state);
+  if(type==='thoughts')state.malachorThoughts--;else state.malachorSuggestion--;
+  const curse=malachorCurse();
+  state.eco.action=true;state.leveledAction=true;
+  state.rpgConcentrationInstance=crypto.randomUUID();
+  state.dragon=null;state.animatedObjects=null;state.sharedResistance='';
+  state.concentration=name;
+  commit(before,'Malachor · '+name,'Sans emplacement ni composantes · concentration '+(type==='suggestion'?'jusqu’à 8 h · SAG DD17.':'jusqu’à 1 min.')+curse,'spell');
   return;
  }
  if(type!=='push'&&type!=='pull')return;
@@ -399,16 +410,19 @@ async function useMalachor(type){
  const controlled=!!window.RPGConnect?.getStatus?.()?.controlled,target=window.RPGConnect?.getStatus?.()?.target;
  if(controlled&&!target)return message('Sélectionnez une cible dans Encounter avant Emprise gravitationnelle.');
  const awake=state.malachorStage==='awakened',diceCount=awake?3:2,range=awake?'4,5 m':'3 m',d=damageDice(diceCount,8);
- transaction('Malachor · Emprise gravitationnelle',()=>{
-  state.eco.bonus=true;state.malachorUses--;
-  if(!controlled)state.turnDamage+=d.total;
-  return 'FOR DD17 · '+diceCount+'d8 = '+d.total+' dégâts de force (réussite : moitié). '+(type==='push'?'Pousser':'Attirer')+' de '+range+' sur échec · '+state.malachorUses+'/3 usages.';
- });
  if(controlled){
   const payload={ability:'FOR',dc:17,source:'Malachor · Emprise gravitationnelle',targetMode:'single',damageRollMode:'shared',halfOnSuccess:true,damage:d.total,damageType:'force',components:[{amount:d.total,type:'force',dice:d.dice,formula:diceCount+'d8'}],failureEffect:(type==='push'?'Pousser':'Attirer')+' '+range+' (sur échec uniquement)'};
-  if(!sendEncounterSave(payload))message('Emprise consommée, mais JdS non transmis à Encounter. Contrôlez la connexion.');
+  if(!sendEncounterSave(payload))return message('JdS non transmis à Encounter. Vérifiez la connexion.');
  }
- window.CompanionResultFocus?.showStructured?.({eventId:crypto.randomUUID(),title:'Malachor · Emprise gravitationnelle',damages:[{type:'force',amount:d.total,dice:d.dice,formula:diceCount+'d8'}],potential:true});
+ const failed=$('#malachorSave').value==='fail';
+ const amount=failed?d.total:Math.floor(d.total/2);
+ transaction('Malachor · Emprise gravitationnelle',()=>{
+  state.eco.bonus=true;state.malachorUses--;
+  if(!controlled)state.turnDamage+=amount;
+  const movement=(type==='push'?'Pousser':'Attirer')+' de '+range;
+  const result=controlled?`JdS confié à Encounter · ${d.total} force sur échec et ${movement.toLowerCase()} ; moitié sur réussite`:`${failed?'Échec':'Réussite'} · ${amount} dégâts de force · ${failed?movement:'aucun déplacement'}`;
+  return `FOR DD17 · ${result} · ${state.malachorUses}/3 usages.`;
+ });
 }
 
 function render(){renderMalachor();$("#hp").max=state.maxHp||78;$("#healthMaxHp").textContent="Points de vie · max "+(state.maxHp||78);document.querySelectorAll('[data-rollmode]').forEach(b=>b.classList.toggle('on',b.dataset.rollmode===state.rollMode));document.querySelectorAll('[data-dragon-rollmode]').forEach(b=>{const active=b.dataset.dragonRollmode===state.dragonRollMode;b.classList.toggle('on',active);b.setAttribute('aria-pressed',String(active));});const d=state.dragon,dragonPhase=state.phase==='dragon';$('#hp').value=state.hp;$('#tempHp').value=state.tempHp||'';$('#turn').textContent=state.round;$('#round').textContent=state.round;$('#actor').textContent=dragonPhase?'Dragon':'Samoth';$('#damageTurn').textContent=dragonPhase?state.dragonDamage:state.turnDamage;$('#damageActor').textContent=dragonPhase?'par le dragon':'par Samoth';$('#concText').textContent=state.concentration||'Aucune';$('#concButton').classList.toggle('used',!state.concentration);$('#nextTurn').textContent=dragonPhase?'Fin du tour du dragon ›':d?'Tour du dragon ›':'Round suivant ›';$('#undo').disabled=!state.undo;renderResources();renderSpellList();
