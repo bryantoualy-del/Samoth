@@ -78,7 +78,7 @@ function boot(){
    }
    const n=get(cfg.next);if(n){const label=txt(n);setText(next.querySelector('.cc-turn-state'),/spectre/i.test(label)?label.replace(/^↻\s*/,''):'')}
  }
- const mo=new MutationObserver(mutations=>{if(mutations.every(m=>bar.contains(m.target)))return;sync()});mo.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','disabled']});sync();
+ const mo=new MutationObserver(mutations=>{if(mutations.every(m=>bar.contains(m.target)))return;sync()});mo.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','disabled']});sync();if(id()==='samoth')window.CompanionAPI?.subscribe?.(sync);
  function rpgVisibility(){
    const strip=$('#rpg-state-strip');if(!strip)return;
    const banner=$('.rpg-session-banner'), networkStatus=$('.rpg-connect-status');
