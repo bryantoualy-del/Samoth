@@ -13,7 +13,7 @@
  };
  const node=(tag,cls,text='')=>{const n=document.createElement(tag);if(cls)n.className=cls;n.textContent=text;return n};
  const idFor=card=>card.querySelector('[data-cast]')?.dataset.cast||'';
- function decorate(selected){
+ function decorate(selected,roleFilter){
    const host=document.getElementById('spellList');if(!host)return;
    const cards=[...host.querySelectorAll('.spell-section .spell')],slots=host.querySelector('.spell-slots'),filter=host.querySelector('.spell-legend');
    if(!cards.length)return;
@@ -26,7 +26,8 @@
      const searchable=[name,level,role,casting,range,card.querySelector('.spell-doc')?.textContent||''].join(' ').toLocaleLowerCase('fr');
      return {card,id,role,name,level,casting,range,searchable};
    }).filter(r=>r.id);
-   const visible=sources.filter(r=>(!onlyFavorites||favorites.includes(r.id))&&r.searchable.includes(query.toLocaleLowerCase('fr')));
+   const normalize=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
+   const visible=sources.filter(r=>(roleFilter==='all'||r.role===roleFilter)&&(!onlyFavorites||favorites.includes(r.id))&&normalize(r.searchable).includes(normalize(query)));
    const chosen=sources.find(x=>x.id===selected);
    const shell=node('section','samoth-kobe-grimoire');
    shell.setAttribute('aria-label','Grimoire de Samoth');

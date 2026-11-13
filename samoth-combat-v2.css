@@ -50,3 +50,24 @@
 }
 #sharedCastControls{display:grid;gap:6px;min-width:0}
 #combatPreview .samoth-spell-glyph{width:34px;height:34px;flex:none}
+/* Leave the floating RPG control outside the stat cells. */
+.app>.top{margin-top:26px}
+#combat .caster-preview{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:7px}
+#combat .caster-preview .caster-facts{margin:0}
+#combat .caster-preview{box-shadow:none!important}
+@media(min-width:768px) and (orientation:landscape){
+ .app>.top .vitals{padding:6px;gap:5px}
+ .app>.top .stat{padding:4px 6px}
+ .app>.top .hp-actions{gap:4px}
+ .app>.top .hp-actions .mini{padding:4px 7px}
+ .app>.top .identity{padding-block:6px}
+}
+@media(max-width:767px){
+ .app>.top{margin-top:17px}
+ #combat .caster-preview{grid-template-columns:auto minmax(0,1fr) auto}
+}
+@media(max-width:767px){
+ #turnbar [data-econ=action]:not(.used){background:#143344!important;border-color:#4fa9c1!important}
+ #turnbar [data-econ=bonus]:not(.used){background:#292b47!important;border-color:#8c83bb!important}
+ #turnbar .economy.used{background:#39232e!important;border-color:#c97791!important}
+}

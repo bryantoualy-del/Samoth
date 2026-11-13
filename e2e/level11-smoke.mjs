@@ -32,7 +32,7 @@ try{
   assert.equal(initial.slot6,1,'one level 6 spell slot');
   assert.equal(initial.sp,11,'eleven sorcery points');
   assert.equal(initial.hitDice,11,'eleven hit dice');
-  assert.equal(initial.malachor,'dormant','Malachor starts dormant');
+  assert.equal(initial.malachor,'awakened','Malachor starts at its campaign stage');
 
   await page.evaluate(()=>{
    const s=structuredClone(window.__CompanionBridge.read());

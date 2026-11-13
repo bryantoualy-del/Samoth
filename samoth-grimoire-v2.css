@@ -110,3 +110,9 @@
  #spellList .samoth-book-cast{display:none}
  #spellList .samoth-book-sheet-title h3{font-size:1rem}
 }
+#spellList .samoth-book-sheet #combatCast{justify-self:start}
+#spellList .samoth-book-sheet .spell-doc summary{min-height:32px}
+#spellList .samoth-book-sheet .meta{margin:0}
+@media(max-width:780px){
+ #spellList .samoth-book-sheet #combatCast{justify-self:stretch}
+}
