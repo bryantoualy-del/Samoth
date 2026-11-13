@@ -27,3 +27,7 @@ Audit initial. Combat affichait une description longue dans le lanceur. Le grimo
 Les scénarios RPG Connect utilisent les contrats locaux et une simulation de l’autorité Encounter. Une recette avec iPad physique et une table Encounter réelle reste à faire. Les 8 tests Fizban de Pilot20 (`9f65052`) passent. Son code et le format de sauvegarde de Samoth restent inchangés.
 
 Exécution locale. 25/25 tests unitaires et quatre scripts de recette réussis sur Chromium et WebKit. Les requêtes des scénarios Companion sont limitées au serveur local. Les captures WebKit donnent 286 → 117 px sur iPad paysage et 305 → 117 px avec la zone CSS réduite.
+
+## Icônes validées
+
+Les 24 illustrations de la planche validée sont livrées en WebP sans perte, 128 × 128 px, avec canal alpha. Le fond et le contour de la tuile sont gérés en CSS. Format Kobe : 40 px en liste, 34 px en vue compacte et 60 px sur la fiche. Combat affiche la même illustration en 34 px, y compris pour les sorts du bâton.

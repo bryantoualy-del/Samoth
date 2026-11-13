@@ -172,7 +172,6 @@ body::before{
   background:#16465d!important;border-color:#52ddff!important;box-shadow:0 0 13px #30d3ff29!important;
 }
 #spellList .samoth-book-detail{background:linear-gradient(150deg,#103248,#081826)!important;border-color:#3682a3!important}
-#spellList .samoth-spell-glyph{filter:drop-shadow(0 0 8px #3ce3ff66)!important}
 .dragon-card{border-color:#4bbae2!important;background:linear-gradient(140deg,#123d56,#071a29)!important}
 .journal-premium{background:linear-gradient(140deg,#10263a,#071421)!important}
 .journal-tabs button.active{border-color:#51ddff!important;background:#124e67!important}

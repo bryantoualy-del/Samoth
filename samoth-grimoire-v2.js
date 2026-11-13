@@ -5,11 +5,15 @@
  let query='',onlyFavorites=false,favorites=[];
  try{const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');favorites=Array.isArray(saved)?saved.filter(x=>typeof x==='string').slice(0,4):[]}catch{}
  const icon=(id)=>{
+   const tile=document.createElement('span');
+   tile.className='samoth-spell-glyph';
+   tile.setAttribute('aria-hidden','true');
    const img=document.createElement('img');
-   img.className='samoth-spell-glyph';img.alt='';img.width=38;img.height=38;
+   img.alt='';img.width=128;img.height=128;img.decoding='async';
    img.addEventListener('error',()=>{img.src='assets/samoth-spells/default.svg';},{once:true});
-   img.src='assets/samoth-spells/'+id+'.svg';
-   return img;
+   img.src='assets/samoth-spells/'+id+'.webp';
+   tile.append(img);
+   return tile;
  };
  const node=(tag,cls,text='')=>{const n=document.createElement(tag);if(cls)n.className=cls;n.textContent=text;return n};
  const idFor=card=>card.querySelector('[data-cast]')?.dataset.cast||'';

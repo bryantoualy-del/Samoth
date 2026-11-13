@@ -63,6 +63,17 @@ try {
       const paths=await page.locator('.samoth-book-list img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
       assert.equal(new Set(paths).size,paths.length,profile+' unique catalogue glyphs');
       assert.equal(paths.length,19);
+      const icons = await page.locator('.samoth-book-list img').evaluateAll(async images =>
+        Promise.all(images.map(async img => {
+          await img.decode();
+          return [img.naturalWidth,img.naturalHeight];
+        })));
+      assert.ok(paths.every(path=>path.endsWith('.webp')));
+      assert.ok(icons.every(([width,height])=>width===128&&height===128));
+      const listTile=await page.locator('.samoth-book-select .samoth-spell-glyph').first().boundingBox();
+      const sheetTile=await page.locator('.samoth-book-sheet-title .samoth-spell-glyph').boundingBox();
+      assert.equal(listTile.width,width<=900?34:40);
+      assert.equal(sheetTile.width,60);
     }
     await page.screenshot({path:`${folder}/${engine.name()}-${profile}-grimoire.png`});
     assert.deepEqual(errors,[]);
@@ -72,6 +83,12 @@ try {
   if (!baseline) {
     const page = await localPage(browser,{viewport:{width:1180,height:820}});
     await page.goto(url);
+    for (const id of ['hands','fog','storm','cone','wall','vortex','rayon']) {
+      if(id!=='rayon'||await page.locator('#combatSpell').inputValue()!==id)await choose(page,id);
+      const icon=page.locator('#combatPreview .samoth-spell-glyph img');
+      assert.equal(await icon.getAttribute('src'),`assets/samoth-spells/${id}.webp`);
+      assert.equal(await icon.evaluate(async img=>{await img.decode();return img.naturalWidth;}),128);
+    }
     await page.locator('#manual').fill('12');
     await cast(page);await confirm(page,'Touché');
     assert.ok((await state(page)).turnDamage>=7);
