@@ -1,4 +1,4 @@
-/* V1.6 : Grimoire de Samoth, architecture et pictogrammes du grimoire Kobe. */
+/* Grimoire Samoth : ergonomie compacte de Kobe et glyphes indépendants. */
 #spellList{display:block;min-width:0}
 #spellList .samoth-kobe-grimoire{display:flex;flex-direction:column;gap:12px;width:100%;min-width:0;
   --book-line:#506575;--book-ink:#eaf6fb;--book-muted:#bbd0dc;--book-accent:#8bcdea;
@@ -27,7 +27,8 @@
 #spellList .samoth-book-entry:has([aria-pressed=true]){border-color:#b8e8ff;background:#254458}
 #spellList .samoth-book-select{display:flex;align-items:center;gap:9px;text-align:left;flex:1;min-width:0;
   background:transparent;border:0;color:#e7f3fa;padding:9px 7px;cursor:pointer;min-height:62px}
-#spellList .samoth-spell-glyph{width:38px;height:38px;flex:none;object-fit:contain;filter:drop-shadow(0 0 8px #72d0ed33)}
+#spellList .samoth-spell-glyph{width:38px;height:38px;flex:none;display:grid;place-items:center;color:var(--glyph-color,#8fe9ff);border-radius:11px;background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--glyph-color) 22%,transparent),#081823 82%);border:1px solid color-mix(in srgb,var(--glyph-color) 48%,#38536a);box-shadow:inset 0 0 7px #ffffff0a,0 0 11px color-mix(in srgb,var(--glyph-color) 17%,transparent)}
+#spellList .samoth-spell-glyph svg{width:85%;height:85%;display:block;filter:drop-shadow(0 0 2px currentColor)}
 #spellList .samoth-book-name{display:flex;flex-direction:column;min-width:0;flex:1;gap:3px}
 #spellList .samoth-book-name strong{font-size:.9rem;white-space:normal;overflow-wrap:anywhere}
 #spellList .samoth-book-name small{color:#aac0cf;font-size:.72rem}
