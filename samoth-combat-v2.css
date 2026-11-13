@@ -71,3 +71,23 @@
  #turnbar [data-econ=bonus]:not(.used){background:#292b47!important;border-color:#8c83bb!important}
  #turnbar .economy.used{background:#39232e!important;border-color:#c97791!important}
 }
+
+@media(max-width:767px){
+ .app>.top .identity{padding:6px 64px 6px 10px}
+ .top .identity .eyebrow{display:none}
+ .top .identity h1{margin:0}
+ .top .identity p{max-width:none;margin:0}
+ .top .signature-icon{height:47px;width:47px;right:8px;bottom:6px}
+ .app>.top .vitals{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px}
+ .app>.top .stat{padding:3px 4px;min-height:0}
+ .app>.top .hpstat{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3px 6px}
+ .top #healthMaxHp{grid-column:1/-1}
+ .top .hp-actions,.top .hpbox{margin:0;gap:3px}
+ .top .hp-actions .mini{padding:3px 5px}
+ .top .stat small{font-size:.6rem;line-height:1.1}
+ .top .stat b{font-size:1rem}
+ .top #acValue{padding:0;min-height:0}
+ .mobile-nav:has([data-rpg-group-tab]){grid-template-columns:repeat(5,minmax(0,1fr))}
+ .mobile-nav button{padding-inline:2px;font-size:.67rem}
+ #result.collapsed{bottom:calc(64px + env(safe-area-inset-bottom))}
+}

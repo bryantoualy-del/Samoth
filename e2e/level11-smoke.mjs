@@ -24,7 +24,7 @@ try{
  for(const width of [390,1180]){
   const page=await browser.newPage({viewport:{width,height:820}});
   const errors=[];page.on('pageerror',err=>errors.push(err.message));
-  await page.goto(base);
+  await page.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());await page.goto(base);
   await page.waitForFunction(()=>window.__CompanionBridge?.id==='samoth');
   const initial=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{max:s.maxHp,hp:s.hp,slot6:s.slots?.[6],sp:s.sp,hitDice:s.hitDice,malachor:s.malachorStage}});
   assert.equal(initial.max,78,'Samoth level 11 has 78 maximum hit points');
@@ -49,7 +49,7 @@ try{
   assert.deepEqual(errors,[],'no browser runtime errors');
   await page.close();
   const legacy=await browser.newPage({viewport:{width,height:820}});
-  await legacy.goto(base);
+  await legacy.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());await legacy.goto(base);
   await legacy.evaluate(()=>{
     localStorage.clear();
     localStorage.setItem('samoth-v3',JSON.stringify({

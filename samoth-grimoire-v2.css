@@ -116,3 +116,8 @@
 @media(max-width:780px){
  #spellList .samoth-book-sheet #combatCast{justify-self:stretch}
 }
+@media(max-width:600px){
+ #spellList .samoth-book-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
+ #spellList .samoth-book-filters button{flex:none}
+ #spellList .samoth-book-sheet #combatCast{scroll-margin-bottom:85px}
+}

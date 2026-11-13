@@ -26,6 +26,11 @@ const layout = [
   ['ipad-landscape',1180,820], ['ipad-zoom-125',944,656],
   ['iphone-portrait',390,844], ['iphone-landscape',844,390]
 ];
+async function localPage(browser, options){
+  const page=await browser.newPage(options);
+  await page.route('**/*',route=>new URL(route.request().url()).origin===url?route.continue():route.abort());
+  return page;
+}
 const state = page => page.evaluate(() => window.__CompanionBridge.read());
 const tab = (page,id) => page.locator(`[data-mobile-view="${id}"],[data-desktop-group="${id}"]`).filter({visible:true}).first().click();
 const choose = (page,id) => page.locator('#combatSpell').selectOption(id);
@@ -37,7 +42,7 @@ try {
   browser = await engine.launch(engine === chromium ? { executablePath, args:['--no-sandbox','--disable-dev-shm-usage'] } : {});
   await mkdir(folder,{recursive:true});
   for (const [profile,width,height] of layout) {
-    const page = await browser.newPage({viewport:{width,height},hasTouch:true,deviceScaleFactor:1});
+    const page = await localPage(browser,{viewport:{width,height},hasTouch:true,deviceScaleFactor:1});
     const errors = [];
     page.on('pageerror',error => errors.push(error.message));
     await page.goto(url);
@@ -65,7 +70,7 @@ try {
     await page.close();
   }
   if (!baseline) {
-    const page = await browser.newPage({viewport:{width:1180,height:820}});
+    const page = await localPage(browser,{viewport:{width:1180,height:820}});
     await page.goto(url);
     await page.locator('#manual').fill('12');
     await cast(page);await confirm(page,'Touché');
