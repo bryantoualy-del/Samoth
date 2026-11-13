@@ -195,3 +195,37 @@ test('all D&D skill results, including Histoire, are excluded from the combat po
  }
  assert.equal(isSocial('Trait de feu'),false);
 });
+
+test('Samoth N6: Encounter save refusal restores spell slot and sorcery points before commit',()=>{
+ const source=fs.readFileSync(path.join(root,'companion.js'),'utf8');
+ assert.match(source,/id:'disintegrate',name:'Désintégration',lv:6/);
+ assert.match(source,/MAX=\{1:4,2:3,3:3,4:3,5:2,6:1\}/);
+ const start=source.indexOf('if(networkSavePayload&&!sendEncounterSave(networkSavePayload)){');
+ const end=source.indexOf("if(s.lv>=1&&['attack','save','storm','automatic']",start);
+ assert.ok(start>0&&end>start,'failure branch precedes spell commit');
+ const branch=source.slice(start,end);
+ const fn=vm.runInNewContext('(function(networkSavePayload,sendEncounterSave,state,before,persist,render,message){'+branch+'return true;})');
+ const state={slots:{6:0},sp:8,eco:{action:true},malachorTriggerRound:3,uncommitted:true};
+ const before={slots:{6:1},sp:11,eco:{action:false},malachorTriggerRound:0};
+ let saves=0,renders=0,msg='';
+ const result=fn({source:'Désintégration'},()=>false,state,before,()=>saves++,()=>renders++,m=>msg=m);
+ assert.equal(result,undefined);
+ assert.deepEqual(JSON.parse(JSON.stringify(state)),before);
+ assert.equal(saves,1);assert.equal(renders,1);
+ assert.match(msg,/ressources restaurées/);
+ const accepted={slots:{6:0},sp:8},okay=fn({source:'Désintégration'},()=>true,accepted,before,()=>{},()=>{},()=>{});
+ assert.equal(okay,true);assert.equal(accepted.slots[6],0);
+});
+
+test('Samoth legacy level 10 import preserves missing HP and expended resources',()=>{
+ const source=fs.readFileSync(path.join(root,'companion.js'),'utf8');
+ assert.match(source,/next\.hp=Math\.max\(0,Math\.min\(78,old\.hp>0\?old\.hp\+6:0\)\)/);
+ assert.match(source,/next\.sp=Math\.max\(0,Math\.min\(11,Number\(old\.spCore\?\?10\)\+1\)\)/);
+ assert.match(source,/next\.staff=Math\.max\(0,Math\.min\(10,Number\(old\.staff\?\?8\)\+2\)\)/);
+ const hp=(old)=>Math.max(0,Math.min(78,old>0?old+6:0));
+ assert.equal(hp(72),78);assert.equal(hp(32),38);assert.equal(hp(0),0);
+ const sp=(old)=>Math.max(0,Math.min(11,Number(old??10)+1));
+ assert.equal(sp(10),11);assert.equal(sp(0),1);
+ const staff=(old)=>Math.max(0,Math.min(10,Number(old??8)+2));
+ assert.equal(staff(8),10);assert.equal(staff(0),2);
+});

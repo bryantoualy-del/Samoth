@@ -1,6 +1,6 @@
 /* Samoth's recorded 2014 build; state migration never resets live resources. */
 (()=>{'use strict';
- const profile=Object.freeze({level:10,scores:{str:8,dex:13,con:14,int:12,wis:10,cha:17},metamagic:['quick','twin','empower'],level8Feat:'fizban:feat:gift-of-the-metallic-dragon',castingAbility:'cha'});
+ const profile=Object.freeze({level:11,scores:{str:8,dex:13,con:14,int:12,wis:10,cha:17},metamagic:['quick','twin','empower'],level8Feat:'fizban:feat:gift-of-the-metallic-dragon',castingAbility:'cha'});
  function migrate(s){
   s.featEnabled=false;s.intensified=false;s.featSp=0;
   s.level8Feat=profile.level8Feat;s.classMetamagic=[...profile.metamagic];
