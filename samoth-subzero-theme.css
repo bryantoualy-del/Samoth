@@ -172,7 +172,6 @@ body::before{
   background:#16465d!important;border-color:#52ddff!important;box-shadow:0 0 13px #30d3ff29!important;
 }
 #spellList .samoth-book-detail{background:linear-gradient(150deg,#103248,#081826)!important;border-color:#3682a3!important}
-#spellList .samoth-spell-glyph{filter:drop-shadow(0 0 8px #3ce3ff66)!important}
 .dragon-card{border-color:#4bbae2!important;background:linear-gradient(140deg,#123d56,#071a29)!important}
 .journal-premium{background:linear-gradient(140deg,#10263a,#071421)!important}
 .journal-tabs button.active{border-color:#51ddff!important;background:#124e67!important}
@@ -185,4 +184,33 @@ body::before{
 }
 @media(prefers-reduced-motion:reduce){
   #cc-turnbar-standard .cc-turn-cell,.nav button,.primary{transition:none!important}
+}
+
+/* Static ice facets stay on the outside of the play surface. */
+:root{--bg:#10151d;--panel:#202c3c;--ink:#d9f6ff;--ice-cobalt:#1651b8}
+html{background:var(--bg)!important}
+body{background:
+  radial-gradient(ellipse at 8% 78%,#29c8ee27,transparent 46%),
+  radial-gradient(ellipse at 95% 12%,#1651b83f,transparent 47%),
+  repeating-linear-gradient(124deg,transparent 0 5px,#d9f6ff03 6px 7px),
+  #10151d!important}
+body::before,body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url("assets/ice-facets.svg") no-repeat left bottom / clamp(128px,23vw,330px) auto;
+  opacity:.66;
+}
+body::after{transform:rotate(180deg);opacity:.52}
+#cc-turnbar-standard .cc-turn-cell.cc-turn-action:not(.is-used){
+  background:#143344!important;border-color:#4fa9c1!important;box-shadow:none!important}
+#cc-turnbar-standard .cc-turn-cell.cc-turn-bonus:not(.is-used){
+  background:#292b47!important;border-color:#8c83bb!important;box-shadow:none!important}
+#cc-turnbar-standard .cc-turn-cell.cc-turn-conc.is-active{
+  background:#184052!important;border-color:#5cdded!important;box-shadow:inset 0 -3px #29c8ee!important}
+#cc-turnbar-standard .cc-turn-cell.is-used[data-rpg-economy-glow]{
+  background:#39232e!important;border-color:#d58199!important;box-shadow:inset 0 -3px #c97791!important}
+#combat .spell-caster{box-shadow:inset 2px 0 #29c8ee!important}
+#combatCast,.caster-cast,.primary{box-shadow:inset 0 1px #d8faff44!important}
+@media(max-width:767px),(prefers-reduced-motion:reduce){
+  body::before{background-size:122px auto;opacity:.34}
+  body::after{display:none}
 }

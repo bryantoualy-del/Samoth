@@ -27,8 +27,11 @@
 #spellList .samoth-book-entry:has([aria-pressed=true]){border-color:#b8e8ff;background:#254458}
 #spellList .samoth-book-select{display:flex;align-items:center;gap:9px;text-align:left;flex:1;min-width:0;
   background:transparent;border:0;color:#e7f3fa;padding:9px 7px;cursor:pointer;min-height:62px}
-#spellList .samoth-spell-glyph{width:38px;height:38px;flex:none;display:grid;place-items:center;color:var(--glyph-color,#8fe9ff);border-radius:11px;background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--glyph-color) 22%,transparent),#081823 82%);border:1px solid color-mix(in srgb,var(--glyph-color) 48%,#38536a);box-shadow:inset 0 0 7px #ffffff0a,0 0 11px color-mix(in srgb,var(--glyph-color) 17%,transparent)}
-#spellList .samoth-spell-glyph svg{width:85%;height:85%;display:block;filter:drop-shadow(0 0 2px currentColor)}
+.samoth-spell-glyph{
+  display:grid;place-items:center;flex:none;width:40px;height:40px;
+  border-radius:8px;background:#101f31;border:1px solid #395973;
+}
+.samoth-spell-glyph img{display:block;width:calc(100% - 6px);height:auto;aspect-ratio:1;object-fit:contain}
 #spellList .samoth-book-name{display:flex;flex-direction:column;min-width:0;flex:1;gap:3px}
 #spellList .samoth-book-name strong{font-size:.9rem;white-space:normal;overflow-wrap:anywhere}
 #spellList .samoth-book-name small{color:#aac0cf;font-size:.72rem}
@@ -40,7 +43,7 @@
   background:linear-gradient(160deg,#1c3342,#11202b);padding:13px;
   max-height:min(64dvh,650px);overflow:auto}
 #spellList .samoth-book-sheet-title{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #496171}
-#spellList .samoth-book-sheet-title .samoth-spell-glyph{width:48px;height:48px}
+#spellList .samoth-book-sheet-title .samoth-spell-glyph{width:60px;height:60px}
 #spellList .samoth-book-sheet-title h3{margin:3px 0 0;color:#e4f7ff;font-size:1.15rem}
 #spellList .samoth-book-sheet-title small{color:#a9c4d4}
 #spellList .samoth-book-sheet{display:flex;flex-direction:column;gap:10px;background:transparent!important;
@@ -67,10 +70,59 @@
   #spellList .samoth-book-layout {grid-template-columns:minmax(210px,38%) minmax(0,1fr);gap:9px}
   #spellList .samoth-book-list, #spellList .samoth-book-detail {max-height:clamp(240px,58dvh,590px);overflow-y:auto;overflow-x:hidden}
   #spellList .samoth-book-select {min-height:52px;padding:6px}
-  #spellList .samoth-spell-glyph {width:31px;height:31px}
   #spellList .samoth-book-sheet-title {gap:8px;margin-bottom:8px;padding-bottom:8px}
-  #spellList .samoth-book-sheet-title .samoth-spell-glyph {width:39px;height:39px}
   #spellList .samoth-book-sheet, #spellList .samoth-book-name, #spellList .samoth-book-sheet .spell-doc {min-width:0;max-width:100%;overflow-wrap:anywhere}
   #spellList .samoth-book-sheet .spell-doc-body {white-space:normal;overflow-wrap:anywhere;word-break:normal}
   #spellList .samoth-book-header, #spellList .samoth-book-tools, #spellList .samoth-book-sheet-title {min-width:0;flex-wrap:wrap}
+}
+
+#spellList .samoth-book-navigation{min-width:0;display:grid;align-content:start;gap:5px}
+#spellList .samoth-book-layout{align-items:start}
+#spellList .samoth-book-detail{max-height:none;overflow:visible}
+#spellList .samoth-book-sheet-title{margin-bottom:7px;padding-bottom:7px}
+#spellList .samoth-book-sheet>.eyebrow{display:none}
+#spellList .samoth-book-sheet{gap:6px}
+#spellList .spell-summary{margin:0;line-height:1.32;color:#d9f6ff;font-size:.88rem}
+#spellList .spell-doc-source{width:max-content;max-width:100%;font-size:.78rem}
+#spellList .slot-groups{display:grid;width:100%;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+#spellList .slot-group{min-width:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px 5px;padding:3px;font-size:.75rem}
+#spellList .slot-group .dots{order:3;width:100%;display:flex;justify-content:center}
+#spellList .slot-group .dot{min-width:24px;height:32px;position:relative;border:0;background:transparent;box-shadow:none;padding:0}
+#spellList .slot-group .dot::after{content:"";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:10px;height:10px;border:1px solid #7495ab;border-radius:50%}
+#spellList .slot-group .dot.on::after{background:#29c8ee}
+#spellList .samoth-book-slots{padding:4px}
+#spellList .meta-strip{grid-template-columns:auto minmax(0,1fr);gap:7px;padding:4px 7px}
+#spellList .meta-strip-head small{display:none}
+#spellList .meta-chip{min-height:39px}
+#spellList .book-cast-controls{grid-row:auto}
+#spellList .caster-controls{display:grid;gap:5px;grid-template-columns:minmax(0,1fr)}
+#spellList #attackControls{flex-wrap:wrap}
+#spellList .samoth-book-sheet [data-cast]{min-height:44px}
+#spellList .samoth-book-filters button{min-height:34px}
+@media(min-width:781px) and (orientation:landscape){
+ #spellList .samoth-book-list{max-height:clamp(180px,calc(100dvh - 330px),530px)}
+}
+@media(max-width:780px){
+ #spellList .samoth-book-list{max-height:151px}
+ #spellList .slot-groups{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #spellList .meta-strip{grid-template-columns:1fr}
+}
+@media(max-width:450px){
+ #spellList .samoth-book-cast{display:none}
+ #spellList .samoth-book-sheet-title h3{font-size:1rem}
+}
+#spellList .samoth-book-sheet #combatCast{justify-self:start}
+#spellList .samoth-book-sheet .spell-doc summary{min-height:32px}
+#spellList .samoth-book-sheet .meta{margin:0}
+@media(max-width:780px){
+ #spellList .samoth-book-sheet #combatCast{justify-self:stretch}
+}
+@media(max-width:600px){
+ #spellList .samoth-book-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
+ #spellList .samoth-book-filters button{flex:none}
+ #spellList .samoth-book-sheet #combatCast{scroll-margin-bottom:85px}
+}
+
+@media(max-width:900px){
+  #spellList .samoth-book-select .samoth-spell-glyph{width:34px;height:34px}
 }

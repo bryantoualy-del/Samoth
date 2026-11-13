@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 640">
+<defs><linearGradient id="ice" x2=".8" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#c5f9ff"/><stop offset=".34" stop-color="#29c8ee"/><stop offset="1" stop-color="#1651b8" stop-opacity=".06"/></linearGradient></defs>
+<g stroke-linejoin="round" stroke="#a8edff" stroke-opacity=".45">
+<path fill="url(#ice)" d="M-46 536 20 247 58 217 71 275 66 602 2 640ZM-21 612 96 399 133 370 147 425 88 642ZM26 637 155 518 201 510 193 558 122 645ZM-15 553 8 432 28 403 49 451 41 638Z"/>
+<path fill="#163b76" fill-opacity=".72" d="M2 640 58 217 71 275 66 602ZM50 637 133 370 147 425 88 642ZM85 641 201 510 193 558 122 645Z"/>
+<path fill="#bff8ff" fill-opacity=".33" d="m20 247 38-30-17 125-27 29Zm76 152 37-29-28 85-36 47Zm59 119 46-8-46 52-37 12Z"/>
+<path fill="none" d="m57 317-28 49 13 14-22 58m100-5-26 38 8 13-43 76m119-22-36 37 7 9-48 33"/>
+</g></svg>

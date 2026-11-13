@@ -1,0 +1,105 @@
+.top .identity h1{font-size:clamp(1.55rem,3vw,2.35rem)}
+.top .identity p{max-width:75%;line-height:1.2}
+#combat .spell-caster{display:grid;gap:7px;padding:10px 12px;min-width:0}
+#combat .caster-layout{display:grid;grid-template-columns:minmax(165px,1fr) minmax(0,2fr) auto;gap:8px;align-items:center}
+.caster-picker{min-width:0}
+.caster-picker select{width:100%;min-width:0;min-height:42px}
+.caster-picker>span{font-size:.75rem}
+#combat .caster-preview,.caster-preview{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;padding:7px 9px;min-height:0;min-width:0}
+.caster-preview h3{font-size:.98rem;margin:0 0 2px;overflow-wrap:anywhere}
+.caster-preview small{color:#d9f6ff}
+#combat .caster-controls{margin:0;gap:6px}
+.caster-controls [hidden],.cast-setup[hidden],.caster-blocked:empty{display:none!important}
+.caster-controls button,.flame-details summary{min-height:42px}
+#combat .caster-cast{min-height:44px;margin:0}
+#combat .caster-resource{white-space:normal;max-width:145px;text-align:center}
+#combat .compact-cast-fields{margin:0;gap:6px}
+.flame-details summary{display:flex;align-items:center;gap:10px;cursor:pointer;color:#ffe0b6;font-size:.82rem}
+.flame-details summary::before{content:'›';font-size:1.1rem}
+.flame-details[open] summary::before{transform:rotate(90deg)}
+#flameState{color:#cfb59f}
+@media(min-width:768px) and (orientation:landscape){
+ .app>.top{gap:8px;margin-bottom:6px}
+ .top .identity,.top .vitals{min-height:0;padding-block:7px}
+ .top .stat{min-height:0;padding-block:5px}
+ .top .signature-icon{height:65px;width:65px}
+ .top .signature-icon img{max-height:100%;object-fit:contain}
+}
+@media(max-width:600px){
+ #combat .caster-layout{grid-template-columns:minmax(0,1fr) auto}
+ #combat .caster-selected{grid-column:1/-1;grid-row:2}
+ #combat .caster-resource{max-width:100px}
+ #combat .caster-controls{display:grid;grid-template-columns:minmax(0,1fr)}
+ #attackControls{flex-wrap:wrap}
+}
+#malachorCombat{display:grid;grid-template-columns:auto minmax(120px,1fr) minmax(0,2fr);gap:6px 12px;align-items:center;padding:9px 12px}
+.malachor-identity{display:flex;align-items:center;gap:8px}
+.malachor-identity h2{font-size:1rem;margin:0}
+#malachorStageLabel{color:#dbc2ff;font-size:.82rem}
+.malachor-readout{display:grid;gap:2px;color:#e4d6ff}
+.malachor-actions{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end}
+.malachor-actions button,.malachor-actions select{min-height:42px}
+.malachor-actions button{font-size:.75rem;padding:5px 8px}
+#malachorLocalSave{align-self:center;font-size:.75rem}
+#malachorLocalSave[hidden],.malachor-actions button[hidden]{display:none}
+.malachor-details{grid-column:1/-1;min-width:0}
+.malachor-details summary{cursor:pointer;color:#dcc6ff;font-size:.82rem;padding-block:5px}
+@media(max-width:710px){
+ #malachorCombat{grid-template-columns:auto minmax(0,1fr)}
+ .malachor-actions{grid-column:1/-1;justify-content:flex-start}
+}
+#sharedCastControls{display:grid;gap:6px;min-width:0}
+#combatPreview .samoth-spell-glyph{width:34px;height:34px;flex:none}
+/* Leave the floating RPG control outside the stat cells. */
+.app>.top{margin-top:26px}
+#combat .caster-preview{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:7px}
+#combat .caster-preview .caster-facts{margin:0}
+#combat .caster-preview{box-shadow:none!important}
+@media(min-width:768px) and (orientation:landscape){
+ .app>.top .vitals{padding:6px;gap:5px}
+ .app>.top .stat{padding:4px 6px}
+ .app>.top .hp-actions{gap:4px}
+ .app>.top .hp-actions .mini{padding:4px 7px}
+ .app>.top .identity{padding-block:6px}
+}
+@media(max-width:767px){
+ .app>.top{margin-top:17px}
+ #combat .caster-preview{grid-template-columns:auto minmax(0,1fr) auto}
+}
+@media(max-width:767px){
+ #turnbar [data-econ=action]:not(.used){background:#143344!important;border-color:#4fa9c1!important}
+ #turnbar [data-econ=bonus]:not(.used){background:#292b47!important;border-color:#8c83bb!important}
+ #turnbar .economy.used{background:#39232e!important;border-color:#c97791!important}
+}
+
+@media(max-width:767px){
+ .app>.top .identity{padding:6px 64px 6px 10px}
+ .top .identity .eyebrow{display:none}
+ .top .identity h1{margin:0}
+ .top .identity p{max-width:none;margin:0}
+ .top .signature-icon{height:47px;width:47px;right:8px;bottom:6px}
+ .app>.top .vitals{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px}
+ .app>.top .stat{padding:3px 4px;min-height:0}
+ .app>.top .hpstat{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3px 6px}
+ .top #healthMaxHp{grid-column:1/-1}
+ .top .hp-actions,.top .hpbox{margin:0;gap:3px}
+ .top .hp-actions .mini{padding:3px 5px}
+ .top .stat small{font-size:.6rem;line-height:1.1}
+ .top .stat b{font-size:1rem}
+ .top #acValue{padding:0;min-height:0}
+ .mobile-nav:has([data-rpg-group-tab]){grid-template-columns:repeat(5,minmax(0,1fr))!important}
+ .mobile-nav button{padding-inline:2px;font-size:.67rem!important}
+ #result.collapsed{bottom:calc(64px + env(safe-area-inset-bottom))}
+}
+@media(max-width:767px){
+ .app>.top .hpstat{grid-column:1/-1}
+ .top input[type=number]{appearance:textfield}
+ .top input::-webkit-inner-spin-button,.top input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+}
+
+/* Native WebKit pickers use the same dark surface as the rest of the form. */
+#combatSpell,#sharedCastControls select,#malachorCombat select{
+  appearance:none;-webkit-appearance:none;color-scheme:dark;color:#d9f6ff;
+  background:#061621 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23d9f6ff' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center / 16px 16px!important;
+  padding-inline-end:30px;
+}
