@@ -96,3 +96,10 @@
  .top input[type=number]{appearance:textfield}
  .top input::-webkit-inner-spin-button,.top input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 }
+
+/* Native WebKit pickers use the same dark surface as the rest of the form. */
+#combatSpell,#sharedCastControls select,#malachorCombat select{
+  appearance:none;-webkit-appearance:none;color-scheme:dark;color:#d9f6ff;
+  background:#061621 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23d9f6ff' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center / 16px 16px!important;
+  padding-inline-end:30px;
+}
