@@ -30,7 +30,7 @@
   const sources=config.sources||['#ribbon .rb','#resultText','#resultRibbonText','#lastResult','#ribbonText','#rb'];
   const labels=config.labels||['#rtitle','#resultTitle','#resultRibbonTitle','#kentaro-ribbon .title','#rt'];
   const safe=(s)=>String(s||'').trim().slice(0,200);
-  let card=null,body=null,heading=null,close=null,clock=0,revealClock=0,lastSignature='',source=null;
+  let card=null,body=null,heading=null,close=null,clock=0,revealClock=0,revealVersion=0,lastSignature='',source=null;
   function create(){
     if(card)return;
     card=doc.createElement('aside');card.id='companion-result-focus';card.setAttribute('role','status');card.setAttribute('aria-label','Résultat de l’action');
@@ -42,14 +42,27 @@
     const notice=doc.createElement('small');notice.className='crf-note';notice.textContent='Valeur annoncée · résolution et application inchangées';
     card.append(head,heading,body,notice);doc.body.appendChild(card);
   }
-  function hide(){if(card)card.hidden=true;root.clearTimeout(clock);root.clearTimeout(revealClock);doc.body.classList?.remove?.('cc-result-fx-pending');}
+  function hide(){revealVersion++;if(card)card.hidden=true;root.clearTimeout(clock);root.clearTimeout(revealClock);doc.body.classList?.remove?.('cc-result-fx-pending');}
   // Damage presentation waits for the attack/spell FX to become visible.
   // Presentation only: combat resolution, journal, hit confirmation and dice are immediate.
-  function revealResult(hasDamage){
+  function revealResult(hasDamage,presentation){
+    const version=++revealVersion;
     root.clearTimeout(revealClock);
     card.hidden=true;
     const reduceMotion=typeof root.matchMedia==='function'&&root.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const waitForFx=hasDamage&&!reduceMotion;
+    if(presentation?.then&&!reduceMotion){
+      const reveal=()=>{
+        if(version!==revealVersion)return;
+        root.clearTimeout(revealClock);
+        doc.body.classList?.remove?.('cc-result-fx-pending');
+        if(card)card.hidden=false;
+      };
+      doc.body.classList?.add?.('cc-result-fx-pending');
+      revealClock=root.setTimeout(reveal,1750);
+      Promise.resolve(presentation).then(reveal,reveal);
+      return;
+    }
+    const waitForFx=hasDamage&&presentation!==null&&!reduceMotion;
     doc.body.classList?.toggle?.('cc-result-fx-pending',waitForFx);
     if(!waitForFx){card.hidden=false;return;}
     revealClock=root.setTimeout(()=>{doc.body.classList?.remove?.('cc-result-fx-pending');if(card)card.hidden=false;revealClock=0;},850);
@@ -181,7 +194,7 @@
     // The ribbon observer runs in a later microtask. Mark this action's ribbon text
     // as already presented so it cannot replace the structured result.
     if(source)lastSignature=String(source.textContent||'').trim();
-    revealResult(totalDamage>0);root.clearTimeout(clock);clock=0;
+    revealResult(totalDamage>0,action.presentation);root.clearTimeout(clock);clock=0;
     return true;
   }
   root.CompanionResultFocus={show:(title,description)=>{if(!isSocial(title))show(title,read(description),description);},read,hide,semanticColors,normalizeType,showStructured};
