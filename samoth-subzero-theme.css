@@ -1,0 +1,188 @@
+/* SAMOTH — SUB-ZERO / DRAGON D'ARGENT — DA validée 2026-11-13
+   Couche visuelle uniquement : aucun changement de règles, données, icônes de sorts
+   ou emblème (assets/emblem-transparent.png, fichier original conservé). */
+:root {
+  --bg:#070e18;--panel:#0c1c2a;--panel2:#102538;--ink:#ebf8ff;
+  --muted:#a7c1d2;--gold:#8deaff;--gold2:#1b80ab;--green:#75dac2;
+  --foam:#b8ebfa;--red:#ff8292;--blue:#29c8ee;--violet:#b7a0fa;
+  --line:#2b6686;--shadow:0 10px 34px #01050bc7;
+  --combat-glow:#29c8ee;--combat-secondary:#b9f2ff;
+  --crf-accent:#29c8ee;--crf-panel:#0b1b2a;--crf-deep:#060d16;
+  --crf-line:#2c6683;--crf-text:#f0faff;--crf-muted:#aec7d8;
+}
+html{background:#060d16!important}
+body{
+  color:#eaf8ff;
+  background:
+    radial-gradient(ellipse 42% 27% at 87% 0%,#1395d238,transparent 83%),
+    radial-gradient(ellipse 38% 28% at 3% 96%,#1483ba2b,transparent 89%),
+    radial-gradient(ellipse 44% 34% at 49% 53%,#0c36552c,transparent 92%),
+    repeating-linear-gradient(121deg,transparent 0 63px,#70d5fc05 64px 65px,transparent 67px 129px),
+    linear-gradient(125deg,#070d16 0%,#0b1b2c 48%,#050b13 100%)!important;
+  background-attachment:fixed!important;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.38;
+  background:
+    linear-gradient(135deg,transparent 60%,#80eaff14 60.12%,transparent 60.4%),
+    linear-gradient(135deg,transparent 69%,#b4f3ff15 69.1%,transparent 69.25%),
+    linear-gradient(135deg,transparent 79%,#76d9fa0d 79.07%,transparent 79.2%),
+    linear-gradient(47deg,transparent 83%,#8cecff14 83.13%,transparent 83.33%);
+}
+.app{position:relative;z-index:1}
+.identity,.vitals,.turnbar,.card,.stat,.journal-premium,.meta-strip{
+  border-color:#285a77!important;
+  box-shadow:0 8px 30px #0009,inset 0 1px #a7edff16!important;
+}
+.identity,.vitals,.card,.journal-premium{
+  background:linear-gradient(145deg,#11283ceF,#07121feb)!important;
+}
+.identity{isolation:isolate;overflow:hidden!important;border-color:#3282a2!important}
+.identity::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.8;
+  background:
+    radial-gradient(circle at 77% 40%,#36caff23 0%,transparent 46%),
+    linear-gradient(132deg,transparent 43%,#81e7ff15 43.1%,transparent 44%),
+    linear-gradient(157deg,transparent 56%,#ddf7ff14 56.15%,transparent 56.45%),
+    linear-gradient(170deg,#0a1725,#10324a 75%,#071320);
+}
+.identity::after{content:none!important}
+.identity h1{color:#f5fcff!important;text-shadow:0 0 19px #60ccff27}
+.identity p{color:#bacfdf!important}
+.eyebrow{color:#8deaff!important}
+.signature-icon,.signature-icon img{
+  filter:drop-shadow(0 0 15px #3bbdff70)!important;
+}
+/* Préserve l'image actuelle de l'emblème : aucun remplacement de src */
+.vitals{background:linear-gradient(160deg,#101e2df2,#091521f5)!important}
+.stat{background:linear-gradient(155deg,#0c1b2a,#08131f)!important;border:1px solid #2c506a!important}
+.stat b{color:#d7f7ff!important}
+.stat small{color:#a9c0d2!important}
+.num,select,input:not([type=checkbox]),textarea{
+  color:#edfaff;border-color:#3984a5;background:#071522;
+}
+.num:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid #5fd9fa;outline-offset:1px;
+}
+.mini,.ability,.toggle{
+  background:linear-gradient(160deg,#10273a,#0a1725)!important;
+  border-color:#39718e!important;color:#eafaff!important;
+}
+.mini[data-hp=damage]{background:#3b1825!important;border-color:#9e5062!important}
+.mini[data-hp=heal]{background:#13372f!important;border-color:#39836f!important}
+.nav,.mobile-subnav{background:transparent!important}
+.nav button,.mobile-subnav button,.mobile-nav button,.subnav button{
+  color:#d9f1ff!important;
+  background:linear-gradient(150deg,#102539,#091726)!important;
+  border:1px solid #356d8a!important;border-radius:10px!important;
+}
+.nav button.active,.mobile-subnav button.active,.mobile-nav button.active,.subnav button.active{
+  color:#edfcff!important;
+  border-color:#3bd7ff!important;
+  background:linear-gradient(150deg,#166b8b,#0e364f)!important;
+  box-shadow:inset 0 1px #c9f6ff54,0 0 18px #24cfff48!important;
+}
+#cc-turnbar-standard{
+  --cc-turn-bg:#071521f0;--cc-turn-border:#2b7295;--cc-turn-fg:#e7faff;
+  --cc-cell-bg:#0b1c2b;--cc-cell-border:#2c5976;
+  --cc-next-bg:linear-gradient(180deg,#f0c36d,#e1a640 52%,#b97817);
+  --cc-active-border:#4cdaff;
+  background:linear-gradient(155deg,#0c2437f7,#07111df5)!important;
+  border-color:#317391!important;
+}
+#cc-turnbar-standard .cc-turn-cell{
+  color:#edfaff!important;background:#0a1a29!important;border-color:#326885!important;
+}
+#cc-turnbar-standard .cc-turn-action:not(.is-used),
+#cc-turnbar-standard .cc-turn-bonus:not(.is-used),
+#cc-turnbar-standard .cc-turn-conc.is-active{
+  border-color:#4ce1ff!important;
+  background:linear-gradient(150deg,#15465f,#09263c)!important;
+  box-shadow:inset 0 0 0 1px #7ee8ff44,0 0 13px #0bd2ff47!important;
+}
+#cc-turnbar-standard .cc-turn-next{
+  background:linear-gradient(180deg,#f0c36d 0%,#e1a640 52%,#b97817 100%)!important;
+  color:#201305!important;border-color:#ffd77f!important;
+}
+#cc-turnbar-standard .cc-turn-next .cc-turn-label,
+#cc-turnbar-standard .cc-turn-next .cc-turn-icon{color:#201305!important}
+.turnbar,.economy,.turn-conc{border-color:#337595!important}
+.economy,.turn-conc{background:#0b1d2b!important}
+.economy:not(.used),.turn-conc:not(.used){
+  box-shadow:inset 0 0 0 1px #4bdeff40,0 0 12px #13cfff25!important;
+}
+.next{
+  background:linear-gradient(180deg,#f0c36d,#e1a640 52%,#b97817)!important;
+  border-color:#ffd77f!important;color:#1b1207!important;
+}
+#combat .spell-caster{
+  border:1px solid #249dca!important;
+  background:
+    radial-gradient(ellipse 27% 65% at 97% 10%,#16a5e31d,transparent),
+    linear-gradient(135deg,#0c2233f4,#071522f4)!important;
+  box-shadow:inset 3px 0 #33d5fa,0 8px 28px #0009,0 0 26px #09c4fc16!important;
+}
+.spell-caster .caster-head h2{color:#f0fbff!important}
+.caster-resource{color:#c1f5ff!important;border-color:#407a96!important;background:#153448!important}
+.caster-preview{
+  background:
+    linear-gradient(140deg,transparent 82%,#64dfff13 82.2%,transparent 83%),
+    linear-gradient(110deg,#163e55,#102536)!important;
+  border-color:#327e9e!important;border-left-color:#62dbfa!important;
+}
+.caster-preview h3{color:#f1faff!important}
+#combatSpell{border-color:#4ed4f7!important;background:#061621!important}
+#combatCast,.caster-cast,.primary{
+  background:linear-gradient(125deg,#1c799e,#34bfdf)!important;
+  border-color:#7ae9ff!important;color:#061c2a!important;
+  box-shadow:inset 0 1px #d8faff55,0 0 16px #1fb6ee33!important;
+}
+.toggle.on,.toggle[aria-pressed=true]{
+  background:linear-gradient(145deg,#13506a,#0c3249)!important;
+  border-color:#51dcfa!important;
+  box-shadow:inset 2px 0 #91eeff,0 0 12px #24d1fc25!important;
+}
+.flame-ribbon{
+  background:linear-gradient(100deg,#2c1c23,#111821)!important;
+  border-color:#bc835d!important;box-shadow:inset 3px 0 #e8a978!important;
+}
+#malachorCombat{
+  border:1px solid #765da5!important;
+  background:
+    radial-gradient(ellipse 36% 100% at 94% 100%,#61409a3b,transparent 80%),
+    linear-gradient(118deg,#181525f5,#0c1522f5)!important;
+  box-shadow:inset 2px 0 #9574d5,0 8px 24px #0009!important;
+}
+#malachorCombat h2{color:#e1d4ff!important}
+.meta-strip{
+  background:linear-gradient(110deg,#171a2b,#0b1725)!important;
+  border-color:#6b579a!important;
+}
+.meta-strip .meta-chip.selected,.meta-strip .meta-chip[aria-pressed=true]{
+  border-color:#bd9bff!important;background:linear-gradient(130deg,#34254f,#182238)!important;
+  box-shadow:inset 2px 0 #cbacff,0 0 15px #b58cff33!important;
+}
+#spellList .samoth-kobe-grimoire{
+  --book-line:#337c9e;--book-ink:#f1faff;--book-muted:#a9c8d9;--book-accent:#42d6ff;
+  background:linear-gradient(150deg,#0f2a40,#071421)!important;border-color:#328bad!important;
+}
+#spellList .samoth-book-list{background:#071523!important;border-color:#2c6784!important}
+#spellList .samoth-book-entry{background:#0d283b!important;border-color:#2a5d7d!important}
+#spellList .samoth-book-entry:has([aria-pressed=true]){
+  background:#16465d!important;border-color:#52ddff!important;box-shadow:0 0 13px #30d3ff29!important;
+}
+#spellList .samoth-book-detail{background:linear-gradient(150deg,#103248,#081826)!important;border-color:#3682a3!important}
+#spellList .samoth-spell-glyph{filter:drop-shadow(0 0 8px #3ce3ff66)!important}
+.dragon-card{border-color:#4bbae2!important;background:linear-gradient(140deg,#123d56,#071a29)!important}
+.journal-premium{background:linear-gradient(140deg,#10263a,#071421)!important}
+.journal-tabs button.active{border-color:#51ddff!important;background:#124e67!important}
+/* Le thème ne touche ni aux images sources du grimoire, ni aux scripts de combat. */
+@media (max-width:780px){
+  body::before{opacity:.23}
+  .identity::before{opacity:.55}
+  #cc-turnbar-standard{backdrop-filter:blur(16px)}
+  #combat .spell-caster{background:linear-gradient(145deg,#0b2335,#081521)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #cc-turnbar-standard .cc-turn-cell,.nav button,.primary{transition:none!important}
+}
