@@ -48,3 +48,4 @@
  #malachorCombat{grid-template-columns:auto minmax(0,1fr)}
  .malachor-actions{grid-column:1/-1;justify-content:flex-start}
 }
+#sharedCastControls{display:grid;gap:6px;min-width:0}

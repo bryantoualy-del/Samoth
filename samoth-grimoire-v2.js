@@ -2,7 +2,7 @@
    Les capacités, les lancements et les emplacements restent gérés par companion.js. */
 (()=>{'use strict';
  const storageKey='samoth:grimoire-favorites:v1';
- let selected='rayon',query='',onlyFavorites=false,favorites=[];
+ let query='',onlyFavorites=false,favorites=[];
  try{const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');favorites=Array.isArray(saved)?saved.filter(x=>typeof x==='string').slice(0,4):[]}catch{}
  // Original Samoth glyphs. Keep Kobe's compact book layout, not Kobe's pictograms.
  const iconTypes={
@@ -40,7 +40,7 @@
  };
  const node=(tag,cls,text='')=>{const n=document.createElement(tag);if(cls)n.className=cls;n.textContent=text;return n};
  const idFor=card=>card.querySelector('[data-cast]')?.dataset.cast||'';
- function decorate(){
+ function decorate(selected){
    const host=document.getElementById('spellList');if(!host)return;
    const cards=[...host.querySelectorAll('.spell-section .spell')],slots=host.querySelector('.spell-slots'),filter=host.querySelector('.spell-legend');
    if(!cards.length)return;
@@ -54,13 +54,9 @@
      return {card,id,role,name,level,casting,range,searchable};
    }).filter(r=>r.id);
    const visible=sources.filter(r=>(!onlyFavorites||favorites.includes(r.id))&&r.searchable.includes(query.toLocaleLowerCase('fr')));
-   if(!visible.some(x=>x.id===selected))selected=visible[0]?.id||'';
-   const chosen=visible.find(x=>x.id===selected);
+   const chosen=sources.find(x=>x.id===selected);
    const shell=node('section','samoth-kobe-grimoire');
    shell.setAttribute('aria-label','Grimoire de Samoth');
-   const head=node('header','samoth-book-header');
-   const title=node('div','samoth-book-heading');title.append(node('h2','', 'Grimoire'),node('small','', 'Catalogue de sorts · Samoth'));
-   head.append(title);shell.append(head);
    if(slots){slots.classList.add('samoth-book-slots');shell.append(slots);}
    const tools=node('div','samoth-book-tools');
    const search=node('input','samoth-book-search');search.type='search';search.id='samothSpellSearch';
@@ -68,8 +64,7 @@
    search.setAttribute('aria-label','Rechercher un sort dans le grimoire');
    const fav=node('button','samoth-book-fav','☆ Favoris');fav.type='button';fav.dataset.samothBookFavorites='';
    fav.setAttribute('aria-pressed',String(onlyFavorites));tools.append(search,fav);
-   shell.append(tools);
-   if(filter){filter.classList.add('samoth-book-filters');shell.append(filter);}
+
    const layout=node('div','samoth-book-layout'),list=node('div','samoth-book-list'),details=node('aside','samoth-book-detail');
    list.setAttribute('aria-label','Catalogue des sorts');details.setAttribute('aria-label','Fiche du sort sélectionné');
    if(!visible.length)list.append(node('p','samoth-book-empty','Aucun sort ne correspond aux filtres.'));
@@ -90,16 +85,20 @@
      const subtitle=node('div','samoth-book-sheet-title');subtitle.append(icon(chosen.id,chosen.role));
      const text=node('div','');text.append(node('small','',chosen.level+' · '+chosen.casting),node('h3','',chosen.name));subtitle.append(text);details.append(subtitle);
      chosen.card.classList.add('samoth-book-sheet');
-     chosen.card.querySelector('.spell-doc')?.setAttribute('open','');
+     const launch=chosen.card.querySelector('[data-cast]');
+     if(launch){const outlet=node('div','book-cast-controls');outlet.id='bookCastHome';launch.replaceWith(outlet);}
      details.append(chosen.card);
    }else details.append(node('p','samoth-book-empty','Sélectionne un sort pour afficher sa fiche.'));
-   layout.append(list,details);shell.append(layout);host.replaceChildren(shell);
+   const navigation=node('div','samoth-book-navigation');
+   navigation.append(tools);
+   if(filter){filter.classList.add('samoth-book-filters');navigation.append(filter);}
+   navigation.append(list);
+   layout.append(navigation,details);shell.append(layout);host.replaceChildren(shell);
  }
- function choose(id){selected=id;}
  function favorite(id){if(favorites.includes(id))favorites=favorites.filter(x=>x!==id);else if(favorites.length<4)favorites.push(id);
    try{localStorage.setItem(storageKey,JSON.stringify(favorites))}catch{}
  }
  function setQuery(value){query=String(value||'');}
  function toggleFavorites(){onlyFavorites=!onlyFavorites;}
- window.SamothGrimoireV2={decorate,choose,favorite,setQuery,toggleFavorites};
+ window.SamothGrimoireV2={decorate,favorite,setQuery,toggleFavorites};
 })();
