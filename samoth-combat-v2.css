@@ -1,0 +1,34 @@
+.top .identity h1{font-size:clamp(1.55rem,3vw,2.35rem)}
+.top .identity p{max-width:75%;line-height:1.2}
+#combat .spell-caster{display:grid;gap:7px;padding:10px 12px;min-width:0}
+#combat .caster-layout{display:grid;grid-template-columns:minmax(165px,1fr) minmax(0,2fr) auto;gap:8px;align-items:center}
+.caster-picker{min-width:0}
+.caster-picker select{width:100%;min-width:0;min-height:42px}
+.caster-picker>span{font-size:.75rem}
+#combat .caster-preview,.caster-preview{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;padding:7px 9px;min-height:0;min-width:0}
+.caster-preview h3{font-size:.98rem;margin:0 0 2px;overflow-wrap:anywhere}
+.caster-preview small{color:#d9f6ff}
+#combat .caster-controls{margin:0;gap:6px}
+.caster-controls [hidden],.cast-setup[hidden],.caster-blocked:empty{display:none!important}
+.caster-controls button,.flame-details summary{min-height:42px}
+#combat .caster-cast{min-height:44px;margin:0}
+#combat .caster-resource{white-space:normal;max-width:145px;text-align:center}
+#combat .compact-cast-fields{margin:0;gap:6px}
+.flame-details summary{display:flex;align-items:center;gap:10px;cursor:pointer;color:#ffe0b6;font-size:.82rem}
+.flame-details summary::before{content:'›';font-size:1.1rem}
+.flame-details[open] summary::before{transform:rotate(90deg)}
+#flameState{color:#cfb59f}
+@media(min-width:768px) and (orientation:landscape){
+ .app>.top{gap:8px;margin-bottom:6px}
+ .top .identity,.top .vitals{min-height:0;padding-block:7px}
+ .top .stat{min-height:0;padding-block:5px}
+ .top .signature-icon{height:65px;width:65px}
+ .top .signature-icon img{max-height:100%;object-fit:contain}
+}
+@media(max-width:600px){
+ #combat .caster-layout{grid-template-columns:minmax(0,1fr) auto}
+ #combat .caster-selected{grid-column:1/-1;grid-row:2}
+ #combat .caster-resource{max-width:100px}
+ #combat .caster-controls{display:grid;grid-template-columns:minmax(0,1fr)}
+ #attackControls{flex-wrap:wrap}
+}
