@@ -37,3 +37,6 @@ body.cc-result-fx-pending :is(#ribbon,#resultRibbon,#kentaro-ribbon,#resultText,
 #companion-result-focus{pointer-events:none}
 #companion-result-focus .crf-head button{pointer-events:auto}
 body.cc-result-fx-pending #result #resultTitle{visibility:hidden!important}
+
+#companion-result-focus .crf-damage-value{display:flex;align-items:center;gap:6px}
+#companion-result-focus .rpg-damage-icon{width:28px;height:28px;flex:0 0 28px;object-fit:contain}
