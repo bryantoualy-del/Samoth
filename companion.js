@@ -311,7 +311,22 @@ async function rest(long){
  castDraft={};
  return `PV ${old} → 78, ressources restaurées et état de combat remis à zéro · Tour 1 · Samoth. Bâton : récupération à l’aube séparée.`})
 }
-function applyIncomingHp(n,kind){transaction(kind==='damage'?'Dégâts reçus':'Soins reçus',()=>{let old=state.hp,t=state.tempHp;if(kind==='damage'){let absorbed=Math.min(t,n);state.tempHp-=absorbed;state.hp=Math.max(0,state.hp-(n-absorbed))}else state.hp=Math.min(state.maxHp||78,state.hp+n);let check='';if(kind==='damage'&&state.concentration&&n>0&&!window.__RPGNetworkConcentration){let dc=Math.max(10,Math.floor(n/2)),natural=roll(20),total=natural+6;check=` · Concentration CON ${natural}+6=${total} contre DD${dc}`;if(total<dc){check+=' : perdue';state.concentration='';state.dragon=null;state.animatedObjects=null;state.sharedResistance='';if(state.phase==='dragon'){state.phase='samoth';state.rpgTableShieldActive=false;state.round++;state.eco={action:false,bonus:false,reaction:false,move:false};state.bonusSpell=false;state.leveledAction=false}}else check+=' : maintenue'}return `${n} ${kind==='damage'?'dégâts':'PV de soins'} · PV ${old}→${state.hp}/${state.maxHp||78}, temporaires ${t}→${state.tempHp}${check}.`});}
+function applyIncomingHp(amount, kind) {
+ const damage = kind === 'damage';
+ transaction(damage ? 'Dégâts reçus' : 'Soins reçus', () => {
+  const oldHp = state.hp, oldTemp = state.tempHp;
+  if (damage) {
+   const absorbed = Math.min(oldTemp, amount);
+   state.tempHp -= absorbed;
+   state.hp = Math.max(0, oldHp - (amount - absorbed));
+  } else {
+   state.hp = Math.min(state.maxHp || 78, oldHp + amount);
+  }
+  return `${amount} ${damage ? 'dégâts' : 'PV de soins'} · PV ${oldHp}→${state.hp}/${state.maxHp || 78}, temporaires ${oldTemp}→${state.tempHp}.`;
+ });
+ if (damage) window.RPGConcentrationLocal?.damage(amount);
+}
+
 let spellFilter='all';
 function showPowerTab(tab){$$('[data-power-pane]').forEach(e=>e.classList.toggle('active',e.dataset.powerPane===tab));$$('[data-power-tab]').forEach(e=>{let active=e.dataset.powerTab===tab;e.classList.toggle('active',active);e.setAttribute('aria-pressed',String(active))})}
 const mobileGroups={combat:['combat','dragon'],powers:['powers'],social:['social','inventory'],history:['history','rules']};
